@@ -22,6 +22,12 @@ export function Aplicacion({ setPhase, state, updateState }: Props) {
         const result = await getIdeaAdvice(state.problem, state.definition, state.selectedIdea!);
         setAdvice(result);
         setIsGeneratingAdvice(false);
+        if (typeof Notification !== 'undefined' && Notification.permission === 'granted') {
+          new Notification("¡Plan de Acción Listo!", { 
+            body: "La IA ha terminado de analizar tu idea. Revisa los consejos para aterrizarla.",
+            icon: "/icon-192.png"
+          });
+        }
       };
       fetchAdvice();
     } else {

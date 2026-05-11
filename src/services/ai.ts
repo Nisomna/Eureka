@@ -2,6 +2,7 @@ import { GoogleGenAI, Type } from "@google/genai";
 
 // En Vite/Vercel se usa import.meta.env.VITE_GEMINI_API_KEY
 // En el entorno de AI Studio se usa process.env.GEMINI_API_KEY
+// @ts-ignore
 const apiKey = import.meta.env.VITE_GEMINI_API_KEY || process.env.GEMINI_API_KEY;
 
 if (!apiKey) {

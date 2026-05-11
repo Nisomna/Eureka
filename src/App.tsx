@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { Phase, AppState } from './types';
 import { Login } from './phases/Login';
@@ -15,8 +15,11 @@ import { Aplicacion } from './phases/Aplicacion';
 import { auth, db } from './firebase';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { doc, getDoc, setDoc, updateDoc, serverTimestamp } from 'firebase/firestore';
-import { LogOut } from 'lucide-react';
+import { LogOut, Bell } from 'lucide-react';
 import { InstallPrompt } from './components/InstallPrompt';
+import { NotificationCenter } from './components/NotificationCenter';
+import { NotifOverlay } from './components/NotifOverlay';
+import { ActiveToast } from './lib/notificationTypes';
 
 enum OperationType {
   CREATE = 'create',
@@ -82,6 +85,20 @@ export default function App() {
   const [phase, setPhase] = useState<Phase>('login');
   const [state, setState] = useState<AppState>(initialState);
   const [loading, setLoading] = useState(true);
+  const [activeToasts, setActiveToasts] = useState<ActiveToast[]>([]);
+
+  useEffect(() => {
+    if (!('serviceWorker' in navigator)) return;
+    navigator.serviceWorker.register('/notification-sw.js').catch(() => {});
+  }, []);
+
+  const handleFireToast = useCallback((toast: ActiveToast) => {
+    setActiveToasts(prev => prev.some(t => t.id === toast.id) ? prev : [...prev, toast]);
+  }, []);
+
+  const handleDismissToast = useCallback((id: string) => {
+    setActiveToasts(prev => prev.filter(t => t.id !== id));
+  }, []);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -203,7 +220,13 @@ export default function App() {
           </motion.div>
         </AnimatePresence>
       </main>
+      
+      {auth.currentUser && phase !== 'login' && (
+        <NotificationCenter onFireToast={handleFireToast} />
+      )}
+
       <InstallPrompt />
+      <NotifOverlay toasts={activeToasts} onDismiss={handleDismissToast} />
     </div>
   );
 }
