@@ -1,0 +1,35 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile containing their interests for creative unblocking.",
+      "type": "object",
+      "properties": {
+        "interests": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of activities/interests the user prefers for relaxation."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["interests", "createdAt", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": {
+        "$ref": "#/entities/User"
+      },
+      "description": "User profiles storing their preferences."
+    }
+  }
+}

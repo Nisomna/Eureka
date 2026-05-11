@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Phase, AppState } from '../types';
-import { ArrowLeft, PenTool, CheckCircle2 } from 'lucide-react';
+import { ArrowLeft, PenTool, CheckCircle2, Bot, Sparkles } from 'lucide-react';
+import { getIdeaAdvice } from '../services/ai';
 
 interface Props {
   setPhase: (phase: Phase) => void;
@@ -10,6 +11,23 @@ interface Props {
 
 export function Aplicacion({ setPhase, state, updateState }: Props) {
   const [isDone, setIsDone] = useState(false);
+  const [advice, setAdvice] = useState<string | null>(null);
+  const [isGeneratingAdvice, setIsGeneratingAdvice] = useState(false);
+
+  useEffect(() => {
+    if (state.selectedIdea) {
+      const fetchAdvice = async () => {
+        setIsGeneratingAdvice(true);
+        setAdvice(null);
+        const result = await getIdeaAdvice(state.problem, state.definition, state.selectedIdea!);
+        setAdvice(result);
+        setIsGeneratingAdvice(false);
+      };
+      fetchAdvice();
+    } else {
+      setAdvice(null);
+    }
+  }, [state.selectedIdea, state.problem, state.definition]);
 
   if (isDone) {
     return (
@@ -70,6 +88,25 @@ export function Aplicacion({ setPhase, state, updateState }: Props) {
             ))}
           </select>
         </div>
+
+        {isGeneratingAdvice && (
+          <div className="bg-indigo-50 border border-indigo-100 p-4 rounded-xl flex items-center space-x-3 animate-pulse">
+            <Sparkles className="text-indigo-400" size={24} />
+            <p className="text-sm text-indigo-800">Generando un plan de ataque para esta idea...</p>
+          </div>
+        )}
+
+        {advice && !isGeneratingAdvice && (
+          <div className="bg-gradient-to-br from-indigo-50 to-purple-50 border border-indigo-100 p-5 rounded-2xl">
+            <div className="flex items-center space-x-2 text-indigo-800 mb-3">
+              <Bot size={20} />
+              <h3 className="font-bold text-sm">Consejo de Aplicación</h3>
+            </div>
+            <div className="text-sm text-indigo-900 leading-relaxed whitespace-pre-wrap">
+              {advice}
+            </div>
+          </div>
+        )}
 
         <div className="space-y-2">
           <label className="block text-sm font-semibold text-slate-700">

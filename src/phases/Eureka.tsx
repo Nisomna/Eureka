@@ -9,14 +9,73 @@ interface Props {
   updateState: (updates: Partial<AppState>) => void;
 }
 
-const PERSPECTIVES = [
+const GLOBAL_PERSPECTIVES = [
   "¿Cómo lo resolvería un niño de 5 años?",
   "¿Qué pasaría si hicieras exactamente lo contrario?",
   "Si tuvieras presupuesto infinito, ¿qué harías?",
-  "¿Cómo se relaciona esto con la naturaleza?",
   "Elimina la parte más importante. ¿Qué queda?",
   "Combina tu problema con un objeto aleatorio de la habitación.",
+  "¿Cómo podrías resolver esto sin usar tecnología?",
+  "Imagina que tienes que explicar la solución en un tweet."
 ];
+
+const STRATEGIES_BY_INTEREST: Record<string, string[]> = {
+  musica: [
+    "¿Qué ritmo tendría la solución a este problema? ¿Rápido, lento, caótico?",
+    "Imagina que tu problema es una canción. ¿Cómo sería el estribillo de la solución?",
+    "¿Qué pasaría si trataras los diferentes elementos del problema como instrumentos musicales?"
+  ],
+  caminar: [
+    "Imagina que la solución es un sendero. ¿Cuáles son los pasos, obstáculos y cómo es el destino?",
+    "Si caminaras alrededor del problema físicamente, ¿qué verías desde atrás?",
+    "Avanza un paso a la vez: ¿cuál es literalmente la acción más pequeña que puedes tomar hoy?"
+  ],
+  leer: [
+    "Escribe la solución como si fuera el título de un libro best-seller.",
+    "Si tu problema fuera una novela de misterio, ¿quién sería el culpable y cómo se resuelve?",
+    "Resume la solución usando solo 3 palabras clave, como el índice de un libro."
+  ],
+  jugar: [
+    "Dale 'Game Over' al problema: ¿cómo sería la pantalla de victoria?",
+    "¿Qué 'poderes especiales' (herramientas/habilidades) necesitas para vencer el nivel de este problema?",
+    "Si este problema fuera juego de mesa, ¿cuáles serían las reglas para ganar?"
+  ],
+  meditar: [
+    "Respira: Si dejas ir la necesidad de control, ¿cuál es la solución más simple que queda?",
+    "Observa el problema desde lejos, sin juzgar. ¿Qué es lo que realmente importa?",
+    "Enfócate en el vacío: ¿qué es lo que NO está sucediendo y debería suceder?"
+  ],
+  dibujar: [
+    "Boceta la solución en un papel sin usar letras, solo formas.",
+    "Dibuja el peor escenario posible. Ahora agrégale colores para hacerlo ridículo.",
+    "¿Qué colores representan la solución? Intenta pensar en términos visuales."
+  ],
+  cocinar: [
+    "¿Cuáles son los 'ingredientes' necesarios para resolver este problema?",
+    "Aplica calor: ¿qué pasa si introduces urgencia a la solución?",
+    "Mezcla dos ideas que normalmente no van juntas, como dulce y salado."
+  ],
+  ejercicio: [
+    "Visualiza el esfuerzo: ¿qué músculo metafórico necesitas ejercitar para resolver esto?",
+    "Divide el problema en 'series' y 'repeticiones'. ¿Cuál es tu primera serie?",
+    "Construye resistencia: ¿qué harás si la primera solución falla?"
+  ],
+  cine: [
+    "Si este problema fuera el clímax de una película, ¿cómo lo resolvería el protagonista?",
+    "Haz un 'corte de director': elimina escenas innecesarias de tu planteamiento.",
+    "Visualiza la escena post-créditos de tu problema ya resuelto. ¿Qué se ve?"
+  ],
+  escribir: [
+    "Redacta una carta de renuncia a tu problema.",
+    "Escribe un poema malo sobre cómo vas a solucionarlo.",
+    "Si tuvieras que usar metáforas para solucionar el problema, ¿cuáles serían?"
+  ],
+  limpiar: [
+    "Limpia el desorden: ¿qué partes del problema son basura y puedes ignorar?",
+    "Organiza las piezas del problema por orden de importancia, como un armario.",
+    "Pule lo que ya tienes: en lugar de una idea nueva, ¿puedes mejorar algo existente?"
+  ]
+};
 
 export function Eureka({ setPhase, state, updateState }: Props) {
   const [newIdea, setNewIdea] = useState('');
@@ -30,7 +89,16 @@ export function Eureka({ setPhase, state, updateState }: Props) {
   };
 
   const getRandomPerspective = () => {
-    const random = PERSPECTIVES[Math.floor(Math.random() * PERSPECTIVES.length)];
+    let availablePerspectives = [...GLOBAL_PERSPECTIVES];
+    
+    // Agrega perspectivas basadas en los gustos del usuario
+    state.interests.forEach(interest => {
+      if (STRATEGIES_BY_INTEREST[interest]) {
+        availablePerspectives = [...availablePerspectives, ...STRATEGIES_BY_INTEREST[interest]];
+      }
+    });
+
+    const random = availablePerspectives[Math.floor(Math.random() * availablePerspectives.length)];
     setPerspective(random);
   };
 
@@ -71,12 +139,13 @@ export function Eureka({ setPhase, state, updateState }: Props) {
         <div className="bg-green-50 p-4 rounded-2xl border border-green-100">
           <div className="flex items-center justify-between mb-2">
             <h3 className="text-sm font-semibold text-green-800">Cambiar Perspectiva</h3>
-            <button onClick={getRandomPerspective} className="text-green-600 p-1 hover:bg-green-100 rounded-md">
+            <button onClick={getRandomPerspective} className="text-green-600 p-2 hover:bg-green-200 rounded-lg transition-colors flex items-center gap-1">
               <Shuffle size={16} />
+              <span className="text-xs font-semibold">Generar</span>
             </button>
           </div>
-          <p className="text-green-700 text-sm italic min-h-[40px]">
-            {perspective || "Toca el botón para ver el problema desde otro ángulo."}
+          <p className="text-green-800 text-sm italic min-h-[40px] leading-relaxed">
+            {perspective || "Usa tus gustos para generar estrategias creativas. ¡Toca Generar!"}
           </p>
         </div>
 

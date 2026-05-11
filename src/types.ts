@@ -1,4 +1,4 @@
-export type Phase = 'home' | 'afinar' | 'despeje' | 'eureka' | 'aplicacion';
+export type Phase = 'login' | 'home' | 'afinar' | 'despeje' | 'eureka' | 'aplicacion';
 
 export interface DespejeActivity {
   id: string;
@@ -18,4 +18,5 @@ export interface AppState {
   plan: string;
   despejeActivities: DespejeActivity[];
   despejeStartTime: number | null;
+  despejeDayPlan: string | null;
 }

@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Phase, AppState } from '../types';
-import { ArrowRight, ArrowLeft, Target } from 'lucide-react';
+import { ArrowRight, ArrowLeft, Target, AlertCircle } from 'lucide-react';
+import { validateProblem } from '../services/ai';
 
 interface Props {
   setPhase: (phase: Phase) => void;
@@ -9,6 +10,22 @@ interface Props {
 }
 
 export function Afinar({ setPhase, state, updateState }: Props) {
+  const [loading, setLoading] = useState(false);
+  const [feedback, setFeedback] = useState<string | null>(null);
+
+  const handleNext = async () => {
+    setLoading(true);
+    setFeedback(null);
+    const result = await validateProblem(state.problem, state.definition, state.options);
+    setLoading(false);
+
+    if (result.isValid) {
+      setPhase('despeje');
+    } else {
+      setFeedback(result.feedback);
+    }
+  };
+
   return (
     <div className="flex flex-col h-full">
       <div className="flex items-center space-x-3 mb-6">
@@ -59,6 +76,13 @@ export function Afinar({ setPhase, state, updateState }: Props) {
         </div>
       </div>
 
+      {feedback && (
+        <div className="mb-4 bg-red-50 border border-red-200 p-4 rounded-xl flex items-start space-x-3">
+          <AlertCircle className="text-red-500 mt-0.5 shrink-0" size={20} />
+          <p className="text-sm text-red-800">{feedback}</p>
+        </div>
+      )}
+
       <div className="pt-4 flex space-x-4 bg-slate-50">
         <button
           onClick={() => setPhase('home')}
@@ -67,12 +91,12 @@ export function Afinar({ setPhase, state, updateState }: Props) {
           <ArrowLeft size={24} />
         </button>
         <button
-          onClick={() => setPhase('despeje')}
-          disabled={!state.problem.trim()}
+          onClick={handleNext}
+          disabled={!state.problem.trim() || loading}
           className="flex-1 py-4 bg-yellow-500 hover:bg-yellow-600 disabled:bg-slate-300 disabled:cursor-not-allowed text-white rounded-2xl font-bold text-lg flex items-center justify-center space-x-2 transition-colors shadow-lg shadow-yellow-200"
         >
-          <span>Siguiente: Despejar</span>
-          <ArrowRight size={24} />
+          <span>{loading ? "Validando..." : "Siguiente: Despejar"}</span>
+          {!loading && <ArrowRight size={24} />}
         </button>
       </div>
     </div>
