@@ -23,7 +23,7 @@ export function Afinar({ setPhase, state, updateState }: Props) {
       if (typeof Notification !== 'undefined' && Notification.permission === 'granted') {
         new Notification("Problema Validado", { 
           body: "Tu problema está bien definido. ¡Es hora de pasar a la fase de Despeje!",
-          icon: "/icon-192.png"
+          icon: "/icon-192.svg"
         });
       }
       setPhase('despeje');

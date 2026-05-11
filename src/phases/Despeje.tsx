@@ -53,7 +53,7 @@ export function Despeje({ setPhase, state, updateState }: Props) {
       if (typeof Notification !== 'undefined' && Notification.permission === 'granted') {
         new Notification("¡Tiempo de Incubación Completo!", { 
           body: "Tu mente ha tenido tiempo para despejarse. Es el momento de buscar ese Eureka.",
-          icon: "/icon-192.png"
+          icon: "/icon-192.svg"
         });
         setNotified(true);
       }

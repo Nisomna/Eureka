@@ -88,8 +88,8 @@ export default function App() {
   const [activeToasts, setActiveToasts] = useState<ActiveToast[]>([]);
 
   useEffect(() => {
-    if (!('serviceWorker' in navigator)) return;
-    navigator.serviceWorker.register('/notification-sw.js').catch(() => {});
+    // Service worker is registered in main.tsx
+    // and consolidated in /sw.js
   }, []);
 
   const handleFireToast = useCallback((toast: ActiveToast) => {
@@ -102,14 +102,21 @@ export default function App() {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        await loadUserData(user.uid);
-        setPhase('home');
-      } else {
+      try {
+        if (user) {
+          await loadUserData(user.uid);
+          setPhase('home');
+        } else {
+          setPhase('login');
+          setState(initialState);
+        }
+      } catch (err) {
+        console.error("Error during initial auth state load:", err);
+        // Fallback to login if something fails critically
         setPhase('login');
-        setState(initialState);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     });
     return () => unsubscribe();
   }, []);
