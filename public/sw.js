@@ -29,14 +29,20 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
-  if (event.request.method !== 'GET') return;
+  const url = new URL(event.request.url);
+  
+  // No cachear peticiones a las APIs de Google/Firebase ni métodos que no sean GET
+  if (
+    event.request.method !== 'GET' || 
+    url.hostname.includes('googleapis.com') || 
+    url.hostname.includes('firebase')
+  ) {
+    return;
+  }
 
   event.respondWith(
     caches.match(event.request).then((cached) => {
-      return cached || fetch(event.request).then(response => {
-        // Optional: Cache new requests on the fly
-        return response;
-      });
+      return cached || fetch(event.request);
     })
   );
 });

@@ -1,6 +1,14 @@
 import { GoogleGenAI, Type } from "@google/genai";
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+// En Vite/Vercel se usa import.meta.env.VITE_GEMINI_API_KEY
+// En el entorno de AI Studio se usa process.env.GEMINI_API_KEY
+const apiKey = import.meta.env.VITE_GEMINI_API_KEY || process.env.GEMINI_API_KEY;
+
+if (!apiKey) {
+  console.warn("GEMINI_API_KEY no encontrada. La IA no funcionará hasta que se configure la variable de entorno.");
+}
+
+const ai = new GoogleGenAI({ apiKey: apiKey || "" });
 
 export async function validateProblem(problem: string, definition: string, options: string) {
   const prompt = `Evalúa si el siguiente problema creativo está bien definido antes de pasar a una fase de incubación (Despeje).
