@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Phase } from '../types';
-import { Sparkles, LogIn, Loader2 } from 'lucide-react';
-import { motion } from 'motion/react';
+import { Sparkles, LogIn } from 'lucide-react';
 import { auth } from '../firebase';
-import { GoogleAuthProvider, signInWithPopup, AuthError } from 'firebase/auth';
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 
 interface Props {
   setPhase: (phase: Phase) => void;
@@ -11,31 +10,14 @@ interface Props {
 }
 
 export function Login({ setPhase, onLoginSuccess }: Props) {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
   const handleLogin = async () => {
-    if (loading) return;
-    
-    setLoading(true);
-    setError(null);
     const provider = new GoogleAuthProvider();
-    
     try {
       const result = await signInWithPopup(auth, provider);
       onLoginSuccess(result.user.uid);
-    } catch (err: any) {
-      const authError = err as AuthError;
-      console.error("Login failed:", authError);
-      
-      if (authError.code === 'auth/cancelled-popup-request') {
-        setError("Una solicitud de ingreso ya está en curso.");
-      } else if (authError.code === 'auth/popup-closed-by-user') {
-        setError("La ventana de ingreso fue cerrada.");
-      } else {
-        setError("Error al intentar ingresar. Intenta de nuevo.");
-      }
-      setLoading(false);
+    } catch (error) {
+      console.error("Login failed:", error);
+      // Detailed error handling could be here
     }
   };
 
@@ -51,33 +33,14 @@ export function Login({ setPhase, onLoginSuccess }: Props) {
         </p>
       </div>
 
-      <div className="w-full max-w-sm pt-8 space-y-4">
+      <div className="w-full max-w-sm pt-8">
         <button
           onClick={handleLogin}
-          disabled={loading}
-          className={`w-full py-4 border rounded-2xl font-bold text-lg flex items-center justify-center space-x-3 transition-colors shadow-sm ${
-            loading 
-              ? 'bg-slate-50 border-slate-100 text-slate-400 cursor-not-allowed' 
-              : 'bg-white border-slate-200 hover:bg-slate-50 text-slate-700'
-          }`}
+          className="w-full py-4 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 rounded-2xl font-bold text-lg flex items-center justify-center space-x-3 transition-colors shadow-sm"
         >
-          {loading ? (
-            <Loader2 className="w-6 h-6 animate-spin" />
-          ) : (
-            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" className="w-6 h-6" />
-          )}
-          <span>{loading ? 'Ingresando...' : 'Ingresar con Google'}</span>
+          <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" className="w-6 h-6" />
+          <span>Ingresar con Google</span>
         </button>
-
-        {error && (
-          <motion.p 
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-red-500 text-center text-sm font-medium"
-          >
-            {error}
-          </motion.p>
-        )}
       </div>
     </div>
   );

@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Phase, AppState, DespejeActivity } from '../types';
-import { Lightbulb, Coffee, Headphones, Radio, Footprints, Activity, BookOpen, Globe, Gamepad2, Puzzle, Wind, TreePine, PenTool, Palette, CheckCircle2, Circle, Clock, FastForward, RefreshCw, ChefHat, Dumbbell, Popcorn, PenLine, Sparkles, Utensils, Tv, Eraser, CalendarDays, BellPlus } from 'lucide-react';
+import { Lightbulb, Coffee, Headphones, Radio, Footprints, Activity, BookOpen, Globe, Gamepad2, Puzzle, Wind, TreePine, PenTool, Palette, CheckCircle2, Circle, Clock, FastForward, RefreshCw, ChefHat, Dumbbell, Popcorn, PenLine, Sparkles, Utensils, Tv, Eraser, CalendarDays } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { generateDespejeContent } from '../services/ai';
 import ReactMarkdown from 'react-markdown';
-import { scheduleViaSW } from '../lib/notificationUtils';
-import { ScheduledNotification } from '../lib/notificationTypes';
 
 interface Props {
   setPhase: (phase: Phase) => void;
@@ -41,24 +39,6 @@ export function Despeje({ setPhase, state, updateState }: Props) {
   const [now, setNow] = useState(Date.now());
   const [isGenerating, setIsGenerating] = useState(false);
   const [showPlan, setShowPlan] = useState(false);
-  const [notified, setNotified] = useState(false);
-
-  const ONE_DAY_MS = 24 * 60 * 60 * 1000;
-  const timeElapsed = state.despejeStartTime ? (now - state.despejeStartTime) : 0;
-  const timeLeft = Math.max(0, ONE_DAY_MS - timeElapsed);
-  const isTimeUp = timeLeft === 0;
-
-  useEffect(() => {
-    if (isTimeUp && !notified && state.despejeStartTime) {
-      if (typeof Notification !== 'undefined' && Notification.permission === 'granted') {
-        new Notification("¡Tiempo de Incubación Completo!", { 
-          body: "Tu mente ha tenido tiempo para despejarse. Es el momento de buscar ese Eureka.",
-          icon: "/icon-192.svg"
-        });
-        setNotified(true);
-      }
-    }
-  }, [isTimeUp, notified, state.despejeStartTime]);
 
   useEffect(() => {
     const interval = setInterval(() => setNow(Date.now()), 1000);
@@ -89,7 +69,6 @@ export function Despeje({ setPhase, state, updateState }: Props) {
         despejeDayPlan: result.dayPlan,
         despejeStartTime: Date.now() 
       });
-      setNotified(false);
     } else {
       // Fallback
       updateState({ 
@@ -117,6 +96,12 @@ export function Despeje({ setPhase, state, updateState }: Props) {
   };
 
   const allCompleted = state.despejeActivities.length > 0 && state.despejeActivities.every(a => a.completed);
+  
+  const ONE_DAY_MS = 24 * 60 * 60 * 1000;
+  const timeElapsed = state.despejeStartTime ? (now - state.despejeStartTime) : 0;
+  const timeLeft = Math.max(0, ONE_DAY_MS - timeElapsed);
+  const isTimeUp = timeLeft === 0;
+
   const canProceed = allCompleted && isTimeUp;
 
   const formatTime = (ms: number) => {
@@ -204,30 +189,6 @@ export function Despeje({ setPhase, state, updateState }: Props) {
                         <p className={`text-sm mt-1 ${rec.completed ? 'text-blue-400/50 line-through' : 'text-slate-400'}`}>
                           {rec.desc}
                         </p>
-                        {!rec.completed && (
-                          <button 
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              const notif: ScheduledNotification = {
-                                id: Math.random().toString(36).substr(2, 9),
-                                title: `Rutina: ${rec.title}`,
-                                message: rec.desc,
-                                scheduledAt: Date.now() + 60 * 60 * 1000, // +1 hour by default
-                                repeat: 'none',
-                                repeatMinutes: null,
-                                sound: true,
-                                soundRepeat: 3,
-                                fired: false,
-                                createdAt: Date.now()
-                              };
-                              scheduleViaSW(notif);
-                              alert("Recordatorio programado para dentro de 1 hora");
-                            }}
-                            className="mt-2 text-[10px] bg-slate-700 hover:bg-slate-600 text-slate-300 px-2 py-1 rounded-lg flex items-center gap-1"
-                          >
-                            <BellPlus size={10} /> Programar alarma
-                          </button>
-                        )}
                       </div>
                       <div className={`p-2 rounded-xl flex-shrink-0 ${rec.completed ? 'bg-blue-900/30 text-blue-400/50' : 'bg-slate-900 text-blue-400'}`}>
                         {ICON_MAP[rec.iconId] || <Coffee size={24} />}
