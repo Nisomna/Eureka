@@ -1,17 +1,18 @@
-const CACHE_NAME = 'incubapp-cache-v1';
+const CACHE_NAME = 'incubapp-cache-v2';
+const OFFLINE_URL = '/offline.html';
+
+// Real assets are handled by the browser's normal cache
+// We only pre-cache the absolute essentials for offline fallback
 const URLS_TO_CACHE = [
   '/',
   '/index.html',
-  '/manifest.json',
-  '/src/main.tsx',
-  '/src/App.tsx'
+  '/manifest.json'
 ];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      // We use addAll but wrap it in a catch to avoid installation failure if some assets are missing (like icons)
-      return cache.addAll(URLS_TO_CACHE).catch(err => console.warn('PWA: Some assets failed to cache', err));
+      return cache.addAll(URLS_TO_CACHE).catch(() => console.log('Offline cache partially failed'));
     })
   );
   self.skipWaiting();
@@ -31,7 +32,7 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   const url = new URL(event.request.url);
   
-  // No cachear peticiones a las APIs de Google/Firebase ni métodos que no sean GET
+  // Skip non-GET, Firebase/Google APIs
   if (
     event.request.method !== 'GET' || 
     url.hostname.includes('googleapis.com') || 
@@ -40,9 +41,23 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
+  // Network first, falling back to cache
   event.respondWith(
-    caches.match(event.request).then((cached) => {
-      return cached || fetch(event.request);
-    })
+    fetch(event.request)
+      .then((response) => {
+        // Cache successful responses for future offline use
+        if (response.status === 200 && event.request.mode === 'navigate') {
+          const responseClone = response.clone();
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(event.request, responseClone);
+          });
+        }
+        return response;
+      })
+      .catch(() => {
+        return caches.match(event.request).then((cached) => {
+          return cached || (event.request.mode === 'navigate' ? caches.match('/') : null);
+        });
+      })
   );
 });
