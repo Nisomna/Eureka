@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Phase, AppState } from '../types';
-import { ArrowRight, ArrowLeft, Lightbulb, Plus, Shuffle } from 'lucide-react';
+import { ArrowRight, ArrowLeft, Lightbulb, Plus, Shuffle, Sparkles, AlertCircle } from 'lucide-react';
 import { motion } from 'motion/react';
 
 interface Props {
@@ -52,7 +52,7 @@ const STRATEGIES_BY_INTEREST: Record<string, string[]> = {
   ],
   cocinar: [
     "¿Cuáles son los 'ingredientes' necesarios para resolver este problema?",
-    "Aplica calor: ¿qué pasa si introduces urgencia a la solución?",
+    "Aplica calor: ¿que pasa si introduces urgencia a la solución?",
     "Mezcla dos ideas que normalmente no van juntas, como dulce y salado."
   ],
   ejercicio: [
@@ -91,10 +91,26 @@ export function Eureka({ setPhase, state, updateState }: Props) {
   const getRandomPerspective = () => {
     let availablePerspectives = [...GLOBAL_PERSPECTIVES];
     
-    // Agrega perspectivas basadas en los gustos del usuario
+    // Add perspectives based on specific interests
     state.interests.forEach(interest => {
-      if (STRATEGIES_BY_INTEREST[interest]) {
-        availablePerspectives = [...availablePerspectives, ...STRATEGIES_BY_INTEREST[interest]];
+      // Clean matching formatting (since values look like "Meditación", let's make it lowercase & clean)
+      const keyword = interest.toLowerCase()
+        .replace('meditación', 'meditar')
+        .replace('dibujo', 'dibujar')
+        .replace('poesía', 'escribir')
+        .replace('lector', 'leer')
+        .replace('escuchar música', 'musica')
+        .replace('caminar', 'caminar')
+        .replace('cocinar', 'cocinar')
+        .replace('ejercicio', 'ejercicio')
+        .replace('yoga', 'ejercicio')
+        .replace('videojuegos', 'jugar')
+        .replace('películas', 'cine')
+        .replace('limpiar', 'limpiar');
+      
+      const matchedKey = Object.keys(STRATEGIES_BY_INTEREST).find(k => keyword.includes(k));
+      if (matchedKey && STRATEGIES_BY_INTEREST[matchedKey]) {
+        availablePerspectives = [...availablePerspectives, ...STRATEGIES_BY_INTEREST[matchedKey]];
       }
     });
 
@@ -102,89 +118,137 @@ export function Eureka({ setPhase, state, updateState }: Props) {
     setPerspective(random);
   };
 
+  // Gracefully handle if problem is missing when coming directly
+  if (!state.problem.trim()) {
+    return (
+      <div className="flex flex-col h-full items-center justify-center text-center space-y-6 mt-12 px-4 pb-24">
+        <div className="w-16 h-16 bg-amber-50 rounded-full flex items-center justify-center border border-amber-100 text-amber-500 animate-float">
+          <AlertCircle size={32} />
+        </div>
+        <div className="space-y-2">
+          <h3 className="text-xl font-bold text-calm-olive serif-title">Falta Definir tu Enfoque</h3>
+          <p className="text-sm text-calm-olive/60 max-w-xs leading-relaxed">
+            Para cultivar ideas mágicas y perspectivas creativas, primero define tu reto en el primer paso.
+          </p>
+        </div>
+        <button
+          onClick={() => setPhase('afinar')}
+          className="py-3 px-6 bg-amber-500 hover:bg-amber-600 text-white font-bold text-sm rounded-xl transition-colors shadow-md shadow-amber-200"
+        >
+          Afinar Problema Ahora
+        </button>
+      </div>
+    );
+  }
+
   return (
-    <div className="flex flex-col h-full">
-      <div className="flex items-center space-x-3 mb-6">
-        <div className="p-2 bg-green-100 text-green-600 rounded-lg">
+    <div className="flex flex-col h-full overflow-y-auto pb-24 px-1">
+      {/* Intro Step Banner */}
+      <div className="flex items-center space-x-3 mb-6 pt-4">
+        <div className="p-3 bg-teal-50 border border-teal-100 text-teal-600 rounded-2xl shadow-sm animate-float">
           <Lightbulb size={24} />
         </div>
         <div>
-          <h2 className="text-2xl font-bold text-slate-800">3. Eureka</h2>
-          <p className="text-sm text-slate-500">Anota todo lo que se te ocurra</p>
+          <span className="text-[10px] uppercase tracking-widest text-teal-600 font-bold">Paso 3 de 4</span>
+          <h2 className="text-3xl font-bold text-calm-olive serif-title">Lluvia de Eureka</h2>
+          <p className="text-xs text-calm-olive/50">La incubadora mental libera las soluciones</p>
         </div>
       </div>
 
-      <div className="flex-1 flex flex-col space-y-6 overflow-hidden">
+      <div className="flex-1 flex flex-col space-y-5 overflow-hidden">
         
-        {/* Input Area */}
-        <div className="flex space-x-2">
-          <input
-            type="text"
-            value={newIdea}
-            onChange={(e) => setNewIdea(e.target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && addIdea()}
-            placeholder="Escribe una idea..."
-            className="flex-1 p-4 rounded-xl border border-slate-200 bg-white focus:ring-2 focus:ring-green-400 focus:border-transparent outline-none"
-          />
-          <button
-            onClick={addIdea}
-            disabled={!newIdea.trim()}
-            className="p-4 bg-green-500 text-white rounded-xl disabled:bg-slate-300 transition-colors"
-          >
-            <Plus size={24} />
-          </button>
-        </div>
-
-        {/* Perspectives Tool */}
-        <div className="bg-green-50 p-4 rounded-2xl border border-green-100">
-          <div className="flex items-center justify-between mb-2">
-            <h3 className="text-sm font-semibold text-green-800">Cambiar Perspectiva</h3>
-            <button onClick={getRandomPerspective} className="text-green-600 p-2 hover:bg-green-200 rounded-lg transition-colors flex items-center gap-1">
-              <Shuffle size={16} />
-              <span className="text-xs font-semibold">Generar</span>
+        {/* Perspectives Block - Styled peacefully */}
+        <div className="bg-gradient-to-tr from-[#ECF9F5] to-teal-50/50 border border-teal-100 p-5 rounded-3xl space-y-3 shadow-sm">
+          <div className="flex items-center justify-between mb-1">
+            <h4 className="text-xs font-bold text-teal-800 uppercase tracking-widest flex items-center space-x-1.5ClassName">
+              <Sparkles size={14} className="text-teal-600 animate-pulse" />
+              <span>Girar Perspectiva</span>
+            </h4>
+            <button 
+              type="button" 
+              onClick={getRandomPerspective} 
+              className="text-teal-700 hover:text-white bg-white hover:bg-teal-600 border border-teal-100 py-1.5 px-3 rounded-xl transition-all flex items-center gap-1 hover:shadow-sm cursor-pointer"
+            >
+              <Shuffle size={13} />
+              <span className="text-[10px] font-bold uppercase tracking-wider">Generar Reto</span>
             </button>
           </div>
-          <p className="text-green-800 text-sm italic min-h-[40px] leading-relaxed">
-            {perspective || "Usa tus gustos para generar estrategias creativas. ¡Toca Generar!"}
+          <p className="text-teal-900 text-xs italic leading-relaxed min-h-[36px] bg-white/40 p-3 rounded-xl border border-teal-150/50">
+            {perspective || "Usa tus gustos e intereses personales para cambiar la perspectiva de tu problema. ¡Prueba Generar un Reto!"}
           </p>
         </div>
 
-        {/* Ideas List */}
-        <div className="flex-1 overflow-y-auto space-y-3 pb-4">
+        {/* Brainstorm Input area */}
+        <div className="space-y-2.5">
+          <h4 className="text-xs font-bold text-calm-sage-700 uppercase tracking-wider">
+            Anota todas tus ideas (sin juicios ni límites)
+          </h4>
+          <div className="flex space-x-2">
+            <input
+              type="text"
+              value={newIdea}
+              onChange={(e) => setNewIdea(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && addIdea()}
+              placeholder="Tengo una idea de hacer..."
+              className="flex-1 p-4 rounded-xl border border-calm-sage-100 bg-white/80 focus:bg-white focus:ring-4 focus:ring-teal-400/20 focus:border-teal-400 outline-none text-sm transition-all text-calm-olive placeholder:text-calm-olive/35"
+            />
+            <button
+              type="button"
+              onClick={addIdea}
+              disabled={!newIdea.trim()}
+              className="p-4 bg-teal-500 hover:bg-teal-600 text-white rounded-xl disabled:bg-calm-sage-100 disabled:text-calm-olive/30 shadow-md shadow-teal-100/40 disabled:shadow-none transition-all cursor-pointer flex items-center justify-center shrink-0"
+              title="Añadir idea"
+            >
+              <Plus size={20} />
+            </button>
+          </div>
+        </div>
+
+        {/* Brainstorm Lists */}
+        <div className="flex-1 min-h-[120px] overflow-y-auto space-y-2.5 pb-2">
           {state.ideas.length === 0 ? (
-            <div className="h-full flex flex-col items-center justify-center text-slate-400 space-y-4">
-              <Lightbulb size={48} className="opacity-20" />
-              <p>Aún no hay ideas. ¡Anota la primera!</p>
+            <div className="h-full py-8 flex flex-col items-center justify-center text-center text-slate-450 space-y-3 calm-card border border-dashed border-calm-sage-200 bg-white/40">
+              <Lightbulb size={36} className="text-calm-sage-350 opacity-40 animate-pulse" />
+              <div className="space-y-1">
+                <p className="text-xs font-bold text-calm-olive/60">¿Algún chispazo?</p>
+                <p className="text-[10px] text-calm-olive/40 max-w-[180px] leading-relaxed mx-auto">Toca el botón 'Generar Reto' o anota ideas sueltas y absurdas.</p>
+              </div>
             </div>
           ) : (
             state.ideas.map((idea, idx) => (
               <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.2 }}
                 key={idx}
-                className="p-4 bg-white border border-slate-200 rounded-xl shadow-sm"
+                className="p-3.5 bg-white/95 border border-calm-sage-100 rounded-2xl shadow-sm text-xs flex items-start space-x-2.5 text-calm-olive leading-relaxed"
               >
-                {idea}
+                <span className="inline-flex w-4.5 h-4.5 items-center justify-center rounded-full bg-teal-50 text-[10px] text-teal-600 font-bold shrink-0 mt-0.5">
+                  {state.ideas.length - idx}
+                </span>
+                <span className="flex-1 font-medium">{idea}</span>
               </motion.div>
             ))
           )}
         </div>
       </div>
 
-      <div className="pt-4 flex space-x-4 bg-slate-50">
+      {/* Button actions */}
+      <div className="pt-4 flex space-x-3">
         <button
           onClick={() => setPhase('despeje')}
-          className="p-4 rounded-2xl border border-slate-200 text-slate-600 hover:bg-slate-100 transition-colors"
+          className="p-4 rounded-2xl border border-calm-sage-100 bg-white hover:bg-calm-sage-50 text-calm-olive transition-colors flex items-center justify-center shadow-sm"
+          title="Regresar"
         >
-          <ArrowLeft size={24} />
+          <ArrowLeft size={18} />
         </button>
         <button
           onClick={() => setPhase('aplicacion')}
           disabled={state.ideas.length === 0}
-          className="flex-1 py-4 bg-green-500 hover:bg-green-600 disabled:bg-slate-300 disabled:cursor-not-allowed text-white rounded-2xl font-bold text-lg flex items-center justify-center space-x-2 transition-colors shadow-lg shadow-green-200"
+          className="flex-1 py-4 bg-teal-500 hover:bg-teal-600 disabled:bg-calm-sage-100 disabled:text-calm-olive/30 disabled:cursor-not-allowed text-white rounded-2xl font-bold text-base flex items-center justify-center space-x-2 transition-all shadow-lg shadow-teal-100/50"
         >
-          <span>Siguiente: Aplicar</span>
-          <ArrowRight size={24} />
+          <span>Siguiente Paso: Aplicar Plan</span>
+          <ArrowRight size={18} />
         </button>
       </div>
     </div>

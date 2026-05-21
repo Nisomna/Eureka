@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Phase, AppState } from '../types';
-import { ArrowRight, ArrowLeft, Target, AlertCircle } from 'lucide-react';
+import { ArrowRight, ArrowLeft, Target, AlertCircle, Sparkles, HelpCircle } from 'lucide-react';
 import { validateProblem } from '../services/ai';
 
 interface Props {
@@ -14,89 +14,115 @@ export function Afinar({ setPhase, state, updateState }: Props) {
   const [feedback, setFeedback] = useState<string | null>(null);
 
   const handleNext = async () => {
+    if (!state.problem.trim()) return;
     setLoading(true);
     setFeedback(null);
-    const result = await validateProblem(state.problem, state.definition, state.options);
-    setLoading(false);
-
-    if (result.isValid) {
-      setPhase('despeje');
-    } else {
-      setFeedback(result.feedback);
+    try {
+      const result = await validateProblem(state.problem, state.definition, state.options);
+      if (result.isValid) {
+        setPhase('despeje');
+      } else {
+        setFeedback(result.feedback);
+      }
+    } catch (e) {
+      console.error(e);
+      setFeedback("Ocurrió un error al validar. Por favor continúa a la etapa de despeje si estás listo.");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="flex flex-col h-full">
-      <div className="flex items-center space-x-3 mb-6">
-        <div className="p-2 bg-yellow-100 text-yellow-600 rounded-lg">
+    <div className="flex flex-col h-full overflow-y-auto pb-24 px-1">
+      {/* Intro Step Banner */}
+      <div className="flex items-center space-x-3 mb-6 pt-4">
+        <div className="p-3 bg-amber-50 border border-amber-100 text-amber-600 rounded-2xl shadow-sm animate-float">
           <Target size={24} />
         </div>
         <div>
-          <h2 className="text-2xl font-bold text-slate-800">1. Afinar</h2>
-          <p className="text-sm text-slate-500">Aclarar el problema a resolver</p>
+          <span className="text-[10px] uppercase tracking-widest text-amber-600 font-bold">Paso 1 de 4</span>
+          <h2 className="text-3xl font-bold text-calm-olive serif-title">Afinar el Enfoque</h2>
+          <p className="text-xs text-calm-olive/50">Clarifica el problema antes de ponerlo en reposo</p>
         </div>
       </div>
 
-      <div className="flex-1 space-y-6 overflow-y-auto pb-20">
-        <div className="space-y-2">
-          <label className="block text-sm font-semibold text-slate-700">
-            Aclarar: ¿Cuál es el problema exacto?
+      <div className="flex-1 space-y-5">
+        
+        {/* Creative Instruction Alert */}
+        <div className="p-4 bg-amber-50/50 border border-amber-100/60 rounded-2xl text-xs text-amber-900 leading-relaxed flex items-start space-x-2">
+          <Sparkles size={16} className="text-amber-500 mt-0.5 shrink-0" />
+          <span>
+            <strong>Consejo Zen:</strong> Al escribir detalladamente tu reto creativo, tu subconsciente guardará estas variables y trabajará en ellas durante la fase de ocio y descanso.
+          </span>
+        </div>
+
+        {/* Text Area 1: Problem */}
+        <div className="space-y-1.5">
+          <label className="block text-xs font-bold text-calm-sage-700 uppercase tracking-wider flex items-center justify-between">
+            <span>¿Cuál es el problema creativo exacto?</span>
+            <span className="text-[10px] text-calm-olive/40 font-normal normal-case">Obligatorio</span>
           </label>
           <textarea
             value={state.problem}
             onChange={(e) => updateState({ problem: e.target.value })}
-            placeholder="Ej: Necesito un diseño para el logo, pero no sé qué estilo usar..."
-            className="w-full p-4 rounded-xl border border-slate-200 bg-white focus:ring-2 focus:ring-yellow-400 focus:border-transparent outline-none resize-none h-32"
+            placeholder="Ej: Necesito diseñar un logo llamativo para mi cafetería ecológica pero todos los bocetos de tazas y granos me parecen aburridos..."
+            className="w-full p-4 rounded-2xl border border-calm-sage-100/80 bg-white/70 focus:bg-white focus:ring-4 focus:ring-amber-400/20 focus:border-amber-400 outline-none resize-none h-32 text-sm leading-relaxed transition-all placeholder:text-calm-olive/30 text-calm-olive"
           />
         </div>
 
-        <div className="space-y-2">
-          <label className="block text-sm font-semibold text-slate-700">
-            Definir: ¿Cuáles son las restricciones o requisitos?
+        {/* Text Area 2: Restrictions */}
+        <div className="space-y-1.5">
+          <label className="block text-xs font-bold text-calm-sage-700 uppercase tracking-wider">
+            ¿Cuáles son las restricciones o requisitos?
           </label>
           <textarea
             value={state.definition}
             onChange={(e) => updateState({ definition: e.target.value })}
-            placeholder="Ej: Debe usar colores pastel, estar listo para el viernes..."
-            className="w-full p-4 rounded-xl border border-slate-200 bg-white focus:ring-2 focus:ring-yellow-400 focus:border-transparent outline-none resize-none h-24"
+            placeholder="Ej: Debe ser monocromático o en base a tonos tierra, minimalista y que transmita modernidad pero origen orgánico..."
+            className="w-full p-4 rounded-2xl border border-calm-sage-100/80 bg-white/70 focus:bg-white focus:ring-4 focus:ring-amber-400/20 focus:border-amber-400 outline-none resize-none h-24 text-sm leading-relaxed transition-all placeholder:text-calm-olive/30 text-calm-olive"
           />
         </div>
 
-        <div className="space-y-2">
-          <label className="block text-sm font-semibold text-slate-700">
-            Opciones: ¿Qué has intentado hasta ahora?
+        {/* Text Area 3: Attempted options */}
+        <div className="space-y-1.5">
+          <label className="block text-xs font-bold text-calm-sage-700 uppercase tracking-wider">
+            ¿Qué has intentado hasta ahora?
           </label>
           <textarea
             value={state.options}
             onChange={(e) => updateState({ options: e.target.value })}
-            placeholder="Ej: Hice unos bocetos minimalistas pero no me convencen..."
-            className="w-full p-4 rounded-xl border border-slate-200 bg-white focus:ring-2 focus:ring-yellow-400 focus:border-transparent outline-none resize-none h-24"
+            placeholder="Ej: He probado dibujando hojas, tazas flotantes, pero se ve genérico. Intenté también tipografías serif clásicas..."
+            className="w-full p-4 rounded-2xl border border-calm-sage-100/80 bg-white/70 focus:bg-white focus:ring-4 focus:ring-amber-400/20 focus:border-amber-400 outline-none resize-none h-24 text-sm leading-relaxed transition-all placeholder:text-calm-olive/30 text-calm-olive"
           />
         </div>
       </div>
 
       {feedback && (
-        <div className="mb-4 bg-red-50 border border-red-200 p-4 rounded-xl flex items-start space-x-3">
-          <AlertCircle className="text-red-500 mt-0.5 shrink-0" size={20} />
-          <p className="text-sm text-red-800">{feedback}</p>
+        <div className="mt-4 bg-red-50 border border-red-100 p-4 rounded-2xl flex items-start space-x-3 shadow-sm animate-shake">
+          <AlertCircle className="text-red-500 mt-0.5 shrink-0" size={18} />
+          <div className="space-y-1">
+            <h4 className="text-xs font-bold text-red-800">Sugerencia de Reflexión</h4>
+            <p className="text-xs text-red-700 leading-relaxed">{feedback}</p>
+          </div>
         </div>
       )}
 
-      <div className="pt-4 flex space-x-4 bg-slate-50">
+      {/* Actions */}
+      <div className="pt-6 flex space-x-3">
         <button
           onClick={() => setPhase('home')}
-          className="p-4 rounded-2xl border border-slate-200 text-slate-600 hover:bg-slate-100 transition-colors"
+          className="p-4 rounded-2xl border border-calm-sage-100/80 bg-white hover:bg-calm-sage-50 text-calm-olive transition-colors flex items-center justify-center shadow-sm"
+          title="Regresar a Inicio"
         >
-          <ArrowLeft size={24} />
+          <ArrowLeft size={20} />
         </button>
         <button
           onClick={handleNext}
           disabled={!state.problem.trim() || loading}
-          className="flex-1 py-4 bg-yellow-500 hover:bg-yellow-600 disabled:bg-slate-300 disabled:cursor-not-allowed text-white rounded-2xl font-bold text-lg flex items-center justify-center space-x-2 transition-colors shadow-lg shadow-yellow-200"
+          className="flex-1 py-4 bg-amber-500 hover:bg-amber-600 disabled:bg-calm-sage-100 disabled:text-calm-olive/30 disabled:cursor-not-allowed text-white rounded-2xl font-bold text-base flex items-center justify-center space-x-2 transition-all shadow-lg shadow-amber-100/50"
         >
-          <span>{loading ? "Validando..." : "Siguiente: Despejar"}</span>
-          {!loading && <ArrowRight size={24} />}
+          <span>{loading ? "Evaluando claridad..." : "Siguiente: Despejar la mente"}</span>
+          {!loading && <ArrowRight size={18} />}
         </button>
       </div>
     </div>

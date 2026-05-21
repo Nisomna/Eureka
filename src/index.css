@@ -1,2 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
+
+@theme {
+  --font-serif: "Instrument Serif", serif;
+  --font-sans: "Plus Jakarta Sans", "Outfit", system-ui, sans-serif;
+  
+  --color-calm-sage-50: #f4f7f5;
+  --color-calm-sage-100: #e5ece7;
+  --color-calm-sage-200: #ccdcd1;
+  --color-calm-sage-500: #73937e;
+  --color-calm-sage-600: #5b7564;
+  --color-calm-sage-700: #4a5e51;
+  
+  --color-calm-cream: #fbfaf7;
+  --color-calm-olive: #38423b;
+  --color-calm-sand: #f0e6da;
+  --color-calm-terracotta: #d98a6c;
+  --color-calm-blush: #faeedf;
+  
+  --animate-breath: breath 6s ease-in-out infinite;
+  --animate-float: float 4s ease-in-out infinite;
+}
+
+@keyframes breath {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.6;
+    filter: blur(8px);
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 0.95;
+    filter: blur(4px);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-6px) rotate(1deg);
+  }
+}
+
+/* Custom classes for the luxury serene vibe */
+.creative-calm-backdrop {
+  background: radial-gradient(circle at 10% 20%, rgba(246, 244, 239, 0.9) 0%, rgba(240, 230, 218, 0.4) 90.7%);
+  background-color: #FAF8F5;
+  font-family: var(--font-sans);
+}
+
+.serif-title {
+  font-family: var(--font-serif);
+  font-weight: 300;
+  letter-spacing: -0.01em;
+}
+
+.calm-card {
+  background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(229, 236, 231, 0.6);
+  border-radius: 24px;
+}
+
+/* Scrollbar restyling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(115, 147, 126, 0.2);
+  border-radius: 99px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(115, 147, 126, 0.4);
+}

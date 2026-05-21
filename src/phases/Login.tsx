@@ -39,20 +39,27 @@ export function Login({ setPhase, onLoginSuccess }: Props) {
   };
 
   return (
-    <div className="flex flex-col h-full items-center justify-center space-y-8">
-      <div className="text-center space-y-4">
-        <div className="inline-flex items-center justify-center w-24 h-24 rounded-full bg-teal-100 text-teal-600 mb-6 mx-auto shadow-inner">
-          <Sparkles size={48} />
+    <div className="flex flex-col h-full items-center justify-center space-y-8 max-w-sm mx-auto px-4 mt-12 md:mt-16">
+      {/* Visual Identity Ring Container */}
+      <div className="text-center space-y-5 relative">
+        <div className="absolute inset-0 bg-teal-100/30 rounded-full filter blur-2xl w-32 h-32 mx-auto pointer-events-none"></div>
+        <div className="relative inline-flex items-center justify-center w-24 h-24 rounded-full bg-gradient-to-tr from-teal-50 to-calm-sage-100 text-teal-600 mb-2 mx-auto shadow-sm border border-calm-sage-200/50 animate-float">
+          <Sparkles size={44} className="text-teal-600/95" />
         </div>
-        <h2 className="text-4xl font-bold text-slate-800 tracking-tight">Incubapp</h2>
-        <p className="text-slate-600 max-w-sm mx-auto text-lg">
-          Tu compañero personal para superar bloqueos mentales y encontrar nuevas ideas.
+        
+        <h2 className="text-5xl font-bold tracking-tight text-calm-olive serif-title">
+          Incubapp
+        </h2>
+        <span className="block text-xs uppercase tracking-widest text-calm-sage-600 font-semibold">Templo de Incubación Mental</span>
+        
+        <p className="text-sm text-calm-olive/70 max-w-xs mx-auto leading-relaxed">
+          Un espacio sereno diseñado para disolver bloqueos creativos, descansar la mente y estructurar ideas geniales en cuatro simples etapas.
         </p>
       </div>
 
-      <div className="w-full max-w-sm pt-4 space-y-4">
+      <div className="w-full pt-4 space-y-4">
         {error && (
-          <div className="p-4 bg-red-50 border border-red-100 rounded-2xl flex items-start space-x-3 text-red-600 text-sm">
+          <div className="p-4 bg-red-50 border border-red-100 rounded-2xl flex items-start space-x-3 text-red-600 text-xs">
             <AlertCircle size={18} className="shrink-0 mt-0.5" />
             <span>{error}</span>
           </div>
@@ -61,15 +68,22 @@ export function Login({ setPhase, onLoginSuccess }: Props) {
         <button
           onClick={handleLogin}
           disabled={isLoggingIn}
-          className={`w-full py-4 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 rounded-2xl font-bold text-lg flex items-center justify-center space-x-3 transition-colors shadow-sm ${isLoggingIn ? 'opacity-50 cursor-not-allowed' : ''}`}
+          className={`w-full py-4 bg-white/70 backdrop-blur-md border border-calm-sage-200/80 hover:bg-white hover:border-teal-300 text-calm-olive rounded-2xl font-bold text-base flex items-center justify-center space-x-3 transition-all shadow-sm hover:shadow-md ${isLoggingIn ? 'opacity-50 cursor-not-allowed' : ''}`}
         >
           {isLoggingIn ? (
             <div className="w-6 h-6 border-2 border-teal-500 border-t-transparent rounded-full animate-spin"></div>
           ) : (
-            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" className="w-6 h-6" />
+            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" className="w-5 h-5" />
           )}
-          <span>{isLoggingIn ? 'Cargando...' : 'Ingresar con Google'}</span>
+          <span>{isLoggingIn ? 'Iniciando sesión...' : 'Comenzar con Google'}</span>
         </button>
+      </div>
+
+      {/* Aesthetic quote branding */}
+      <div className="pt-8 text-center">
+        <p className="text-[11px] text-calm-sage-600/60 font-medium italic">
+          "La claridad nace del espacio que le otorgas a tu mente."
+        </p>
       </div>
     </div>
   );
