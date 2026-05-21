@@ -14,6 +14,7 @@ interface Props {
   setPhase: (phase: Phase) => void;
   state: AppState;
   updateState: (updates: Partial<AppState>) => void;
+  isDark?: boolean;
 }
 
 const ICON_MAP: Record<string, React.ReactNode> = {
@@ -40,10 +41,11 @@ const ICON_MAP: Record<string, React.ReactNode> = {
   eraser: <Eraser size={20} />
 };
 
-export function Despeje({ setPhase, state, updateState }: Props) {
+export function Despeje({ setPhase, state, updateState, isDark }: Props) {
   const [now, setNow] = useState(Date.now());
   const [isGenerating, setIsGenerating] = useState(false);
   const [showPlan, setShowPlan] = useState(false);
+  const isDarkModeActive = isDark !== undefined ? isDark : document.documentElement.classList.contains('dark');
 
   useEffect(() => {
     const interval = setInterval(() => setNow(Date.now()), 1000);
@@ -124,23 +126,23 @@ export function Despeje({ setPhase, state, updateState }: Props) {
   };
 
   return (
-    <div className="flex flex-col h-full bg-gradient-to-b from-[#1C2621] to-[#121915] text-[#EBECEB] -m-4 md:-m-6 p-5 md:p-6 rounded-3xl relative overflow-hidden shadow-2xl">
+    <div className="flex flex-col h-full bg-gradient-to-b from-[#fbfaf7] to-[#e5ece7] dark:from-[#1C2621] dark:to-[#121915] text-[#38423b] dark:text-[#EBECEB] -m-4 md:-m-6 p-5 md:p-6 rounded-3xl relative overflow-hidden shadow-2xl transition-all">
       
       {/* Absolute overlay starry sky look */}
-      <div className="absolute top-10 left-10 w-1.5 h-1.5 rounded-full bg-teal-400 opacity-60 animate-pulse"></div>
-      <div className="absolute top-24 right-16 w-1 h-1 rounded-full bg-amber-200 opacity-80 animate-pulse delay-500"></div>
-      <div className="absolute bottom-32 left-20 w-1 h-1 rounded-full bg-teal-200 opacity-40 animate-pulse delay-1000"></div>
+      <div className="absolute top-10 left-10 w-1.5 h-1.5 rounded-full bg-teal-500/50 dark:bg-teal-400 opacity-60 animate-pulse"></div>
+      <div className="absolute top-24 right-16 w-1 h-1 rounded-full bg-amber-500/50 dark:bg-amber-200 opacity-80 animate-pulse delay-500"></div>
+      <div className="absolute bottom-32 left-20 w-1 h-1 rounded-full bg-teal-300 dark:bg-teal-200 opacity-40 animate-pulse delay-1000"></div>
 
       <div className="flex-1 flex flex-col space-y-5 overflow-hidden">
         
         {/* Step Header */}
         <div className="text-center space-y-2 mt-2 relative">
-          <div className="inline-flex items-center justify-center p-2.5 bg-teal-950 border border-teal-800/40 text-teal-400 rounded-2xl shadow-sm mb-1 animate-float">
+          <div className="inline-flex items-center justify-center p-2.5 bg-teal-50 dark:bg-teal-950 border border-teal-100 dark:border-teal-800/40 text-teal-600 dark:text-teal-400 rounded-2xl shadow-sm mb-1 animate-float">
             <Moon size={22} />
           </div>
-          <span className="block text-[9px] uppercase tracking-widest text-teal-400 font-bold">Paso 2 de 4</span>
-          <h2 className="text-2xl font-bold text-white serif-title leading-none">Momento de Despeje</h2>
-          <p className="text-slate-400 text-xs max-w-xs mx-auto">
+          <span className="block text-[9px] uppercase tracking-widest text-teal-600 dark:text-teal-400 font-bold">Paso 2 de 4</span>
+          <h2 className="text-2xl font-bold text-calm-olive dark:text-white serif-title leading-none">Momento de Despeje</h2>
+          <p className="text-calm-olive/70 dark:text-slate-450 text-xs max-w-xs mx-auto">
             Disuelve la atención focalizada para encender la incubación del hemisferio derecho. Sigue tu plan o haz recreaciones.
           </p>
           
@@ -148,7 +150,7 @@ export function Despeje({ setPhase, state, updateState }: Props) {
           {!isTimeUp && !isGenerating && (
             <button 
               onClick={devSkipTime}
-              className="absolute top-0 right-0 p-2 bg-teal-950/80 hover:bg-teal-900 text-teal-300 border border-teal-800/50 rounded-xl text-[10px] flex items-center space-x-1 shadow-md transition-all active:scale-95"
+              className="absolute top-0 right-0 p-2 bg-white/60 hover:bg-white dark:bg-teal-950/80 dark:hover:bg-teal-900 text-calm-sage-700 dark:text-teal-300 border border-calm-sage-100 dark:border-teal-800/50 rounded-xl text-[10px] flex items-center space-x-1 shadow-md transition-all active:scale-95 cursor-pointer"
               title="Acelerar incubación mental (24 hrs)"
             >
               <FastForward size={12} />
@@ -163,18 +165,18 @@ export function Despeje({ setPhase, state, updateState }: Props) {
               <div className="w-12 h-12 border-4 border-teal-600 border-t-transparent rounded-full animate-spin"></div>
               <div className="absolute w-6 h-6 rounded-full bg-teal-500/20 animate-breath"></div>
             </div>
-            <p className="text-teal-400 font-medium text-xs tracking-wide">Estructurando un santuario de descanso...</p>
+            <p className="text-teal-600 dark:text-teal-450 font-medium text-xs tracking-wide">Estructurando un santuario de descanso...</p>
           </div>
         ) : (
           <>
             {/* Custom Tab Bar styled beautifully */}
-            <div className="flex justify-center border-b border-teal-950 mb-1 flex-shrink-0">
+            <div className="flex justify-center border-b border-calm-sage-100/60 dark:border-teal-950 mb-1 flex-shrink-0">
               <button
                 type="button"
                 className={`flex-1 py-2 px-4 border-b-2 font-bold text-xs tracking-wider uppercase transition-colors outline-none cursor-pointer ${
                   showPlan 
-                    ? 'border-teal-400 text-teal-300' 
-                    : 'border-transparent text-slate-500 hover:text-slate-300'
+                    ? 'border-teal-600 text-teal-700 dark:border-teal-400 dark:text-teal-300' 
+                    : 'border-transparent text-calm-sage-600/50 dark:text-slate-500 hover:text-calm-olive dark:hover:text-slate-300'
                 }`}
                 onClick={() => setShowPlan(true)}
               >
@@ -184,8 +186,8 @@ export function Despeje({ setPhase, state, updateState }: Props) {
                 type="button"
                 className={`flex-1 py-2 px-4 border-b-2 font-bold text-xs tracking-wider uppercase transition-colors outline-none cursor-pointer ${
                   !showPlan 
-                    ? 'border-teal-400 text-teal-300' 
-                    : 'border-transparent text-slate-500 hover:text-slate-300'
+                    ? 'border-teal-600 text-teal-700 dark:border-teal-400 dark:text-teal-300' 
+                    : 'border-transparent text-calm-sage-600/50 dark:text-slate-500 hover:text-calm-olive dark:hover:text-slate-300'
                 }`}
                 onClick={() => setShowPlan(false)}
               >
@@ -196,10 +198,14 @@ export function Despeje({ setPhase, state, updateState }: Props) {
             {/* List/Plan view */}
             <div className="flex-1 overflow-y-auto pb-4 px-1 min-h-[150px]">
               {showPlan && state.despejeDayPlan ? (
-                <div className="bg-[#18201B] border border-teal-900/60 p-5 rounded-2xl prose prose-invert prose-xs max-w-none text-slate-300">
-                  <div className="flex items-center space-x-2 text-teal-400 mb-3 border-b border-teal-950 pb-2 flex-shrink-0">
+                <div className={`p-5 rounded-2xl border prose prose-xs max-w-none shadow-sm ${
+                  isDarkModeActive 
+                    ? 'bg-[#18201B] border-teal-900/60 text-slate-300 prose-invert' 
+                    : 'bg-white/85 border-calm-sage-100 text-calm-olive/80'
+                }`}>
+                  <div className="flex items-center space-x-2 text-teal-600 dark:text-teal-400 mb-3 border-b border-calm-sage-100 dark:border-teal-950 pb-2 flex-shrink-0">
                     <CalendarDays size={18} />
-                    <h3 className="text-sm font-semibold m-0 text-white">Tu Día Sin Prisa</h3>
+                    <h3 className="text-sm font-semibold m-0 text-calm-olive dark:text-white">Tu Día Sin Prisa</h3>
                   </div>
                   <div className="leading-relaxed text-xs">
                     <ReactMarkdown>{state.despejeDayPlan}</ReactMarkdown>
@@ -216,24 +222,24 @@ export function Despeje({ setPhase, state, updateState }: Props) {
                       onClick={() => toggleActivity(rec.id)}
                       className={`p-3.5 border rounded-2xl transition-all duration-200 cursor-pointer group flex items-start space-x-3.5 select-none ${
                         rec.completed 
-                          ? 'bg-teal-950/20 border-teal-800/60' 
-                          : 'bg-[#18201B]/80 border-teal-950/80 hover:bg-[#1E2822]'
+                          ? 'bg-teal-50 bg-opacity-35 dark:bg-teal-950/20 border-teal-200/50 dark:border-teal-800/60 shadow-inner' 
+                          : 'bg-white/90 dark:bg-[#18201B]/80 border-calm-sage-100/50 dark:border-teal-950/80 hover:bg-white dark:hover:bg-[#1E2822]'
                       }`}
                     >
-                      <div className={`mt-0.5 ${rec.completed ? 'text-teal-400' : 'text-slate-500'}`}>
+                      <div className={`mt-0.5 ${rec.completed ? 'text-teal-600 dark:text-teal-400' : 'text-calm-sage-400 dark:text-slate-500'}`}>
                         {rec.completed ? <CheckCircle2 size={20} className="stroke-[2.5]" /> : <Circle size={20} />}
                       </div>
                       
                       <div className="flex-1 min-w-0">
-                        <h3 className={`font-bold text-xs tracking-wide ${rec.completed ? 'text-teal-300 line-through opacity-60' : 'text-slate-100'}`}>
+                        <h3 className={`font-bold text-xs tracking-wide ${rec.completed ? 'text-teal-700/60 dark:text-teal-300 line-through opacity-60' : 'text-calm-olive dark:text-slate-100'}`}>
                           {rec.title}
                         </h3>
-                        <p className={`text-[11px] mt-0.5 leading-relaxed ${rec.completed ? 'text-teal-600/50 line-through' : 'text-slate-400'}`}>
+                        <p className={`text-[11px] mt-0.5 leading-relaxed ${rec.completed ? 'text-teal-600/40 dark:text-teal-600/50 line-through' : 'text-calm-olive/70 dark:text-slate-400'}`}>
                           {rec.desc}
                         </p>
                       </div>
 
-                      <div className={`p-1.5 rounded-xl flex-shrink-0 ${rec.completed ? 'bg-teal-950/30 text-teal-600/50' : 'bg-[#111613] text-teal-400 border border-teal-900/30'}`}>
+                      <div className={`p-1.5 rounded-xl flex-shrink-0 ${rec.completed ? 'bg-teal-100/50 dark:bg-teal-950/30 text-teal-600/50' : 'bg-teal-50 dark:bg-[#111613] text-teal-600 dark:text-teal-400 border border-teal-100/30 dark:border-teal-900/10'}`}>
                         {ICON_MAP[rec.iconId] || <Coffee size={18} />}
                       </div>
                     </motion.div>
@@ -243,27 +249,27 @@ export function Despeje({ setPhase, state, updateState }: Props) {
             </div>
 
             {/* Status & Timer Card */}
-            <div className="bg-[#151D18] p-4 rounded-2xl border border-teal-900/50 text-center space-y-2.5 flex-shrink-0 shadow-inner">
+            <div className="bg-white/50 dark:bg-[#151D18] p-4 rounded-2xl border border-calm-sage-150/40 dark:border-teal-900/50 text-center space-y-2.5 flex-shrink-0 shadow-sm">
               {!allCompleted ? (
-                <p className="text-slate-400 text-[11px] leading-relaxed">
+                <p className="text-calm-olive/60 dark:text-slate-400 text-[11px] leading-relaxed">
                   Completa tu plan o marca cada una de tus actividades personalizadas para relajar tu corteza prefrontal.
                 </p>
               ) : !isTimeUp ? (
                 <div className="flex flex-col items-center space-y-1.5">
-                  <p className="text-emerald-400 text-xs font-semibold flex items-center justify-center gap-1.5">
+                  <p className="text-emerald-600 dark:text-emerald-400 text-xs font-semibold flex items-center justify-center gap-1.5">
                     <CheckCircle2 size={14} className="stroke-[2.5]" /> Actividades listas. Deja reposar la mente.
                   </p>
-                  <div className="flex items-center space-x-2 text-teal-300 font-mono text-base bg-teal-950/80 border border-teal-900/40 px-3.5 py-1 rounded-full shadow-sm">
+                  <div className="flex items-center space-x-2 text-teal-700 dark:text-teal-300 font-mono text-base bg-teal-50 dark:bg-teal-950/80 border border-teal-100 dark:border-teal-900/40 px-3.5 py-1 rounded-full shadow-sm">
                     <Clock size={16} />
                     <span>{formatTime(timeLeft)}</span>
                   </div>
                 </div>
               ) : (
                 <div className="space-y-1">
-                  <p className="text-emerald-400 text-xs font-semibold flex items-center justify-center gap-1.5">
+                  <p className="text-emerald-600 dark:text-emerald-400 text-xs font-semibold flex items-center justify-center gap-1.5">
                     <Sparkles size={14} /> ¡Fase de calma e incubación completada!
                   </p>
-                  <p className="text-[10px] text-slate-400">Es hora de abrir compuertas para las ideas.</p>
+                  <p className="text-[10px] text-calm-olive/50 dark:text-slate-450">Es hora de abrir compuertas para las ideas.</p>
                 </div>
               )}
             </div>
@@ -277,7 +283,7 @@ export function Despeje({ setPhase, state, updateState }: Props) {
           <button
             type="button"
             onClick={generateActivities}
-            className="w-full py-2.5 bg-teal-950 hover:bg-teal-900 text-teal-300 border border-teal-900/40 rounded-xl font-bold text-xs flex items-center justify-center space-x-1.5 transition-all"
+            className="w-full py-2.5 bg-white/70 hover:bg-white dark:bg-teal-950 dark:hover:bg-teal-900 text-teal-700 dark:text-teal-300 border border-calm-sage-150/50 dark:border-teal-900/40 rounded-xl font-bold text-xs flex items-center justify-center space-x-1.5 transition-all cursor-pointer"
           >
             <RefreshCw size={13} />
             <span>Volver a iniciar despeje</span>
@@ -288,10 +294,10 @@ export function Despeje({ setPhase, state, updateState }: Props) {
           type="button"
           onClick={() => setPhase('eureka')}
           disabled={!canProceed || isGenerating}
-          className={`w-full py-4 rounded-xl font-bold text-base flex items-center justify-center space-x-2.5 transition-all ${
+          className={`w-full py-4 rounded-xl font-bold text-base flex items-center justify-center space-x-2.5 transition-all cursor-pointer ${
             canProceed && !isGenerating
-              ? 'bg-teal-600 hover:bg-teal-500 text-white shadow-lg shadow-teal-950/40 active:scale-[0.99]' 
-              : 'bg-teal-950/40 text-slate-600 cursor-not-allowed border border-teal-950/80'
+              ? 'bg-teal-600 hover:bg-teal-500 text-white shadow-lg shadow-teal-100 dark:shadow-none active:scale-[0.99]' 
+              : 'bg-calm-sage-50 dark:bg-teal-950/40 text-calm-olive/30 dark:text-slate-600 border border-calm-sage-150/20 dark:border-teal-950/80 cursor-not-allowed'
           }`}
         >
           <Lightbulb size={20} className={canProceed && !isGenerating ? "text-amber-300 animate-pulse" : "text-slate-600"} />

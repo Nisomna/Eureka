@@ -52,6 +52,13 @@
   font-family: var(--font-sans);
 }
 
+/* Premium Creative Calm Twilight Theme (Dark Mode) */
+.dark .creative-calm-backdrop {
+  background: radial-gradient(circle at 50% 50%, #1E2B25 0%, #111A16 100%);
+  background-color: #111A16;
+  color: #E6EAE7;
+}
+
 .serif-title {
   font-family: var(--font-serif);
   font-weight: 300;
@@ -63,6 +70,12 @@
   backdrop-filter: blur(12px);
   border: 1px solid rgba(229, 236, 231, 0.6);
   border-radius: 24px;
+}
+
+.dark .calm-card {
+  background-color: rgba(23, 34, 29, 0.75);
+  border-color: rgba(115, 147, 126, 0.15);
+  box-shadow: 0 10px 30px -10px rgba(0,0,0,0.3);
 }
 
 /* Scrollbar restyling */
@@ -77,6 +90,10 @@
   background: rgba(115, 147, 126, 0.2);
   border-radius: 99px;
 }
+.dark ::-webkit-scrollbar-thumb {
+  background: rgba(115, 147, 126, 0.35);
+}
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(115, 147, 126, 0.4);
 }
+

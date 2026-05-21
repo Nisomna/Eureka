@@ -8,6 +8,15 @@ export interface DespejeActivity {
   completed: boolean;
 }
 
+export interface HistoricalTask {
+  id: string;
+  problem: string;
+  idea: string;
+  plan: string;
+  date: string;
+  completed: boolean;
+}
+
 export interface AppState {
   interests: string[];
   problem: string;
@@ -19,4 +28,5 @@ export interface AppState {
   despejeActivities: DespejeActivity[];
   despejeStartTime: number | null;
   despejeDayPlan: string | null;
+  historicalTasks: HistoricalTask[];
 }
