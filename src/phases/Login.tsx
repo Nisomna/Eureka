@@ -42,17 +42,17 @@ export function Login({ setPhase, onLoginSuccess }: Props) {
     <div className="flex flex-col h-full items-center justify-center space-y-8 max-w-sm mx-auto px-4 mt-12 md:mt-16">
       {/* Visual Identity Ring Container */}
       <div className="text-center space-y-5 relative">
-        <div className="absolute inset-0 bg-teal-100/30 rounded-full filter blur-2xl w-32 h-32 mx-auto pointer-events-none"></div>
-        <div className="relative inline-flex items-center justify-center w-24 h-24 rounded-full bg-gradient-to-tr from-teal-50 to-calm-sage-100 dark:from-teal-950 dark:to-emerald-950 text-teal-600 dark:text-teal-400 mb-2 mx-auto shadow-sm border border-calm-sage-200/50 dark:border-teal-900 animate-float">
-          <Sparkles size={44} className="text-teal-600/95 dark:text-teal-400" />
+        <div className="absolute inset-0 bg-calm-duckegg/25 rounded-full filter blur-2xl w-32 h-32 mx-auto pointer-events-none"></div>
+        <div className="relative inline-flex items-center justify-center w-24 h-24 rounded-full bg-gradient-to-tr from-calm-duckegg/30 to-calm-cream dark:from-teal-950 dark:to-[#17221d] text-calm-emeraldsea dark:text-calm-duckegg mb-2 mx-auto shadow-sm border border-calm-sage-200/50 dark:border-teal-900/40 animate-float">
+          <Sparkles size={44} className="text-calm-emeraldsea dark:text-calm-duckegg" />
         </div>
         
         <h2 className="text-5xl font-bold tracking-tight text-calm-olive dark:text-white serif-title">
           Incubapp
         </h2>
-        <span className="block text-xs uppercase tracking-widest text-calm-sage-600 dark:text-teal-450 font-semibold">Templo de Incubación Mental</span>
+        <span className="block text-xs uppercase tracking-widest text-calm-sage-700 dark:text-calm-duckegg font-extrabold">Templo de Incubación Mental</span>
         
-        <p className="text-sm text-calm-olive/70 dark:text-[#EBECEB]/70 max-w-xs mx-auto leading-relaxed">
+        <p className="text-sm text-calm-olive/90 dark:text-[#EBECEB]/80 max-w-xs mx-auto leading-relaxed font-medium">
           Un espacio sereno diseñado para disolver bloqueos creativos, descansar la mente y estructurar ideas geniales en cuatro simples etapas.
         </p>
       </div>
@@ -68,10 +68,10 @@ export function Login({ setPhase, onLoginSuccess }: Props) {
         <button
           onClick={handleLogin}
           disabled={isLoggingIn}
-          className={`w-full py-4 bg-white/70 dark:bg-[#1E2B25]/85 backdrop-blur-md border border-calm-sage-200/80 dark:border-teal-950 hover:bg-white dark:hover:bg-[#25322B] hover:border-teal-300 dark:hover:border-teal-700 text-calm-olive dark:text-white rounded-2xl font-bold text-base flex items-center justify-center space-x-3 transition-all shadow-sm hover:shadow-md cursor-pointer ${isLoggingIn ? 'opacity-50 cursor-not-allowed' : ''}`}
+          className={`w-full py-4 bg-calm-cream/95 dark:bg-[#1E2B25]/85 backdrop-blur-md border border-calm-sage-200 dark:border-teal-950/80 hover:bg-calm-cream dark:hover:bg-[#25322B] hover:border-calm-emeraldsea dark:hover:border-teal-700 text-calm-olive dark:text-white rounded-2xl font-bold text-base flex items-center justify-center space-x-3 transition-all shadow-sm hover:shadow-md cursor-pointer ${isLoggingIn ? 'opacity-50 cursor-not-allowed' : ''}`}
         >
           {isLoggingIn ? (
-            <div className="w-6 h-6 border-2 border-teal-500 border-t-transparent rounded-full animate-spin"></div>
+            <div className="w-6 h-6 border-2 border-calm-emeraldsea border-t-transparent rounded-full animate-spin"></div>
           ) : (
             <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" className="w-5 h-5" />
           )}
@@ -81,7 +81,7 @@ export function Login({ setPhase, onLoginSuccess }: Props) {
 
       {/* Aesthetic quote branding */}
       <div className="pt-8 text-center">
-        <p className="text-[11px] text-calm-sage-600/60 dark:text-[#EBECEB]/40 font-medium italic">
+        <p className="text-[11px] text-calm-sage-600 dark:text-[#EBECEB]/65 font-medium italic">
           "La claridad nace del espacio que le otorgas a tu mente."
         </p>
       </div>

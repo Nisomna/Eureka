@@ -6,18 +6,30 @@
   --font-serif: "Instrument Serif", serif;
   --font-sans: "Plus Jakarta Sans", "Outfit", system-ui, sans-serif;
   
-  --color-calm-sage-50: #f4f7f5;
-  --color-calm-sage-100: #e5ece7;
-  --color-calm-sage-200: #ccdcd1;
-  --color-calm-sage-500: #73937e;
-  --color-calm-sage-600: #5b7564;
-  --color-calm-sage-700: #4a5e51;
+  /* Color Palette mapping for fallbacks */
+  --color-calm-sage-50: #FAF7F4;
+  --color-calm-sage-100: #F2D5CB;
+  --color-calm-sage-150: #E2BFB4;
+  --color-calm-sage-200: #BCD1CE;
+  --color-calm-sage-250: #A2B9B6;
+  --color-calm-sage-300: #98AAB1;
+  --color-calm-sage-500: #468285;   /* Emerald Sea as Primary */
+  --color-calm-sage-600: #3A6D70;   /* Rich slightly darker Emerald Sea for states */
+  --color-calm-sage-700: #244547;   /* High-contrast deep teal for text and icons */
+  --color-calm-sage-800: #1B3335;
+  --color-calm-sage-900: #122223;
   
-  --color-calm-cream: #fbfaf7;
-  --color-calm-olive: #38423b;
-  --color-calm-sand: #f0e6da;
-  --color-calm-terracotta: #d98a6c;
-  --color-calm-blush: #faeedf;
+  /* Standard specific custom colors of the requested palette */
+  --color-calm-coral: #F7A08E;
+  --color-calm-blush: #F2D5CB;
+  --color-calm-butterscotch: #E4AD53;
+  --color-calm-smoke: #98AAB1;
+  --color-calm-duckegg: #BCD1CE;
+  --color-calm-emeraldsea: #468285;
+  --color-calm-cream: #F9F6F0;
+  --color-calm-olive: #2D3934;
+  --color-calm-sand: #FAF7F4;
+  --color-calm-terracotta: #F7A08E;
   
   --animate-breath: breath 6s ease-in-out infinite;
   --animate-float: float 4s ease-in-out infinite;
@@ -47,8 +59,8 @@
 
 /* Custom classes for the luxury serene vibe */
 .creative-calm-backdrop {
-  background: radial-gradient(circle at 10% 20%, rgba(246, 244, 239, 0.9) 0%, rgba(240, 230, 218, 0.4) 90.7%);
-  background-color: #FAF8F5;
+  background: linear-gradient(135deg, #FAF7F4 0%, #F2D5CB 65%, #BCD1CE 100%);
+  background-color: #FAF7F4;
   font-family: var(--font-sans);
 }
 
@@ -66,15 +78,15 @@
 }
 
 .calm-card {
-  background-color: rgba(255, 255, 255, 0.7);
+  background-color: rgba(250, 246, 238, 0.95); /* Organic warm cream backdrop */
   backdrop-filter: blur(12px);
-  border: 1px solid rgba(229, 236, 231, 0.6);
+  border: 1px solid rgba(70, 130, 133, 0.32); /* Emerald Sea custom outline */
   border-radius: 24px;
 }
 
 .dark .calm-card {
-  background-color: rgba(23, 34, 29, 0.75);
-  border-color: rgba(115, 147, 126, 0.15);
+  background-color: rgba(23, 34, 29, 0.85);
+  border-color: rgba(115, 147, 126, 0.22);
   box-shadow: 0 10px 30px -10px rgba(0,0,0,0.3);
 }
 

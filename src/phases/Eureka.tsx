@@ -129,18 +129,18 @@ export function Eureka({ setPhase, state, updateState, isDark }: Props) {
   if (!state.problem.trim()) {
     return (
       <div className="flex flex-col h-full items-center justify-center text-center space-y-6 mt-12 px-4 pb-24">
-        <div className="w-16 h-16 bg-amber-50 rounded-full flex items-center justify-center border border-amber-100 text-amber-500 animate-float">
+        <div className="w-16 h-16 bg-calm-butterscotch/15 rounded-full flex items-center justify-center border border-calm-butterscotch/35 text-calm-butterscotch animate-float">
           <AlertCircle size={32} />
         </div>
         <div className="space-y-2">
-          <h3 className="text-xl font-bold text-calm-olive serif-title">Falta Definir tu Enfoque</h3>
-          <p className="text-sm text-calm-olive/60 max-w-xs leading-relaxed">
+          <h3 className="text-xl font-bold text-calm-olive dark:text-white serif-title">Falta Definir tu Enfoque</h3>
+          <p className="text-sm text-calm-olive/60 dark:text-[#EBECEB]/60 max-w-xs leading-relaxed">
             Para cultivar ideas mágicas y perspectivas creativas, primero define tu reto en el primer paso.
           </p>
         </div>
         <button
           onClick={() => setPhase('afinar')}
-          className="py-3 px-6 bg-amber-500 hover:bg-amber-600 text-white font-bold text-sm rounded-xl transition-colors shadow-md shadow-amber-200"
+          className="py-3 px-6 bg-calm-sage-500 hover:bg-calm-sage-600 text-white font-bold text-sm rounded-xl transition-colors shadow-md shadow-calm-sage-200/50 cursor-pointer"
         >
           Afinar Problema Ahora
         </button>
@@ -154,35 +154,35 @@ export function Eureka({ setPhase, state, updateState, isDark }: Props) {
     <div className="flex flex-col h-full overflow-y-auto pb-24 px-1">
       {/* Intro Step Banner */}
       <div className="flex items-center space-x-3 mb-6 pt-4">
-        <div className="p-3 bg-teal-50 border border-teal-100 dark:bg-teal-950 dark:border-teal-900 text-teal-600 dark:text-teal-400 rounded-2xl shadow-sm animate-float">
+        <div className="p-3 bg-calm-coral/15 border border-calm-coral/35 dark:bg-calm-coral/25 dark:border-calm-coral/45 text-calm-coral rounded-2xl shadow-sm animate-float">
           <Lightbulb size={24} />
         </div>
         <div>
-          <span className="text-[10px] uppercase tracking-widest text-teal-600 dark:text-teal-400 font-bold">Paso 3 de 4</span>
+          <span className="text-[10px] uppercase tracking-widest text-calm-coral dark:text-calm-blush font-bold">Paso 3 de 4</span>
           <h2 className="text-3xl font-bold text-calm-olive dark:text-[#EBECEB] serif-title">Lluvia de Eureka</h2>
-          <p className="text-xs text-calm-olive/50 dark:text-[#EBECEB]/50">La incubadora mental libera las soluciones</p>
+          <p className="text-sm text-calm-olive/95 dark:text-slate-200 font-semibold mt-1">La incubadora mental libera las soluciones</p>
         </div>
       </div>
 
       <div className="flex-1 flex flex-col space-y-5 overflow-hidden">
         
         {/* Perspectives Block - Styled peacefully */}
-        <div className="bg-gradient-to-tr from-[#ECF9F5] to-teal-50/50 dark:from-[#1E2E27] dark:to-teal-950/20 border border-teal-100 dark:border-teal-900/60 p-5 rounded-3xl space-y-3 shadow-sm">
+        <div className="bg-gradient-to-tr from-calm-blush/25 to-calm-coral/10 dark:from-[#1E2E27] dark:to-teal-950/20 border border-calm-coral/30 dark:border-teal-900/60 p-5 rounded-3xl space-y-3 shadow-sm">
           <div className="flex items-center justify-between mb-1">
-            <h4 className="text-xs font-bold text-teal-800 dark:text-teal-300 uppercase tracking-widest flex items-center space-x-1.5">
-              <Sparkles size={14} className="text-teal-600 animate-pulse" />
+            <h4 className="text-xs font-bold text-calm-sage-700 dark:text-calm-blush uppercase tracking-widest flex items-center space-x-1.5">
+              <Sparkles size={14} className="text-calm-coral animate-pulse" />
               <span>Girar Perspectiva</span>
             </h4>
             <button 
               type="button" 
               onClick={getRandomPerspective} 
-              className="text-teal-700 hover:text-white dark:text-teal-300 dark:hover:text-white bg-white dark:bg-[#1C2621] hover:bg-teal-600 border border-teal-100 dark:border-teal-900 py-1.5 px-3 rounded-xl transition-all flex items-center gap-1 hover:shadow-sm cursor-pointer text-xs"
+              className="text-calm-emeraldsea hover:text-white dark:text-calm-duckegg dark:hover:text-white bg-calm-cream hover:bg-calm-emeraldsea border border-calm-duckegg py-1.5 px-3 rounded-xl transition-all flex items-center gap-1 hover:shadow-sm cursor-pointer text-xs"
             >
               <Shuffle size={13} />
               <span className="text-[10px] font-bold uppercase tracking-wider">Generar Reto</span>
             </button>
           </div>
-          <p className="text-teal-900 dark:text-teal-100 text-xs italic leading-relaxed min-h-[36px] bg-white/40 dark:bg-[#1C2621]/40 p-3 rounded-xl border border-teal-150/50 dark:border-teal-900/30">
+          <p className="text-calm-olive dark:text-calm-duckegg text-xs italic leading-relaxed min-h-[36px] bg-calm-cream/60 dark:bg-[#1C2621]/40 p-3 rounded-xl border border-calm-duckegg/40 dark:border-teal-900/30">
             {perspective || "Usa tus gustos e intereses personales para cambiar la perspectiva de tu problema. ¡Prueba Generar un Reto!"}
           </p>
         </div>
@@ -228,13 +228,13 @@ export function Eureka({ setPhase, state, updateState, isDark }: Props) {
                 onChange={(e) => setNewIdea(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && addIdea()}
                 placeholder="Tengo una idea de hacer..."
-                className="flex-1 p-4 rounded-xl border border-calm-sage-100 dark:border-teal-900/40 bg-white/80 dark:bg-[#1C2621]/80 focus:bg-white dark:focus:bg-[#1C2621] focus:ring-4 focus:ring-teal-400/20 focus:border-teal-400 outline-none text-sm transition-all text-calm-olive dark:text-[#EBECEB] placeholder:text-calm-olive/35"
+                className="flex-1 p-4 rounded-xl border border-calm-sage-200 dark:border-teal-900/40 bg-calm-cream/90 dark:bg-[#1C2621]/80 focus:bg-calm-cream dark:focus:bg-[#1C2621] focus:ring-4 focus:ring-calm-emeraldsea/20 focus:border-calm-emeraldsea outline-none text-sm transition-all text-calm-olive dark:text-[#EBECEB] placeholder:text-calm-olive/75 dark:placeholder:text-[#EBECEB]/55"
               />
               <button
                 type="button"
                 onClick={addIdea}
                 disabled={!newIdea.trim()}
-                className="p-4 bg-teal-500 hover:bg-teal-600 text-white rounded-xl disabled:bg-calm-sage-100 dark:disabled:bg-teal-950/40 disabled:text-calm-olive/30 dark:disabled:text-[#EBECEB]/25 shadow-md shadow-teal-100/40 dark:shadow-none disabled:shadow-none transition-all cursor-pointer flex items-center justify-center shrink-0"
+                className="p-4 bg-calm-sage-500 hover:bg-calm-sage-600 text-white rounded-xl disabled:bg-calm-sage-100 dark:disabled:bg-teal-950/40 disabled:text-calm-olive/30 dark:disabled:text-[#EBECEB]/25 shadow-md shadow-calm-sage-200/40 dark:shadow-none disabled:shadow-none transition-all cursor-pointer flex items-center justify-center shrink-0"
                 title="Añadir idea"
               >
                 <Plus size={20} />
@@ -245,7 +245,7 @@ export function Eureka({ setPhase, state, updateState, isDark }: Props) {
           <div className="space-y-2.5">
             <h4 className="text-xs font-bold text-calm-sage-700 dark:text-[#EBECEB]/75 uppercase tracking-wider flex items-center gap-1.5">
               <span>Boceta tu idea visualmente</span>
-              <span className="text-[10px] lowercase text-[#EBECEB]/40 font-normal">Garabatea libremente</span>
+              <span className="text-[10px] lowercase text-calm-olive/60 dark:text-[#EBECEB]/70 font-normal">Garabatea libremente</span>
             </h4>
             <SketchPad onSave={handleSaveSketch} isDark={isDarkModeActive} />
           </div>
@@ -254,11 +254,11 @@ export function Eureka({ setPhase, state, updateState, isDark }: Props) {
         {/* Brainstorm Lists */}
         <div className="flex-1 min-h-[140px] overflow-y-auto space-y-2.5 pb-2">
           {state.ideas.length === 0 ? (
-            <div className="h-full py-8 flex flex-col items-center justify-center text-center text-slate-450 space-y-3 calm-card border border-dashed border-calm-sage-200 bg-white/40 dark:bg-[#1C2621]/20">
-              <Lightbulb size={36} className="text-calm-sage-350 opacity-40 animate-pulse" />
+            <div className="h-full py-8 flex flex-col items-center justify-center text-center space-y-3 calm-card border border-dashed border-calm-sage-200 dark:border-teal-900/40 bg-calm-cream/40 dark:bg-[#1C2621]/20">
+              <Lightbulb size={36} className="text-calm-sage-500 opacity-60 animate-pulse" />
               <div className="space-y-1">
-                <p className="text-xs font-bold text-calm-olive/60 dark:text-[#EBECEB]/60">¿Algún chispazo?</p>
-                <p className="text-[10px] text-calm-olive/40 dark:text-[#EBECEB]/40 max-w-[180px] leading-relaxed mx-auto">Toca el botón 'Generar Reto' o anota ideas sueltas y absurdas.</p>
+                <p className="text-xs font-bold text-calm-olive/85 dark:text-[#EBECEB]/85">¿Algún chispazo?</p>
+                <p className="text-[10px] text-calm-olive/75 dark:text-[#EBECEB]/75 max-w-[180px] leading-relaxed mx-auto">Toca el botón 'Generar Reto' o anota ideas sueltas y absurdas.</p>
               </div>
             </div>
           ) : (
@@ -268,21 +268,21 @@ export function Eureka({ setPhase, state, updateState, isDark }: Props) {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.2 }}
                 key={idx}
-                className="p-3.5 bg-white/95 dark:bg-[#18221D] border border-calm-sage-100 dark:border-teal-950 rounded-2xl shadow-sm text-xs flex items-start space-x-2.5 text-calm-olive dark:text-silver leading-relaxed"
+                className="p-3.5 bg-calm-cream dark:bg-[#18221D] border border-calm-sage-200 dark:border-teal-950 rounded-2xl shadow-sm text-xs flex items-start space-x-2.5 text-calm-olive dark:text-[#EBECEB] leading-relaxed"
               >
-                <span className="inline-flex w-5 h-5 items-center justify-center rounded-full bg-teal-50 dark:bg-teal-950 text-[10px] text-teal-600 dark:text-teal-400 font-bold shrink-0 mt-0.5">
+                <span className="inline-flex w-5 h-5 items-center justify-center rounded-full bg-calm-duckegg/20 dark:bg-teal-950/40 text-[10px] text-calm-emeraldsea dark:text-calm-duckegg font-bold shrink-0 mt-0.5">
                   {state.ideas.length - idx}
                 </span>
                 
                 {idea.startsWith('data:image/') ? (
                   <div className="flex-1 space-y-2">
-                    <span className="text-[10px] uppercase font-bold tracking-widest text-teal-600 dark:text-teal-450 block flex items-center gap-1.5">
+                    <span className="text-[10px] uppercase font-bold tracking-widest text-calm-emeraldsea dark:text-calm-duckegg block flex items-center gap-1.5">
                       <ImageIcon size={12} /> Boceto de Idea Visual
                     </span>
                     <img 
                       src={idea} 
                       alt="Visual Sketch" 
-                      className="max-w-[200px] max-h-36 rounded-xl border border-calm-sage-100 dark:border-teal-900 bg-white dark:bg-[#141C18] p-1 shadow-sm object-contain" 
+                      className="max-w-[200px] max-h-36 rounded-xl border border-calm-sage-200 dark:border-teal-900 bg-calm-cream dark:bg-[#141C18] p-1 shadow-sm object-contain" 
                       referrerPolicy="no-referrer" 
                     />
                   </div>
@@ -299,7 +299,7 @@ export function Eureka({ setPhase, state, updateState, isDark }: Props) {
       <div className="pt-4 flex space-x-3">
         <button
           onClick={() => setPhase('despeje')}
-          className="p-4 rounded-2xl border border-calm-sage-100 dark:border-teal-900 bg-white dark:bg-[#1C2621]/80 hover:bg-calm-sage-50 dark:hover:bg-calm-sage-950 text-calm-olive dark:text-[#EBECEB] transition-colors flex items-center justify-center shadow-sm"
+          className="p-4 rounded-2xl border border-calm-sage-200 dark:border-teal-900 bg-calm-cream dark:bg-[#1C2621]/80 hover:bg-calm-sage-100/60 dark:hover:bg-calm-sage-950 text-calm-olive dark:text-[#EBECEB] transition-colors flex items-center justify-center shadow-sm cursor-pointer"
           title="Regresar"
         >
           <ArrowLeft size={18} />
@@ -307,7 +307,7 @@ export function Eureka({ setPhase, state, updateState, isDark }: Props) {
         <button
           onClick={() => setPhase('aplicacion')}
           disabled={state.ideas.length === 0}
-          className="flex-1 py-4 bg-teal-500 hover:bg-teal-600 disabled:bg-calm-sage-100 dark:disabled:bg-teal-950/40 disabled:text-calm-olive/30 dark:disabled:text-[#EBECEB]/25 disabled:cursor-not-allowed text-white rounded-2xl font-bold text-base flex items-center justify-center space-x-2 transition-all shadow-lg shadow-teal-100/50 dark:shadow-none disabled:shadow-none"
+          className="flex-1 py-4 bg-calm-sage-500 hover:bg-calm-sage-600 disabled:bg-calm-sage-100 dark:disabled:bg-teal-950/40 disabled:text-calm-olive/30 dark:disabled:text-[#EBECEB]/25 disabled:cursor-not-allowed text-white rounded-2xl font-bold text-base flex items-center justify-center space-x-2 transition-all shadow-lg shadow-calm-sage-200/50 dark:shadow-none disabled:shadow-none"
         >
           <span>Siguiente Paso: Aplicar Plan</span>
           <ArrowRight size={18} />

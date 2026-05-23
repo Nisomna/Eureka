@@ -13,7 +13,7 @@ const CATEGORIES = [
     id: 'arte',
     title: 'Arte y Creatividad',
     icon: '🎨',
-    color: 'bg-orange-50/70 border-orange-100',
+    color: 'bg-calm-coral/35 border-calm-coral/50',
     subs: [
       { id: 'arte:dibujar', label: 'Dibuje/Boceto' },
       { id: 'arte:pintar', label: 'Pintura' },
@@ -25,7 +25,7 @@ const CATEGORIES = [
     id: 'deporte',
     title: 'Deporte y Movimiento',
     icon: '🏃',
-    color: 'bg-emerald-50/70 border-emerald-100',
+    color: 'bg-calm-duckegg/40 border-calm-duckegg/50',
     subs: [
       { id: 'deporte:correr', label: 'Trotar/Caminar al aire libre' },
       { id: 'deporte:yoga', label: 'Yoga/Estiramiento' },
@@ -38,7 +38,7 @@ const CATEGORIES = [
     id: 'entretenimiento',
     title: 'Entretenimiento y Ocio',
     icon: '🍿',
-    color: 'bg-rose-50/70 border-rose-100',
+    color: 'bg-calm-blush/40 border-calm-blush/60',
     subs: [
       { id: 'ent:leer', label: 'Leer ficción/cómics' },
       { id: 'ent:leer_nf', label: 'Leer no ficción/artículos' },
@@ -52,7 +52,7 @@ const CATEGORIES = [
     id: 'bienestar',
     title: 'Hogar, Bienestar y Música',
     icon: '🧘',
-    color: 'bg-indigo-50/70 border-indigo-100',
+    color: 'bg-calm-smoke/45 border-calm-smoke/60',
     subs: [
       { id: 'bien:meditar', label: 'Meditación' },
       { id: 'bien:cocinar', label: 'Cocinar algo nuevo/Hornear' },
@@ -79,22 +79,22 @@ export function Home({ setPhase, state, updateState }: Props) {
         
         {/* Intro Banner */}
         <div className="text-center space-y-3 pt-4">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-teal-50 dark:bg-teal-950/40 text-teal-600 dark:text-teal-400 border border-teal-100 dark:border-teal-900 shadow-sm mb-2 animate-float">
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-calm-duckegg/40 dark:bg-calm-emeraldsea/25 text-calm-emeraldsea dark:text-calm-duckegg border border-calm-duckegg dark:border-calm-emeraldsea shadow-sm mb-2 animate-float">
             <Compass size={32} />
           </div>
           <h2 className="text-4xl font-bold text-calm-olive dark:text-white serif-title">Libera tu Mente</h2>
-          <p className="text-sm text-calm-olive/70 dark:text-[#EBECEB]/70 max-w-sm mx-auto leading-relaxed">
+          <p className="text-sm text-calm-olive/95 dark:text-slate-200 max-w-sm mx-auto leading-relaxed font-semibold">
             Un proceso guiado en 4 pasos científicos para superar bloqueos creativos, utilizando técnicas de incubación mental.
           </p>
         </div>
 
         {/* Categories Grid or Stack */}
-        <div className="space-y-6 calm-card p-6 border border-calm-sage-100/60 dark:border-teal-950/85 bg-white/70 dark:bg-[#17221d]/75 shadow-sm">
+        <div className="space-y-6 calm-card p-6 border border-calm-sage-200/60 dark:border-teal-950/85 dark:bg-[#17221d]/75 shadow-sm">
           <div className="text-center space-y-1">
             <h3 className="text-lg font-bold text-calm-olive dark:text-white">
               ¿Qué te ayuda a desconectar?
             </h3>
-            <p className="text-xs text-calm-olive/50 dark:text-[#EBECEB]/50">
+            <p className="text-sm text-calm-olive/95 dark:text-slate-200 font-semibold mt-1">
               Selecciona tus actividades favoritas para que podamos diseñar tu día de descanso ideal.
             </p>
           </div>
@@ -102,7 +102,7 @@ export function Home({ setPhase, state, updateState }: Props) {
           <div className="space-y-5">
             {CATEGORIES.map((cat) => (
               <div key={cat.id} className="space-y-2.5">
-                <h4 className="text-xs font-bold text-calm-sage-700 dark:text-teal-400 uppercase tracking-widest flex items-center gap-1.5">
+                <h4 className="text-xs font-bold text-calm-sage-700 dark:text-calm-duckegg uppercase tracking-widest flex items-center gap-1.5 font-extrabold">
                   <span className="text-base">{cat.icon}</span> {cat.title}
                 </h4>
                 <div className="flex flex-wrap gap-1.5">
@@ -115,8 +115,8 @@ export function Home({ setPhase, state, updateState }: Props) {
                         onClick={() => toggleInterest(sub.label)}
                         className={`px-3.5 py-2 rounded-xl border text-xs transition-all duration-200 text-left cursor-pointer select-none font-medium ${
                           isSelected
-                            ? 'border-calm-sage-500 bg-calm-sage-500 text-white font-semibold shadow-sm scale-[1.02]'
-                            : 'border-calm-sage-100/60 dark:border-teal-900/65 bg-white/50 dark:bg-[#202E26]/55 text-calm-olive/80 dark:text-[#EBECEB]/85 hover:border-calm-sage-300 dark:hover:border-teal-800 hover:bg-white dark:hover:bg-[#25362C]/75 dark:hover:text-white'
+                            ? 'border-calm-sage-700 bg-calm-sage-600 text-white font-semibold shadow-sm scale-[1.02]'
+                            : 'border-calm-sage-200 dark:border-teal-900/65 bg-calm-cream/95 dark:bg-[#202E26]/55 text-calm-olive dark:text-[#EBECEB] hover:border-calm-sage-500 dark:hover:border-teal-800 hover:bg-calm-cream dark:hover:bg-[#25362C]/75 dark:hover:text-white'
                         }`}
                       >
                         {sub.label}

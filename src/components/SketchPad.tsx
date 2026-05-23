@@ -7,18 +7,18 @@ interface Props {
 }
 
 const COLORS = [
-  { name: 'Jade Calm', value: '#73937e' },
-  { name: 'Ámbar Cálido', value: '#d98a6c' },
-  { name: 'Oliva Profundo', value: '#38423b' },
-  { name: 'Índigo Místico', value: '#4f46e5' },
-  { name: 'Crema Suave', value: '#f0e6da' },
-  { name: 'Escarlata Zen', value: '#f43f5e' },
+  { name: 'Mar Esmeralda', value: '#468285' },
+  { name: 'Coral Calm', value: '#F7A08E' },
+  { name: 'Oliva Profundo', value: '#2D3934' },
+  { name: 'Butterscotch', value: '#E4AD53' },
+  { name: 'Huevo de Pato', value: '#BCD1CE' },
+  { name: 'Blush Dulce', value: '#F2D5CB' },
 ];
 
 export function SketchPad({ onSave, isDark }: Props) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const [selectedColor, setSelectedColor] = useState('#73937e');
+  const [selectedColor, setSelectedColor] = useState('#468285');
   const [brushSize, setBrushSize] = useState(4);
   const [isDrawing, setIsDrawing] = useState(false);
   const [history, setHistory] = useState<string[]>([]);
@@ -47,8 +47,8 @@ export function SketchPad({ onSave, isDark }: Props) {
         ctx.lineCap = 'round';
         ctx.lineJoin = 'round';
         
-        // Fill white/light bg or dark bg depending on mode
-        ctx.fillStyle = isDark ? '#1C2621' : '#fcfbf9';
+        // Fill cream/light bg or dark bg depending on mode
+        ctx.fillStyle = isDark ? '#1C2621' : '#FAF6EE';
         ctx.fillRect(0, 0, parentWidth, parentHeight);
       }
     };
@@ -111,7 +111,7 @@ export function SketchPad({ onSave, isDark }: Props) {
 
     ctx.beginPath();
     ctx.moveTo(x, y);
-    ctx.strokeStyle = isEraser ? (isDark ? '#1C2621' : '#fcfbf9') : selectedColor;
+    ctx.strokeStyle = isEraser ? (isDark ? '#1C2621' : '#FAF6EE') : selectedColor;
     ctx.lineWidth = brushSize;
     ctx.stroke();
 
@@ -132,7 +132,7 @@ export function SketchPad({ onSave, isDark }: Props) {
     const { x, y } = getCoordinates(e);
 
     ctx.lineTo(x, y);
-    ctx.strokeStyle = isEraser ? (isDark ? '#1C2621' : '#fcfbf9') : selectedColor;
+    ctx.strokeStyle = isEraser ? (isDark ? '#1C2621' : '#FAF6EE') : selectedColor;
     ctx.lineWidth = brushSize;
     ctx.stroke();
   };
@@ -149,7 +149,7 @@ export function SketchPad({ onSave, isDark }: Props) {
     const ctx = canvas?.getContext('2d');
     if (!canvas || !ctx) return;
 
-    ctx.fillStyle = isDark ? '#1C2621' : '#fcfbf9';
+    ctx.fillStyle = isDark ? '#1C2621' : '#FAF6EE';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     saveToHistory();
   };
@@ -191,7 +191,7 @@ export function SketchPad({ onSave, isDark }: Props) {
 
   return (
     <div className="space-y-4" ref={containerRef}>
-      <div className="relative border border-calm-sage-200/60 dark:border-teal-900 rounded-3xl overflow-hidden shadow-inner bg-stone-50 dark:bg-[#1C2621]/90">
+      <div className="relative border border-calm-sage-200 dark:border-teal-900/40 rounded-3xl overflow-hidden shadow-inner bg-stone-50 dark:bg-[#1C2621]/90">
         <canvas
           ref={canvasRef}
           onMouseDown={startDrawing}
@@ -206,13 +206,13 @@ export function SketchPad({ onSave, isDark }: Props) {
         />
         
         {/* Helper layout tags */}
-        <div className="absolute bottom-2 left-3 text-[10px] uppercase tracking-wider font-semibold pointer-events-none opacity-40 text-calm-olive dark:text-[#EBECEB]/50">
+        <div className="absolute bottom-2 left-3 text-[10px] uppercase tracking-wider font-semibold pointer-events-none text-calm-olive/50 dark:text-[#EBECEB]/60">
           Lienzo de Incubación
         </div>
       </div>
 
       {/* Toolbox: Colors, Sizes, Clear */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 p-3 bg-white/70 dark:bg-[#1C2621]/80 backdrop-blur-md rounded-2xl border border-calm-sage-100/60 dark:border-teal-900 shadow-sm">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 p-3 bg-calm-cream/90 dark:bg-[#1C2621]/80 backdrop-blur-md rounded-2xl border border-calm-sage-200 dark:border-teal-900/40 shadow-sm">
         {/* Colors selector */}
         <div className="flex items-center gap-1.5 flex-wrap">
           {COLORS.map((col) => {
@@ -224,8 +224,8 @@ export function SketchPad({ onSave, isDark }: Props) {
                   setSelectedColor(col.value);
                   setIsEraser(false);
                 }}
-                className={`w-8 h-8 rounded-full border flex items-center justify-center transition-all ${
-                  isSelected ? 'scale-110 ring-2 ring-teal-500/50 border-teal-500' : 'border-stone-200 dark:border-teal-950 hover:scale-105'
+                className={`w-8 h-8 rounded-full border flex items-center justify-center transition-all cursor-pointer ${
+                  isSelected ? 'scale-110 ring-2 ring-calm-emeraldsea/50 border-calm-emeraldsea' : 'border-stone-200 dark:border-teal-950/40 hover:scale-105'
                 }`}
                 style={{ backgroundColor: col.value }}
                 title={col.name}
@@ -239,7 +239,7 @@ export function SketchPad({ onSave, isDark }: Props) {
             className={`px-3 py-1.5 rounded-full border text-xs font-semibold transition-all cursor-pointer ${
               isEraser 
                 ? 'bg-calm-sage-500 text-white border-calm-sage-600' 
-                : 'bg-white dark:bg-[#1C2621] text-calm-olive dark:text-stone-200 border-stone-200 dark:border-teal-950 hover:bg-stone-50 dark:hover:bg-[#25322B]'
+                : 'bg-white dark:bg-[#1C2621] text-calm-olive dark:text-stone-200 border-stone-200 dark:border-teal-950/40 hover:bg-stone-50 dark:hover:bg-[#25322B]'
             }`}
           >
             Borrador
@@ -249,28 +249,28 @@ export function SketchPad({ onSave, isDark }: Props) {
         {/* Brush Size / Actions */}
         <div className="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-start">
           <div className="flex items-center gap-2">
-            <span className="text-[11px] font-bold text-calm-sage-700 dark:text-teal-400 uppercase tracking-widest">Grosor:</span>
+            <span className="text-[11px] font-bold text-calm-sage-700 dark:text-calm-duckegg uppercase tracking-widest">Grosor:</span>
             <input
               type="range"
               min="1"
               max="20"
               value={brushSize}
               onChange={(e) => setBrushSize(parseInt(e.target.value))}
-              className="w-20 accent-calm-sage-500 h-1 bg-stone-200 dark:bg-teal-950 rounded-lg cursor-pointer"
+              className="w-20 accent-calm-sage-500 h-1 bg-stone-200 dark:bg-teal-950/40 rounded-lg cursor-pointer"
             />
           </div>
 
           <div className="flex items-center gap-1.5">
             <button
               onClick={undo}
-              className="p-2 text-calm-sage-600 dark:text-[#EBECEB]/70 hover:text-calm-sage-900 dark:hover:text-white bg-white dark:bg-[#1C2621]/50 hover:bg-stone-50 dark:hover:bg-[#25322B] border border-stone-200 dark:border-teal-950 rounded-xl transition-all cursor-pointer"
+              className="p-2 text-calm-sage-600 dark:text-[#EBECEB]/70 hover:text-calm-sage-900 dark:hover:text-white bg-white dark:bg-[#1C2621]/50 hover:bg-stone-50 dark:hover:bg-[#25322B] border border-stone-200 dark:border-teal-950/40 rounded-xl transition-all cursor-pointer"
               title="Deshacer"
             >
               <RotateCcw size={16} />
             </button>
             <button
               onClick={clearCanvas}
-              className="p-2 text-rose-500 hover:text-rose-700 bg-white dark:bg-[#1C2621]/50 hover:bg-rose-50 dark:hover:bg-rose-950/20 border border-stone-200 dark:border-teal-950 rounded-xl transition-all cursor-pointer"
+              className="p-2 text-rose-500 hover:text-rose-700 bg-white dark:bg-[#1C2621]/50 hover:bg-rose-50 dark:hover:bg-rose-950/20 border border-stone-200 dark:border-teal-950/40 rounded-xl transition-all cursor-pointer"
               title="Borrar todo"
             >
               <Trash2 size={16} />
@@ -281,7 +281,7 @@ export function SketchPad({ onSave, isDark }: Props) {
 
       <button
         onClick={handleExport}
-        className="w-full py-3 bg-teal-500 hover:bg-teal-600 active:scale-[0.99] text-white rounded-2xl font-bold text-sm tracking-wide flex items-center justify-center space-x-2 transition-all shadow-md shadow-teal-100/50 dark:shadow-none cursor-pointer"
+        className="w-full py-3 bg-calm-sage-500 hover:bg-calm-sage-600 active:scale-[0.99] text-white rounded-2xl font-bold text-sm tracking-wide flex items-center justify-center space-x-2 transition-all shadow-md shadow-calm-sage-200/50 dark:shadow-none cursor-pointer"
       >
         <Check size={16} />
         <span>Añadir Boceto Visual a la Lluvia</span>

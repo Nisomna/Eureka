@@ -29,4 +29,5 @@ export interface AppState {
   despejeStartTime: number | null;
   despejeDayPlan: string | null;
   historicalTasks: HistoricalTask[];
+  isQuotaActive?: boolean;
 }

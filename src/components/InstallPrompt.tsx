@@ -43,26 +43,26 @@ export function InstallPrompt() {
           exit={{ y: 100, opacity: 0 }}
           className="fixed bottom-6 left-6 right-6 z-50 md:left-auto md:max-w-sm"
         >
-          <div className="bg-white border border-teal-100 shadow-2xl rounded-2xl p-4 flex items-center justify-between space-x-4">
+          <div className="bg-white dark:bg-[#1E2B25] border border-calm-sage-200 dark:border-teal-900/40 shadow-2xl rounded-2xl p-4 flex items-center justify-between space-x-4">
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-teal-100 text-teal-600 rounded-xl flex items-center justify-center">
+              <div className="w-10 h-10 bg-calm-duckegg/20 dark:bg-[#111A16] text-calm-emeraldsea dark:text-calm-duckegg rounded-xl flex items-center justify-center">
                 <Download size={20} />
               </div>
               <div>
-                <h4 className="font-bold text-slate-800 text-sm">Instalar Incubapp</h4>
-                <p className="text-slate-500 text-xs text-balance">Accede más rápido desde tu pantalla de inicio.</p>
+                <h4 className="font-bold text-calm-olive dark:text-white text-sm">Instalar Incubapp</h4>
+                <p className="text-calm-sage-600 dark:text-[#EBECEB]/60 text-xs text-balance">Accede más rápido desde tu pantalla de inicio.</p>
               </div>
             </div>
             <div className="flex items-center space-x-2">
               <button
                 onClick={handleInstall}
-                className="bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-xl text-sm font-bold transition-colors"
+                className="bg-calm-sage-500 hover:bg-calm-sage-600 text-white px-4 py-2 rounded-xl text-sm font-bold transition-colors cursor-pointer"
               >
                 Instalar
               </button>
               <button
                 onClick={() => setShowPrompt(false)}
-                className="p-2 text-slate-400 hover:text-slate-600"
+                className="p-2 text-calm-sage-600 dark:text-[#EBECEB]/50 hover:text-calm-olive dark:hover:text-white cursor-pointer"
               >
                 <X size={20} />
               </button>

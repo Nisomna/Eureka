@@ -77,6 +77,7 @@ const initialState: AppState = {
   despejeStartTime: null,
   despejeDayPlan: null,
   historicalTasks: [],
+  isQuotaActive: false,
 };
 
 export default function App() {
@@ -85,22 +86,14 @@ export default function App() {
   const [loading, setLoading] = useState(true);
   const [showBreathingModal, setShowBreathingModal] = useState(false);
   const [breathState, setBreathState] = useState<'Inhala' | 'Retén' | 'Exhala'>('Inhala');
-  const [isDark, setIsDark] = useState<boolean>(() => {
-    const saved = localStorage.getItem('theme');
-    return saved === 'dark';
-  });
+  const isDark = true;
   const [showNotificationsDrawer, setShowNotificationsDrawer] = useState(false);
   const [selectedHistoricalTask, setSelectedHistoricalTask] = useState<any | null>(null);
 
   useEffect(() => {
-    if (isDark) {
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
-    }
-  }, [isDark]);
+    document.documentElement.classList.add('dark');
+    localStorage.setItem('theme', 'dark');
+  }, []);
 
   useEffect(() => {
     let breathTimer: NodeJS.Timeout;
@@ -229,16 +222,16 @@ export default function App() {
   };
 
   const navigationSteps = [
-    { id: 'home' as Phase, label: 'Inicio', icon: Compass, colorClass: 'text-emerald-500' },
-    { id: 'afinar' as Phase, label: '1. Afinar', icon: Target, colorClass: 'text-amber-500' },
-    { id: 'despeje' as Phase, label: '2. Despejar', icon: Wind, colorClass: 'text-indigo-500' },
-    { id: 'eureka' as Phase, label: '3. Eureka', icon: Lightbulb, colorClass: 'text-teal-500' },
-    { id: 'aplicacion' as Phase, label: '4. Aplicar', icon: PenTool, colorClass: 'text-purple-500' },
+    { id: 'home' as Phase, label: 'Inicio', icon: Compass, colorClass: 'text-calm-emeraldsea' },
+    { id: 'afinar' as Phase, label: '1. Afinar', icon: Target, colorClass: 'text-calm-butterscotch' },
+    { id: 'despeje' as Phase, label: '2. Despejar', icon: Wind, colorClass: 'text-calm-smoke' },
+    { id: 'eureka' as Phase, label: '3. Eureka', icon: Lightbulb, colorClass: 'text-calm-coral' },
+    { id: 'aplicacion' as Phase, label: '4. Aplicar', icon: PenTool, colorClass: 'text-calm-emeraldsea' },
   ];
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#fbfaf7] dark:bg-[#111A16] flex flex-col items-center justify-center space-y-4">
+      <div className="min-h-screen bg-calm-cream dark:bg-[#111A16] flex flex-col items-center justify-center space-y-4">
         <div className="relative flex items-center justify-center">
           <div className="w-16 h-16 border-4 border-calm-sage-200 dark:border-teal-900 border-t-calm-sage-500 rounded-full animate-spin"></div>
           <div className="absolute w-8 h-8 rounded-full bg-calm-sage-200 dark:bg-teal-900/40 animate-breath"></div>
@@ -251,17 +244,17 @@ export default function App() {
   return (
     <div className="min-h-screen creative-calm-backdrop text-calm-olive dark:text-[#E6EAE7] font-sans overflow-hidden flex flex-col relative">
       {/* Decorative Orbs */}
-      <div className="absolute -top-40 -left-40 w-96 h-96 rounded-full bg-emerald-100/35 filter blur-3xl pointer-events-none"></div>
-      <div className="absolute -bottom-40 -right-40 w-96 h-96 rounded-full bg-amber-100/35 filter blur-3xl pointer-events-none"></div>
+      <div className="absolute -top-40 -left-40 w-96 h-96 rounded-full bg-calm-duckegg/20 dark:bg-[#1E2B25]/20 filter blur-3xl pointer-events-none"></div>
+      <div className="absolute -bottom-40 -right-40 w-96 h-96 rounded-full bg-calm-blush/15 dark:bg-[#111A16]/10 filter blur-3xl pointer-events-none"></div>
 
       {/* Header */}
       <header className="py-4 md:py-6 flex items-center justify-between border-b border-calm-sage-100/60 dark:border-teal-950 px-6 max-w-5xl mx-auto w-full z-10">
         <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 rounded-full bg-teal-50 dark:bg-teal-950 border border-teal-100/80 dark:border-teal-900 flex items-center justify-center shadow-sm">
-            <Sparkles className="text-teal-600 dark:text-teal-400 w-5 h-5 animate-float" />
+          <div className="w-10 h-10 rounded-full bg-calm-duckegg/20 dark:bg-[#1C2621] border border-calm-duckegg/60 dark:border-teal-900/40 flex items-center justify-center shadow-sm">
+            <Sparkles className="text-calm-emeraldsea dark:text-calm-duckegg w-5 h-5 animate-float" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold tracking-tight bg-gradient-to-r from-teal-700 to-emerald-700 dark:from-teal-400 dark:to-emerald-450 bg-clip-text text-transparent serif-title">
+            <h1 className="text-2xl font-bold tracking-tight bg-gradient-to-r from-calm-emeraldsea to-calm-sage-700 dark:from-calm-duckegg dark:to-calm-emeraldsea bg-clip-text text-transparent serif-title">
               Incubapp
             </h1>
             <p className="text-[10px] tracking-widest text-calm-sage-600/80 dark:text-[#EBECEB]/40 uppercase font-semibold">Creative Calm Nest</p>
@@ -275,28 +268,19 @@ export default function App() {
               onClick={() => setShowBreathingModal(true)}
               className="hidden sm:flex items-center space-x-2 px-3 py-1.5 rounded-full border border-calm-sage-200 dark:border-teal-900 bg-white/60 dark:bg-[#1C2621]/60 hover:bg-white dark:hover:bg-[#1C2621] text-xs text-calm-sage-700 dark:text-[#EBECEB] transition-all shadow-sm cursor-pointer"
             >
-              <div className="w-2.5 h-2.5 rounded-full bg-teal-400 animate-pulse"></div>
+              <div className="w-2.5 h-2.5 rounded-full bg-calm-emeraldsea animate-pulse"></div>
               <span className="font-semibold">Espacio de Alivio</span>
-            </button>
-
-            {/* Dark/Light mode toggle */}
-            <button
-              onClick={() => setIsDark(!isDark)}
-              className="p-2.5 text-calm-sage-600 dark:text-[#EBECEB]/65 hover:text-teal-600 dark:hover:text-teal-400 rounded-full bg-white/50 dark:bg-[#18221D]/55 hover:bg-white dark:hover:bg-[#1C2621] border border-transparent hover:border-calm-sage-100 dark:hover:border-teal-900 transition-all shadow-sm cursor-pointer"
-              title={isDark ? "Cambiar a modo claro" : "Cambiar a modo oscuro"}
-            >
-              {isDark ? <Sun size={17} /> : <Moon size={17} />}
             </button>
 
             {/* Notification Bell with Badge */}
             <button
               onClick={() => setShowNotificationsDrawer(true)}
-              className="p-2.5 text-calm-sage-600 dark:text-[#EBECEB]/65 hover:text-teal-650 dark:hover:text-[#90C2A0] rounded-full bg-white/50 dark:bg-[#18221D]/55 hover:bg-white dark:hover:bg-[#1C2621] border border-transparent hover:border-calm-sage-100 dark:hover:border-teal-900 transition-all shadow-sm relative cursor-pointer"
+              className="p-2.5 text-calm-sage-600 dark:text-[#EBECEB]/65 hover:text-calm-emeraldsea dark:hover:text-[#90C2A0] rounded-full bg-white/50 dark:bg-[#18221D]/55 hover:bg-white dark:hover:bg-[#1C2621] border border-transparent hover:border-calm-sage-100 dark:hover:border-teal-900 transition-all shadow-sm relative cursor-pointer"
               title="Centro de Notificaciones / Planes Pendientes"
             >
               <Bell size={17} />
               {state.historicalTasks && state.historicalTasks.filter(t => !t.completed).length > 0 && (
-                <span className="absolute top-1.5 right-1.5 min-w-[16px] h-4 text-[9px] font-black text-white bg-indigo-500 rounded-full flex items-center justify-center px-1">
+                <span className="absolute top-1.5 right-1.5 min-w-[16px] h-4 text-[9px] font-black text-white bg-calm-emeraldsea rounded-full flex items-center justify-center px-1">
                   {state.historicalTasks.filter(t => !t.completed).length}
                 </span>
               )}
@@ -334,7 +318,7 @@ export default function App() {
       {/* Floating Bottom Navigation (Menu Interactivo por Iconos) */}
       {auth.currentUser && phase !== 'login' && (
         <div className="fixed bottom-6 inset-x-0 mx-auto max-w-md w-11/12 z-40">
-          <div className="bg-white/80 dark:bg-[#1E2B25]/85 backdrop-blur-xl border border-calm-sage-100 dark:border-teal-950 rounded-full p-2 flex items-center justify-around shadow-xl shadow-calm-sage-200/40 dark:shadow-black/50">
+          <div className="bg-calm-cream/90 dark:bg-[#1E2B25]/85 backdrop-blur-xl border border-calm-sage-200 dark:border-teal-950 rounded-full p-2 flex items-center justify-around shadow-xl shadow-calm-sage-200/40 dark:shadow-black/50">
             {navigationSteps.map((step) => {
               const Icon = step.icon;
               const isActive = phase === step.id;
@@ -346,15 +330,15 @@ export default function App() {
                   onClick={() => setPhase(step.id)}
                   className={`relative flex flex-col items-center justify-center p-3 rounded-full transition-all group cursor-pointer ${
                     isActive
-                      ? `scale-110 bg-calm-sage-100 dark:bg-teal-950 text-calm-sage-700 dark:text-teal-300 shadow-md`
-                      : 'text-calm-sage-600/70 dark:text-[#EBECEB]/65 hover:text-calm-olive dark:hover:text-white hover:bg-calm-sage-50/50 dark:hover:bg-teal-950/40'
+                      ? `scale-110 bg-calm-duckegg/25 dark:bg-[#1C2621]/90 text-calm-emeraldsea dark:text-calm-duckegg shadow-md`
+                      : 'text-calm-sage-600/70 dark:text-[#EBECEB]/65 hover:text-calm-olive dark:hover:text-white hover:bg-calm-sage-50/50 dark:hover:bg-[#1C2621]/40'
                   }`}
                 >
                   {/* Glowing line indicators */}
                   {isActive && (
                     <motion.div
                       layoutId="activeIndicator"
-                      className="absolute -top-1 w-6 h-1 rounded-full bg-teal-600 dark:bg-teal-450"
+                      className="absolute -top-1 w-6 h-1 rounded-full bg-calm-emeraldsea dark:bg-calm-duckegg"
                       transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                     />
                   )}
@@ -364,7 +348,7 @@ export default function App() {
 
                   {/* Micro-dot for step complete configuration */}
                   {isDone && (
-                    <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-emerald-500 ring-2 ring-white dark:ring-[#1E2B25]"></span>
+                    <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-calm-emeraldsea ring-2 ring-white dark:ring-[#1E2B25]"></span>
                   )}
 
                   {/* Subtle Tooltip Label */}
@@ -391,14 +375,14 @@ export default function App() {
               initial={{ scale: 0.9, y: 15 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 15 }}
-              className="bg-[#fbfaf7] dark:bg-[#17221D] p-8 rounded-[32px] border border-calm-sage-100 dark:border-teal-900/60 shadow-2xl max-w-sm w-full text-center space-y-8 relative"
+              className="bg-calm-cream dark:bg-[#17221D] p-8 rounded-[32px] border border-calm-sage-200 dark:border-teal-900/40 shadow-2xl max-w-sm w-full text-center space-y-8 relative"
             >
               <div className="space-y-2">
-                <span className="text-2xl font-serif text-calm-sage-600 dark:text-teal-400 italic">Pausa Consciente</span>
+                <span className="text-2xl font-serif text-calm-sage-700 dark:text-calm-duckegg font-extrabold italic">Pausa Consciente</span>
                 <h3 className="text-xl font-bold text-calm-olive dark:text-white">
                   Sincroniza tu Respiración
                 </h3>
-                <p className="text-xs text-calm-olive/60 dark:text-[#EBECEB]/60">
+                <p className="text-xs text-calm-olive/85 dark:text-[#EBECEB]/75 font-medium">
                   Despeja el estrés de tu dia antes de crear o tomar acción.
                 </p>
               </div>
@@ -406,16 +390,16 @@ export default function App() {
               {/* Breathing Animation Orb */}
               <div className="flex items-center justify-center py-6">
                 <div className="relative w-40 h-40 flex items-center justify-center">
-                  <div className={`absolute inset-0 rounded-full bg-teal-100 dark:bg-teal-950 border border-teal-200/50 dark:border-teal-900/45 transition-all duration-[2000ms] ${
+                  <div className={`absolute inset-0 rounded-full bg-calm-duckegg/25 dark:bg-teal-950 border border-calm-duckegg/50 dark:border-teal-900/45 transition-all duration-[2000ms] ${
                     breathState === 'Inhala' ? 'scale-110 opacity-70' :
                     breathState === 'Retén' ? 'scale-115 opacity-80' : 'scale-90 opacity-40'
                   }`}></div>
-                  <div className={`absolute w-28 h-28 rounded-full bg-teal-300/40 dark:bg-teal-900/30 transition-all duration-[2000ms] ${
+                  <div className={`absolute w-28 h-28 rounded-full bg-calm-duckegg/40 dark:bg-teal-900/30 transition-all duration-[2000ms] ${
                     breathState === 'Inhala' ? 'scale-105' :
                     breathState === 'Retén' ? 'scale-110' : 'scale-95'
                   }`}></div>
-                  <div className="absolute flex flex-col items-center justify-center text-teal-800 dark:text-teal-250 font-bold tracking-wider capitalize text-sm">
-                    <Smile className="w-5 h-5 mb-1 text-teal-600 dark:text-teal-450" />
+                  <div className="absolute flex flex-col items-center justify-center text-calm-emeraldsea dark:text-calm-duckegg font-extrabold tracking-wider capitalize text-sm">
+                    <Smile className="w-5 h-5 mb-1 text-calm-emeraldsea dark:text-calm-duckegg" />
                     {breathState}
                   </div>
                 </div>
@@ -423,7 +407,7 @@ export default function App() {
 
               <button
                 onClick={() => setShowBreathingModal(false)}
-                className="w-full py-3.5 bg-calm-sage-500 hover:bg-calm-sage-600 dark:bg-emerald-600 dark:hover:bg-emerald-700 text-white rounded-2xl font-bold text-sm transition-colors shadow-lg shadow-calm-sage-200 dark:shadow-emerald-950/20"
+                className="w-full py-3.5 bg-calm-sage-500 hover:bg-calm-sage-600 dark:bg-calm-sage-500/95 dark:hover:bg-calm-sage-600 text-white rounded-2xl font-bold text-sm transition-colors shadow-lg shadow-calm-sage-200/50 dark:shadow-none"
               >
                 Volver a la calma
               </button>
@@ -449,12 +433,12 @@ export default function App() {
               animate={{ x: 0, opacity: 1 }}
               exit={{ x: '100%', opacity: 0.9 }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="bg-[#fbfaf7] dark:bg-[#151E1A] h-full w-full sm:max-w-md shadow-2xl relative z-10 flex flex-col sm:rounded-[32px] border-l sm:border border-calm-sage-100 dark:border-teal-900/60 overflow-hidden"
+              className="bg-calm-cream dark:bg-[#151E1A] h-full w-full sm:max-w-md shadow-2xl relative z-10 flex flex-col sm:rounded-[32px] border-l sm:border border-calm-sage-200 dark:border-teal-900/40 overflow-hidden"
             >
               {/* Header */}
-              <div className="p-6 border-b border-calm-sage-100/60 dark:border-teal-950 flex items-center justify-between shrink-0">
+              <div className="p-6 border-b border-calm-sage-100/60 dark:border-teal-950/40 flex items-center justify-between shrink-0">
                 <div className="flex items-center space-x-2.5">
-                  <div className="w-10 h-10 rounded-full bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-full bg-calm-duckegg/25 dark:bg-teal-950/40 text-calm-emeraldsea dark:text-calm-duckegg flex items-center justify-center">
                     <History size={18} />
                   </div>
                   <div>
@@ -464,7 +448,7 @@ export default function App() {
                 </div>
                 <button
                   onClick={() => setShowNotificationsDrawer(false)}
-                  className="p-2.5 hover:bg-stone-100 dark:hover:bg-[#1C2621] text-calm-sage-600 dark:text-[#EBECEB]/50 rounded-full transition-all cursor-pointer"
+                  className="p-2.5 hover:bg-stone-100 dark:hover:bg-[#1C2621] text-calm-sage-600 dark:text-[#EBECEB]/75 rounded-full transition-all cursor-pointer"
                 >
                   <X size={18} />
                 </button>
@@ -474,12 +458,12 @@ export default function App() {
               <div className="flex-1 overflow-y-auto p-6 space-y-4">
                 {!state.historicalTasks || state.historicalTasks.length === 0 ? (
                   <div className="h-full flex flex-col items-center justify-center text-center p-4 space-y-4">
-                    <div className="w-14 h-14 rounded-full bg-stone-100 dark:bg-[#1C2621] text-stone-350 dark:text-teal-900 flex items-center justify-center animate-pulse">
+                    <div className="w-14 h-14 rounded-full bg-calm-duckegg/20 dark:bg-[#1C2621]/95 text-calm-sage-600 dark:text-calm-duckegg flex items-center justify-center animate-pulse">
                       <Bell size={24} />
                     </div>
                     <div className="space-y-1">
                       <h4 className="text-sm font-bold text-calm-olive dark:text-white">¡Bandeja Despejada!</h4>
-                      <p className="text-xs text-calm-olive/50 dark:text-[#EBECEB]/40 max-w-xs leading-relaxed">
+                      <p className="text-xs text-calm-olive/75 dark:text-[#EBECEB]/75 max-w-xs leading-relaxed">
                         No hay tareas pendientes en tus incubaciones. Completa una sesión en la fase "4. Aplicar" para almacenar aquí tu plan inteligente.
                       </p>
                     </div>
@@ -494,8 +478,8 @@ export default function App() {
                         key={task.id}
                         className={`p-4 border rounded-2xl transition-all flex flex-col space-y-3 ${
                           task.completed
-                            ? 'bg-emerald-50/20 dark:bg-emerald-950/10 border-emerald-100 dark:border-emerald-950/30 opacity-75'
-                            : 'bg-white dark:bg-[#18221D] border-calm-sage-100 dark:border-teal-950/80 shadow-sm'
+                            ? 'bg-calm-duckegg/10 dark:bg-[#1E2B25]/30 border-calm-duckegg/40 dark:border-teal-950/50 opacity-75'
+                            : 'bg-calm-cream/95 dark:bg-[#18221D] border-calm-sage-200 dark:border-teal-950/80 shadow-sm'
                         }`}
                       >
                         {/* Task Header info */}
@@ -509,8 +493,8 @@ export default function App() {
                             }}
                             className={`w-6 h-6 rounded-lg border flex items-center justify-center transition-all shrink-0 mt-0.5 cursor-pointer ${
                               task.completed
-                                ? 'bg-emerald-500 border-emerald-500 text-white'
-                                : 'border-stone-250 dark:border-teal-900 bg-white/50 dark:bg-[#1C2621]/45 hover:bg-emerald-50 dark:hover:bg-emerald-950'
+                                ? 'bg-calm-emeraldsea border-calm-emeraldsea text-white'
+                                : 'border-calm-sage-200 dark:border-teal-900 bg-white/50 dark:bg-[#1C2621]/45 hover:bg-calm-duckegg/20 dark:hover:bg-[#1E2B25]'
                             }`}
                             title={task.completed ? "Marcar como pendiente" : "Marcar como completado/resuelto"}
                           >
@@ -518,10 +502,10 @@ export default function App() {
                           </button>
 
                           <div className="flex-1 min-w-0">
-                            <h5 className={`text-xs font-bold text-calm-olive dark:text-white leading-relaxed ${task.completed ? 'line-through text-calm-olive/50 dark:text-[#EBECEB]/40' : ''}`}>
+                            <h5 className={`text-xs font-bold text-calm-olive dark:text-white leading-relaxed ${task.completed ? 'line-through text-calm-olive/60 dark:text-[#EBECEB]/60' : ''}`}>
                               {task.problem}
                             </h5>
-                            <span className="text-[9px] text-calm-olive/40 dark:text-[#EBECEB]/35 block mt-0.5">
+                            <span className="text-[9px] text-calm-olive/60 dark:text-[#EBECEB]/60 block mt-0.5">
                               Creado: {task.date}
                             </span>
                           </div>
@@ -542,7 +526,7 @@ export default function App() {
                         <div>
                           <button
                             onClick={() => setSelectedHistoricalTask(isExpanded ? null : task.id)}
-                            className="text-[10px] font-bold text-indigo-600 hover:text-indigo-800 dark:text-indigo-400 uppercase tracking-wider flex items-center gap-1.5 cursor-pointer"
+                            className="text-[10px] font-bold text-calm-emeraldsea hover:text-calm-sage-600 dark:text-calm-duckegg uppercase tracking-wider flex items-center gap-1.5 cursor-pointer"
                           >
                             <span>{isExpanded ? 'Ocultar Plan' : 'Ver Plan de Acción'}</span>
                           </button>
@@ -551,12 +535,12 @@ export default function App() {
                             <motion.div
                               initial={{ opacity: 0, y: -5 }}
                               animate={{ opacity: 1, y: 0 }}
-                              className="mt-3 p-3 bg-stone-50 dark:bg-[#141C18] rounded-xl border border-stone-150/40 dark:border-teal-950 text-xs space-y-2.5"
+                              className="mt-3 p-3 bg-stone-50 dark:bg-[#141C18] rounded-xl border border-stone-150/40 dark:border-teal-900/30 text-xs space-y-2.5"
                             >
                               <div className="space-y-1">
-                                <span className="text-[9px] uppercase font-bold text-indigo-500 tracking-wider">La Mejor Idea:</span>
+                                <span className="text-[9px] uppercase font-bold text-calm-emeraldsea dark:text-calm-duckegg tracking-wider">La Mejor Idea:</span>
                                 {isSketch ? (
-                                  <div className="p-1 bg-white dark:bg-[#1C2621]/50 border border-stone-200 dark:border-teal-900 rounded-lg inline-block">
+                                  <div className="p-1 bg-white dark:bg-[#1C2621]/50 border border-calm-sage-200 dark:border-teal-900/40 rounded-lg inline-block">
                                     <img 
                                       src={task.idea} 
                                       alt="Boceto guardado" 
@@ -569,7 +553,7 @@ export default function App() {
                                 )}
                               </div>
                               <div className="space-y-1">
-                                <span className="text-[9px] uppercase font-bold text-indigo-500 tracking-wider font-semibold">Pasos de Acción:</span>
+                                <span className="text-[9px] uppercase font-bold text-calm-emeraldsea dark:text-calm-duckegg tracking-wider font-semibold">Pasos de Acción:</span>
                                 <p className="text-calm-olive/80 dark:text-[#EBECEB]/80 font-medium whitespace-pre-wrap leading-relaxed">
                                   {task.plan}
                                 </p>
