@@ -135,28 +135,29 @@ export function Despeje({ setPhase, state, updateState, isDark }: Props) {
       <div className="absolute top-24 right-16 w-1 h-1 rounded-full bg-calm-butterscotch/50 dark:bg-calm-butterscotch/70 opacity-80 animate-pulse delay-500"></div>
       <div className="absolute bottom-32 left-20 w-1 h-1 rounded-full bg-calm-duckegg dark:bg-calm-duckegg/40 opacity-40 animate-pulse delay-1000"></div>
 
-      <div className="flex-1 flex flex-col space-y-6 overflow-hidden">
+      <div className="flex-1 flex flex-col space-y-3 overflow-hidden">
         
-        {/* Step Header */}
-        <div className="text-center space-y-3 mt-2 relative">
-          <div className="inline-flex items-center justify-center p-3 bg-calm-smoke/15 dark:bg-calm-smoke/25 border border-calm-smoke/35 dark:border-calm-smoke/45 text-calm-sage-700 dark:text-calm-duckegg rounded-2xl shadow-sm mb-1 animate-float">
-            <Moon size={24} />
+        {/* Step Header — compacto para maximizar espacio de lista */}
+        <div className="flex items-center justify-between mt-1 relative">
+          <div className="flex items-center space-x-3">
+            <div className="flex-shrink-0 p-2.5 bg-calm-smoke/15 dark:bg-calm-smoke/25 border border-calm-smoke/35 dark:border-calm-smoke/45 text-calm-sage-700 dark:text-calm-duckegg rounded-xl shadow-sm animate-float">
+              <Moon size={20} />
+            </div>
+            <div>
+              <span className="block text-[10px] uppercase tracking-widest text-calm-sage-700 dark:text-calm-duckegg font-extrabold leading-none mb-0.5">Paso 2 de 4</span>
+              <h2 className="text-xl font-bold text-calm-olive dark:text-white serif-title leading-tight">Momento de Despeje</h2>
+            </div>
           </div>
-          <span className="block text-[10px] uppercase tracking-widest text-calm-sage-700 dark:text-calm-duckegg font-extrabold">Paso 2 de 4</span>
-          <h2 className="text-3xl font-bold text-calm-olive dark:text-white serif-title leading-none">Momento de Despeje</h2>
-          <p className="text-calm-olive/95 dark:text-slate-200 text-sm max-w-md mx-auto font-medium">
-            Disuelve la atención focalizada para encender la incubación del hemisferio derecho. Sigue tu plan o realiza actividades sugeridas.
-          </p>
-          
+
           {/* Dev button to skip time */}
           {!isTimeUp && !isGenerating && (
             <button 
               onClick={devSkipTime}
-              className="absolute top-0 right-0 p-2.5 bg-calm-cream hover:bg-white dark:bg-[#1C2621]/90 dark:hover:bg-[#25322B] text-calm-sage-700 dark:text-calm-duckegg border border-calm-sage-200 dark:border-teal-950/60 rounded-xl text-xs flex items-center space-x-1.5 shadow-md transition-all active:scale-95 cursor-pointer font-bold"
+              className="p-2 bg-calm-cream hover:bg-white dark:bg-[#1C2621]/90 dark:hover:bg-[#25322B] text-calm-sage-700 dark:text-calm-duckegg border border-calm-sage-200 dark:border-teal-950/60 rounded-xl text-xs flex items-center space-x-1 shadow-md transition-all active:scale-95 cursor-pointer font-bold flex-shrink-0"
               title="Acelerar incubación mental (24 hrs)"
             >
-              <FastForward size={14} />
-              <span>Simular 24h</span>
+              <FastForward size={13} />
+              <span>24h</span>
             </button>
           )}
         </div>
@@ -197,7 +198,7 @@ export function Despeje({ setPhase, state, updateState, isDark }: Props) {
                 className={`flex-1 py-3.5 px-4 border-b-2 font-extrabold text-sm tracking-wider uppercase transition-colors outline-none cursor-pointer ${
                   showPlan 
                     ? 'border-calm-emeraldsea text-calm-sage-800 dark:border-calm-duckegg dark:text-calm-duckegg' 
-                    : 'border-transparent text-calm-sage-650 dark:text-slate-400 hover:text-calm-olive dark:hover:text-slate-300'
+                    : 'border-transparent text-calm-sage-600 dark:text-slate-400 hover:text-calm-olive dark:hover:text-slate-300'
                 }`}
                 onClick={() => setShowPlan(true)}
               >
@@ -208,7 +209,7 @@ export function Despeje({ setPhase, state, updateState, isDark }: Props) {
                 className={`flex-1 py-3.5 px-4 border-b-2 font-extrabold text-sm tracking-wider uppercase transition-colors outline-none cursor-pointer ${
                   !showPlan 
                     ? 'border-calm-emeraldsea text-calm-sage-800 dark:border-calm-duckegg dark:text-calm-duckegg' 
-                    : 'border-transparent text-calm-sage-650 dark:text-slate-400 hover:text-calm-olive dark:hover:text-slate-300'
+                    : 'border-transparent text-calm-sage-600 dark:text-slate-400 hover:text-calm-olive dark:hover:text-slate-300'
                 }`}
                 onClick={() => setShowPlan(false)}
               >
@@ -233,38 +234,49 @@ export function Despeje({ setPhase, state, updateState, isDark }: Props) {
                   </div>
                 </div>
               ) : (
-                <div className="space-y-4">
+                <div className="space-y-3">
                   {state.despejeActivities.map((rec, idx) => (
                     <motion.div
-                      initial={{ opacity: 0, y: 12 }}
+                      initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: idx * 0.05 }}
                       key={rec.id}
                       onClick={() => toggleActivity(rec.id)}
-                      className={`p-6 sm:p-7 border rounded-3xl transition-all duration-200 cursor-pointer group flex items-start space-x-5 select-none ${
+                      className={`p-4 border rounded-2xl transition-all duration-200 cursor-pointer group flex items-center space-x-4 select-none active:scale-[0.985] ${
                         rec.completed 
-                          ? 'bg-calm-duckegg/25 dark:bg-[#1E2B25]/25 border-calm-duckegg/60 dark:border-teal-900/40 shadow-inner scale-[0.99] opacity-80' 
-                          : 'bg-calm-cream dark:bg-[#18201B] border-calm-sage-200/80 dark:border-teal-950 hover:bg-white dark:hover:bg-[#1E2822] hover:shadow-lg hover:scale-[1.008]'
+                          ? 'bg-calm-duckegg/20 dark:bg-[#1E2B25]/30 border-calm-duckegg/50 dark:border-teal-900/50 opacity-75' 
+                          : 'bg-calm-cream dark:bg-[#18201B] border-calm-sage-200/80 dark:border-teal-950 hover:bg-white dark:hover:bg-[#1E2822] hover:border-calm-duckegg/60 dark:hover:border-teal-800 hover:shadow-md'
                       }`}
                     >
-                      <div className={`mt-1.5 flex-shrink-0 ${rec.completed ? 'text-calm-emeraldsea dark:text-calm-duckegg' : 'text-calm-sage-500 dark:text-slate-400 group-hover:scale-105 transition-transform'}`}>
+                      {/* Checkbox grande y fácil de tocar */}
+                      <div className={`flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center transition-all ${
+                        rec.completed 
+                          ? 'bg-calm-emeraldsea text-white shadow-sm' 
+                          : 'bg-calm-sage-100/60 dark:bg-[#1C2621] border-2 border-calm-sage-200 dark:border-teal-900 text-calm-sage-400 group-hover:border-calm-emeraldsea/60 group-hover:text-calm-emeraldsea/70'
+                      }`}>
                         {rec.completed 
-                          ? <CheckCircle2 size={28} className="stroke-[2.5]" /> 
-                          : <Circle size={28} className="stroke-2" />
+                          ? <CheckCircle2 size={22} className="stroke-[2.5]" /> 
+                          : <Circle size={20} className="stroke-2" />
                         }
                       </div>
+
+                      {/* Icono de actividad */}
+                      <div className={`flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center [&_svg]:w-5 [&_svg]:h-5 ${
+                        rec.completed 
+                          ? 'bg-calm-duckegg/30 dark:bg-[#1E2B25]/50 text-calm-emeraldsea/60' 
+                          : 'bg-calm-sand dark:bg-[#111613] text-calm-emeraldsea dark:text-calm-duckegg border border-calm-duckegg/30 dark:border-teal-900/30'
+                      }`}>
+                        {ICON_MAP[rec.iconId] || <Coffee size={20} />}
+                      </div>
                       
+                      {/* Texto */}
                       <div className="flex-1 min-w-0">
-                        <h3 className={`font-bold text-base sm:text-lg tracking-wide ${rec.completed ? 'text-calm-sage-700/60 dark:text-calm-duckegg line-through opacity-60' : 'text-calm-olive dark:text-white'}`}>
+                        <h3 className={`font-bold text-sm leading-snug ${rec.completed ? 'line-through text-calm-sage-600/50 dark:text-calm-duckegg/50' : 'text-calm-olive dark:text-white'}`}>
                           {rec.title}
                         </h3>
-                        <p className={`text-sm sm:text-base mt-2 leading-relaxed ${rec.completed ? 'text-calm-emeraldsea/55 dark:text-calm-duckegg/40 line-through' : 'text-calm-olive/95 dark:text-[#EBECEB]'}`}>
+                        <p className={`text-xs mt-0.5 leading-relaxed line-clamp-2 ${rec.completed ? 'text-calm-sage-500/50 dark:text-calm-duckegg/35' : 'text-calm-olive/70 dark:text-[#EBECEB]/70'}`}>
                           {rec.desc}
                         </p>
-                      </div>
-
-                      <div className={`p-4 rounded-2xl flex-shrink-0 self-center scale-110 [&_svg]:w-6 [&_svg]:h-6 ${rec.completed ? 'bg-calm-duckegg/30 dark:bg-[#1E2B25]/40 text-calm-emeraldsea' : 'bg-calm-sand dark:bg-[#111613] text-calm-emeraldsea dark:text-calm-duckegg border border-calm-duckegg/30 dark:border-teal-900/20'}`}>
-                        {ICON_MAP[rec.iconId] || <Coffee size={24} />}
                       </div>
                     </motion.div>
                   ))}
@@ -272,29 +284,26 @@ export function Despeje({ setPhase, state, updateState, isDark }: Props) {
               )}
             </div>
 
-            {/* Status & Timer Card */}
-            <div className="bg-calm-sage-100/40 dark:bg-[#151D18] p-4 rounded-2xl border border-calm-sage-200 dark:border-teal-900/50 text-center space-y-2.5 flex-shrink-0 shadow-sm">
+            {/* Status & Timer — compacto */}
+            <div className="bg-calm-sage-100/40 dark:bg-[#151D18] px-4 py-3 rounded-2xl border border-calm-sage-200 dark:border-teal-900/50 text-center flex-shrink-0 shadow-sm">
               {!allCompleted ? (
-                <p className="text-calm-olive dark:text-slate-300 text-[11px] leading-relaxed font-medium">
-                  Completa tu plan o marca cada una de tus actividades personalizadas para relajar tu corteza prefrontal.
+                <p className="text-calm-olive/70 dark:text-slate-400 text-[11px] font-medium">
+                  Toca cada actividad para marcarla como completada.
                 </p>
               ) : !isTimeUp ? (
-                <div className="flex flex-col items-center space-y-1.5">
-                  <p className="text-calm-sage-700 dark:text-calm-duckegg text-xs font-bold flex items-center justify-center gap-1.5">
-                    <CheckCircle2 size={14} className="stroke-[2.5]" /> Actividades listas. Deja reposar la mente.
+                <div className="flex items-center justify-center space-x-3">
+                  <p className="text-calm-sage-700 dark:text-calm-duckegg text-xs font-bold flex items-center gap-1.5">
+                    <CheckCircle2 size={13} className="stroke-[2.5]" /> Listas. Deja reposar la mente.
                   </p>
-                  <div className="flex items-center space-x-2 text-calm-emeraldsea dark:text-calm-duckegg font-mono text-base bg-calm-cream dark:bg-[#1C2621]/80 border border-calm-sage-200 dark:border-teal-950/45 px-3.5 py-1 rounded-full shadow-sm">
-                    <Clock size={16} />
+                  <div className="flex items-center space-x-1.5 text-calm-emeraldsea dark:text-calm-duckegg font-mono text-sm bg-calm-cream dark:bg-[#1C2621]/80 border border-calm-sage-200 dark:border-teal-950/45 px-3 py-1 rounded-full shadow-sm">
+                    <Clock size={13} />
                     <span>{formatTime(timeLeft)}</span>
                   </div>
                 </div>
               ) : (
-                <div className="space-y-1">
-                  <p className="text-calm-sage-700 dark:text-calm-duckegg text-xs font-bold flex items-center justify-center gap-1.5">
-                    <Sparkles size={14} /> ¡Fase de calma e incubación completada!
-                  </p>
-                  <p className="text-[10px] text-calm-olive/85 dark:text-slate-400 font-medium">Es hora de abrir compuertas para las ideas.</p>
-                </div>
+                <p className="text-calm-sage-700 dark:text-calm-duckegg text-xs font-bold flex items-center justify-center gap-1.5">
+                  <Sparkles size={13} /> ¡Incubación completada! Es hora de las ideas.
+                </p>
               )}
             </div>
           </>

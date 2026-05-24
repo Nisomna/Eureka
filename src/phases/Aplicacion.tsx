@@ -51,7 +51,7 @@ export function Aplicacion({ setPhase, state, updateState }: Props) {
         </div>
         <div className="space-y-2">
           <h3 className="text-xl font-bold text-calm-olive dark:text-white serif-title">Faltan Ideas para el Plan</h3>
-          <p className="text-sm text-calm-olive/60 dark:text-silver/60 max-w-xs leading-relaxed">
+          <p className="text-sm text-calm-olive/60 dark:text-[#EBECEB]/60 max-w-xs leading-relaxed">
             Para diseñar un plan de implementación, primero ingresa ideas en el paso de Eureka.
           </p>
         </div>
@@ -245,7 +245,7 @@ export function Aplicacion({ setPhase, state, updateState }: Props) {
          {/* Quality list check boxes - BOOSTED LEGIBILITY */}
          <div className="bg-calm-cream/85 dark:bg-[#1C2621]/80 border border-calm-sage-200/90 dark:border-teal-900/50 p-6 sm:p-7 rounded-3xl space-y-5 shadow-sm">
            <h4 className="text-base font-extrabold text-calm-olive dark:text-calm-duckegg uppercase tracking-wider border-b border-calm-sage-150 dark:border-teal-950/40 pb-2">Filtro de Viabilidad</h4>
-           <div className="space-y-4.5">
+           <div className="space-y-4">
              <label className="flex items-start space-x-4 text-base text-calm-olive dark:text-[#EBECEB] font-semibold cursor-pointer select-none group transition-colors hover:text-calm-emeraldsea dark:hover:text-calm-duckegg">
                <input 
                  type="checkbox" 
@@ -283,7 +283,7 @@ export function Aplicacion({ setPhase, state, updateState }: Props) {
          <button
            type="button"
            onClick={() => setPhase('eureka')}
-           className="p-4.5 rounded-2xl border border-calm-sage-205 dark:border-teal-900 bg-calm-cream dark:bg-[#1C2621]/80 hover:bg-white dark:hover:bg-calm-sage-950 text-calm-olive dark:text-[#EBECEB] transition-colors flex items-center justify-center shadow-sm cursor-pointer"
+           className="p-4 rounded-2xl border border-calm-sage-200 dark:border-teal-900 bg-calm-cream dark:bg-[#1C2621]/80 hover:bg-white dark:hover:bg-calm-sage-950 text-calm-olive dark:text-[#EBECEB] transition-colors flex items-center justify-center shadow-sm cursor-pointer"
            title="Regresar"
          >
            <ArrowLeft size={20} />
@@ -292,7 +292,7 @@ export function Aplicacion({ setPhase, state, updateState }: Props) {
            type="button"
            onClick={handleFinalize}
            disabled={!state.selectedIdea || !state.plan.trim()}
-           className="flex-1 py-4.5 bg-calm-sage-500 hover:bg-calm-sage-600 disabled:bg-calm-sage-100 dark:disabled:bg-teal-950/40 disabled:text-calm-olive/30 dark:disabled:text-[#EBECEB]/25 disabled:cursor-not-allowed disabled:shadow-none dark:shadow-none text-white rounded-2xl font-bold text-base flex items-center justify-center space-x-2.5 transition-all shadow-lg shadow-calm-sage-200/50 cursor-pointer"
+           className="flex-1 py-4 bg-calm-sage-500 hover:bg-calm-sage-600 disabled:bg-calm-sage-100 dark:disabled:bg-teal-950/40 disabled:text-calm-olive/30 dark:disabled:text-[#EBECEB]/25 disabled:cursor-not-allowed disabled:shadow-none dark:shadow-none text-white rounded-2xl font-bold text-base flex items-center justify-center space-x-2.5 transition-all shadow-lg shadow-calm-sage-200/50 cursor-pointer"
          >
            <CheckCircle2 size={20} />
            <span>Finalizar e Incubar</span>
