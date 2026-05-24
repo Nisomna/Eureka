@@ -15,9 +15,10 @@ import { Aplicacion } from './phases/Aplicacion';
 import { auth, db } from './firebase';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { doc, getDoc, setDoc, updateDoc, serverTimestamp } from 'firebase/firestore';
-import { LogOut, Compass, Target, Wind, Lightbulb, PenTool, Sparkles, Check, Smile, Sun, Moon, Bell, Trash2, History, X } from 'lucide-react';
+import { LogOut, Compass, Target, Wind, Lightbulb, PenTool, Sparkles, Check, Smile, Sun, Moon, Bell, Trash2, History, X, Trophy } from 'lucide-react';
 import { InstallPrompt } from './components/InstallPrompt';
 import { Intro } from './components/Intro';
+import { Credits } from './components/Credits';
 import { soundTransition } from './utils/sounds';
 
 enum OperationType {
@@ -91,6 +92,7 @@ export default function App() {
   const isDark = true;
   const [showNotificationsDrawer, setShowNotificationsDrawer] = useState(false);
   const [selectedHistoricalTask, setSelectedHistoricalTask] = useState<any | null>(null);
+  const [showCredits, setShowCredits] = useState(false);
   const [showIntro, setShowIntro] = useState(() => {
     // Solo mostrar la cinemática la primera vez que se abre la app
     return !localStorage.getItem('incubapp_intro_seen');
@@ -125,8 +127,14 @@ export default function App() {
         await loadUserData(user.uid);
         setPhase('home');
       } else {
-        setPhase('login');
-        setState(initialState);
+        const isGuestUser = localStorage.getItem('incubapp_guest_user') === 'true';
+        if (isGuestUser) {
+          await loadUserData('guest');
+          setPhase('home');
+        } else {
+          setPhase('login');
+          setState(initialState);
+        }
       }
       setLoading(false);
     });
@@ -134,6 +142,28 @@ export default function App() {
   }, []);
 
   const loadUserData = async (uid: string) => {
+    if (uid === 'guest') {
+      const guestDataStr = localStorage.getItem('incubapp_guest_data');
+      if (guestDataStr) {
+        try {
+          const data = JSON.parse(guestDataStr);
+          setState((prev) => ({
+            ...prev,
+            interests: data.interests && Array.isArray(data.interests) ? data.interests : [],
+            historicalTasks: data.historicalTasks && Array.isArray(data.historicalTasks) ? data.historicalTasks : [],
+          }));
+        } catch (err) {
+          console.error("Failed to parse guest data:", err);
+        }
+      } else {
+        setState((prev) => ({
+          ...prev,
+          interests: [],
+          historicalTasks: [],
+        }));
+      }
+      return;
+    }
     const userRef = doc(db, 'users', uid);
     try {
       const docSnap = await getDoc(userRef);
@@ -153,12 +183,34 @@ export default function App() {
         });
       }
     } catch (e) {
-      handleFirestoreError(e, OperationType.WRITE, `users/${uid}`);
+      console.warn("Firestore error, falling back seamlessly directly to local fallback storage as Guest/Offline mode for safety:", e);
+      const guestDataStr = localStorage.getItem('incubapp_guest_data') || '{}';
+      try {
+        const data = JSON.parse(guestDataStr);
+        setState((prev) => ({
+          ...prev,
+          interests: data.interests && Array.isArray(data.interests) ? data.interests : [],
+          historicalTasks: data.historicalTasks && Array.isArray(data.historicalTasks) ? data.historicalTasks : [],
+        }));
+      } catch {
+        // ignore
+      }
     }
   };
 
   const syncInterests = async (newInterests: string[]) => {
-    if (!auth.currentUser) return;
+    const isGuestUser = !auth.currentUser || localStorage.getItem('incubapp_guest_user') === 'true';
+    if (isGuestUser) {
+      const guestDataStr = localStorage.getItem('incubapp_guest_data') || '{}';
+      try {
+        const data = JSON.parse(guestDataStr);
+        data.interests = newInterests;
+        localStorage.setItem('incubapp_guest_data', JSON.stringify(data));
+      } catch (err) {
+        console.error(err);
+      }
+      return;
+    }
     const uid = auth.currentUser.uid;
     const userRef = doc(db, 'users', uid);
     try {
@@ -167,12 +219,29 @@ export default function App() {
         updatedAt: serverTimestamp()
       });
     } catch (e) {
-      handleFirestoreError(e, OperationType.WRITE, `users/${uid}`);
+      console.warn("Firestore sync error, saving interests locally instead:", e);
+      const guestDataStr = localStorage.getItem('incubapp_guest_data') || '{}';
+      try {
+        const data = JSON.parse(guestDataStr);
+        data.interests = newInterests;
+        localStorage.setItem('incubapp_guest_data', JSON.stringify(data));
+      } catch {}
     }
   };
 
   const syncHistoricalTasks = async (newTasks: any[]) => {
-    if (!auth.currentUser) return;
+    const isGuestUser = !auth.currentUser || localStorage.getItem('incubapp_guest_user') === 'true';
+    if (isGuestUser) {
+      const guestDataStr = localStorage.getItem('incubapp_guest_data') || '{}';
+      try {
+        const data = JSON.parse(guestDataStr);
+        data.historicalTasks = newTasks;
+        localStorage.setItem('incubapp_guest_data', JSON.stringify(data));
+      } catch (err) {
+        console.error(err);
+      }
+      return;
+    }
     const uid = auth.currentUser.uid;
     const userRef = doc(db, 'users', uid);
     try {
@@ -181,7 +250,13 @@ export default function App() {
         updatedAt: serverTimestamp()
       });
     } catch (e) {
-      handleFirestoreError(e, OperationType.WRITE, `users/${uid}`);
+      console.warn("Firestore sync error, saving historical tasks locally instead:", e);
+      const guestDataStr = localStorage.getItem('incubapp_guest_data') || '{}';
+      try {
+        const data = JSON.parse(guestDataStr);
+        data.historicalTasks = newTasks;
+        localStorage.setItem('incubapp_guest_data', JSON.stringify(data));
+      } catch {}
     }
   };
 
@@ -249,6 +324,7 @@ export default function App() {
 
   return (
     <>
+      {showCredits && <Credits onClose={() => setShowCredits(false)} />}
       {showIntro && <Intro onDone={() => {
         localStorage.setItem('incubapp_intro_seen', '1');
         setShowIntro(false);
@@ -273,36 +349,49 @@ export default function App() {
         </div>
 
         {/* Floating Controls (Breathing Workspace, Theme Light/Dark, Notifications Bell, Log Out) */}
-        {auth.currentUser && phase !== 'login' && (
+        {(auth.currentUser || localStorage.getItem('incubapp_guest_user') === 'true') && phase !== 'login' && (
           <div className="flex items-center space-x-2.5">
             <button
-              onClick={() => setShowBreathingModal(true)}
-              className="hidden sm:flex items-center space-x-2 px-3 py-1.5 rounded-full border border-calm-sage-200 dark:border-teal-900 bg-white/60 dark:bg-[#1C2621]/60 hover:bg-white dark:hover:bg-[#1C2621] text-xs text-calm-sage-700 dark:text-[#EBECEB] transition-all shadow-sm cursor-pointer"
+               onClick={() => setShowBreathingModal(true)}
+               className="hidden sm:flex items-center space-x-2 px-3 py-1.5 rounded-full border border-calm-sage-200 dark:border-teal-900 bg-white/60 dark:bg-[#1C2621]/60 hover:bg-white dark:hover:bg-[#1C2621] text-xs text-calm-sage-700 dark:text-[#EBECEB] transition-all shadow-sm cursor-pointer"
             >
-              <div className="w-2.5 h-2.5 rounded-full bg-calm-emeraldsea animate-pulse"></div>
-              <span className="font-semibold">Espacio de Alivio</span>
+               <div className="w-2.5 h-2.5 rounded-full bg-calm-emeraldsea animate-pulse"></div>
+               <span className="font-semibold">Espacio de Alivio</span>
             </button>
 
             {/* Notification Bell with Badge */}
             <button
-              onClick={() => setShowNotificationsDrawer(true)}
-              className="p-2.5 text-calm-sage-600 dark:text-[#EBECEB]/65 hover:text-calm-emeraldsea dark:hover:text-[#90C2A0] rounded-full bg-white/50 dark:bg-[#18221D]/55 hover:bg-white dark:hover:bg-[#1C2621] border border-transparent hover:border-calm-sage-100 dark:hover:border-teal-900 transition-all shadow-sm relative cursor-pointer"
-              title="Centro de Notificaciones / Planes Pendientes"
+               onClick={() => setShowNotificationsDrawer(true)}
+               className="p-2.5 text-calm-sage-600 dark:text-[#EBECEB]/65 hover:text-calm-emeraldsea dark:hover:text-[#90C2A0] rounded-full bg-white/50 dark:bg-[#18221D]/55 hover:bg-white dark:hover:bg-[#1C2621] border border-transparent hover:border-calm-sage-100 dark:hover:border-teal-900 transition-all shadow-sm relative cursor-pointer"
+               title="Centro de Notificaciones / Planes Pendientes"
             >
-              <Bell size={17} />
-              {state.historicalTasks && state.historicalTasks.filter(t => !t.completed).length > 0 && (
-                <span className="absolute top-1.5 right-1.5 min-w-[16px] h-4 text-[9px] font-black text-white bg-calm-emeraldsea rounded-full flex items-center justify-center px-1">
-                  {state.historicalTasks.filter(t => !t.completed).length}
-                </span>
-              )}
+               <Bell size={17} />
+               {state.historicalTasks && state.historicalTasks.filter(t => !t.completed).length > 0 && (
+                 <span className="absolute top-1.5 right-1.5 min-w-[16px] h-4 text-[9px] font-black text-white bg-calm-emeraldsea rounded-full flex items-center justify-center px-1">
+                   {state.historicalTasks.filter(t => !t.completed).length}
+                 </span>
+               )}
             </button>
 
-            <button 
-              onClick={() => signOut(auth)} 
-              className="p-2.5 text-calm-sage-600 dark:text-[#EBECEB]/55 hover:text-red-500 rounded-full bg-white/50 dark:bg-[#18221D]/55 hover:bg-white dark:hover:bg-[#1C2621] border border-transparent hover:border-calm-sage-200 dark:hover:border-teal-900/60 transition-all shadow-sm cursor-pointer"
-              title="Cerrar sesión"
+            <button
+               onClick={() => setShowCredits(true)}
+               className="p-2.5 text-calm-sage-600 dark:text-[#EBECEB]/55 hover:text-calm-butterscotch rounded-full bg-white/50 dark:bg-[#18221D]/55 hover:bg-white dark:hover:bg-[#1C2621] border border-transparent hover:border-calm-sage-200 dark:hover:border-teal-900/60 transition-all shadow-sm cursor-pointer"
+               title="Créditos"
             >
-              <LogOut size={16} />
+               <Trophy size={16} />
+            </button>
+            <button 
+               onClick={() => {
+                 localStorage.removeItem('incubapp_guest_user');
+                 signOut(auth).finally(() => {
+                   setPhase('login');
+                   setState(initialState);
+                 });
+               }} 
+               className="p-2.5 text-calm-sage-600 dark:text-[#EBECEB]/55 hover:text-red-500 rounded-full bg-white/50 dark:bg-[#18221D]/55 hover:bg-white dark:hover:bg-[#1C2621] border border-transparent hover:border-calm-sage-200 dark:hover:border-teal-900/60 transition-all shadow-sm cursor-pointer"
+               title="Cerrar sesión"
+            >
+               <LogOut size={16} />
             </button>
           </div>
         )}
@@ -327,7 +416,7 @@ export default function App() {
       </main>
 
       {/* Floating Bottom Navigation (Menu Interactivo por Iconos) */}
-      {auth.currentUser && phase !== 'login' && (
+      {(auth.currentUser || localStorage.getItem('incubapp_guest_user') === 'true') && phase !== 'login' && (
         <div className="fixed bottom-6 inset-x-0 mx-auto max-w-md w-11/12 z-40">
           <div className="bg-calm-cream/90 dark:bg-[#1E2B25]/85 backdrop-blur-xl border border-calm-sage-200 dark:border-teal-950 rounded-full p-2 flex items-center justify-around shadow-xl shadow-calm-sage-200/40 dark:shadow-black/50">
             {navigationSteps.map((step) => {

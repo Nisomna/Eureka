@@ -25,9 +25,11 @@ export function Login({ setPhase, onLoginSuccess }: Props) {
       let message = "Ocurrió un error al intentar iniciar sesión.";
       
       if (e.code === 'auth/popup-blocked') {
-        message = "El navegador bloqueó la ventana emergente. Por favor, permite las ventanas emergentes para este sitio.";
+        message = "El navegador bloqueó la ventana emergente. Por favor, permite las ventanas emergentes en este sitio.";
       } else if (e.code === 'auth/unauthorized-domain') {
-        message = "Este dominio no está autorizado para la autenticación de Firebase. Debes añadirlo en la consola de Firebase.";
+        message = "Este dominio no está autorizado para Firebase Auth. Activa o usa el modo local sin conexión.";
+      } else if (e.code === 'auth/network-request-failed' || e.message?.includes('network-request-failed')) {
+        message = "Fallo de conexión de red con los servidores de autenticación. Puedes continuar usando el 'Modo local offline' a continuación sin perder tus funcionalidades.";
       } else if (e.message) {
         message = e.message;
       }
@@ -36,6 +38,12 @@ export function Login({ setPhase, onLoginSuccess }: Props) {
     } finally {
       setIsLoggingIn(false);
     }
+  };
+
+  const handleGuestLogin = () => {
+    localStorage.setItem('incubapp_guest_user', 'true');
+    onLoginSuccess('guest');
+    setPhase('home');
   };
 
   return (
@@ -57,7 +65,7 @@ export function Login({ setPhase, onLoginSuccess }: Props) {
         </p>
       </div>
 
-      <div className="w-full pt-4 space-y-4">
+      <div className="w-full pt-2 space-y-4">
         {error && (
           <div className="p-4 bg-red-50 dark:bg-red-950/20 border border-red-100 dark:border-red-900/50 rounded-2xl flex items-start space-x-3 text-red-600 dark:text-red-400 text-xs">
             <AlertCircle size={18} className="shrink-0 mt-0.5" />
@@ -76,6 +84,15 @@ export function Login({ setPhase, onLoginSuccess }: Props) {
             <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" className="w-5 h-5" />
           )}
           <span>{isLoggingIn ? 'Iniciando sesión...' : 'Comenzar con Google'}</span>
+        </button>
+
+        <button
+          type="button"
+          onClick={handleGuestLogin}
+          disabled={isLoggingIn}
+          className="w-full py-3.5 bg-transparent hover:bg-calm-cream/20 dark:hover:bg-white/5 border border-dashed border-calm-sage-300 dark:border-teal-900/60 text-calm-olive/80 dark:text-[#EBECEB]/80 rounded-2xl font-bold text-sm flex items-center justify-center space-x-2 transition-all cursor-pointer"
+        >
+          <span>Continuar sin cuenta (Modo local offline)</span>
         </button>
       </div>
 
