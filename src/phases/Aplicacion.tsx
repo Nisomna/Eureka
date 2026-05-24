@@ -4,6 +4,7 @@ import { ArrowLeft, PenTool, CheckCircle2, Bot, Sparkles, AlertCircle, Smile } f
 import { getIdeaAdvice } from '../services/ai';
 import ReactMarkdown from 'react-markdown';
 import { motion } from 'motion/react';
+import { soundTap, soundTransition, soundSuccess, soundCheck } from '../utils/sounds';
 
 interface Props {
   setPhase: (phase: Phase) => void;
@@ -56,7 +57,7 @@ export function Aplicacion({ setPhase, state, updateState }: Props) {
           </p>
         </div>
         <button
-          onClick={() => setPhase('eureka')}
+          onClick={() => { soundTap(); setPhase('eureka'); }}
           className="py-3 px-6 bg-calm-sage-500 hover:bg-calm-sage-600 text-white font-bold text-sm rounded-xl transition-colors shadow-md shadow-calm-sage-200/50 dark:shadow-none cursor-pointer"
         >
           Generar Ideas en Eureka
@@ -67,6 +68,7 @@ export function Aplicacion({ setPhase, state, updateState }: Props) {
 
   const handleFinalize = () => {
     if (!state.selectedIdea || !state.plan.trim()) return;
+    soundSuccess();
 
     const newTask = {
       id: Date.now().toString(),
@@ -125,15 +127,14 @@ export function Aplicacion({ setPhase, state, updateState }: Props) {
 
   return (
     <div className="flex flex-col h-full overflow-y-auto pb-24 px-1">
-      {/* Step Header */}
-      <div className="flex items-center space-x-3 mb-6 pt-4">
-        <div className="p-3 bg-calm-emeraldsea/15 border border-calm-emeraldsea/35 dark:bg-calm-emeraldsea/25 dark:border-calm-emeraldsea/45 text-calm-emeraldsea rounded-2xl shadow-sm animate-float">
-          <PenTool size={24} />
+      {/* Header compacto */}
+      <div className="flex items-center space-x-3 pt-3 mb-4">
+        <div className="p-2.5 bg-calm-emeraldsea/15 border border-calm-emeraldsea/35 dark:bg-calm-emeraldsea/20 text-calm-emeraldsea rounded-xl shadow-sm animate-float shrink-0">
+          <PenTool size={20} />
         </div>
         <div>
-          <span className="text-[10px] uppercase tracking-widest text-calm-emeraldsea dark:text-calm-duckegg font-extrabold">Paso 4 de 4</span>
-          <h2 className="text-3xl font-bold text-calm-olive dark:text-[#EBECEB] serif-title">Aplicar y Planificar</h2>
-          <p className="text-sm text-calm-olive/95 dark:text-slate-200 font-semibold mt-1">Estructura pasos concretos para manifestar la idea</p>
+          <span className="text-[10px] uppercase tracking-widest text-calm-emeraldsea dark:text-calm-duckegg font-extrabold leading-none">Paso 4 de 4</span>
+          <h2 className="text-2xl font-bold text-calm-olive dark:text-[#EBECEB] serif-title leading-tight">Aplicar y Planificar</h2>
         </div>
       </div>
 
@@ -250,7 +251,7 @@ export function Aplicacion({ setPhase, state, updateState }: Props) {
                <input 
                  type="checkbox" 
                  checked={checks.solve}
-                 onChange={() => setChecks(p => ({ ...p, solve: !p.solve }))}
+                 onChange={() => { soundCheck(); setChecks(p => ({ ...p, solve: !p.solve })); }}
                  className="w-6 h-6 rounded-lg text-calm-emeraldsea dark:text-calm-duckegg focus:ring-calm-emeraldsea border-calm-sage-300 dark:border-teal-900 cursor-pointer mt-0.5 shrink-0 scale-110 accent-calm-emeraldsea" 
                />
                <span className="leading-snug">¿Resuelve genuinamente el problema original planteado?</span>
@@ -259,7 +260,7 @@ export function Aplicacion({ setPhase, state, updateState }: Props) {
                <input 
                  type="checkbox" 
                  checked={checks.restrictions}
-                 onChange={() => setChecks(p => ({ ...p, restrictions: !p.restrictions }))}
+                 onChange={() => { soundCheck(); setChecks(p => ({ ...p, restrictions: !p.restrictions })); }}
                  className="w-6 h-6 rounded-lg text-calm-emeraldsea dark:text-calm-duckegg focus:ring-calm-emeraldsea border-calm-sage-300 dark:border-teal-900 cursor-pointer mt-0.5 shrink-0 scale-110 accent-calm-emeraldsea" 
                />
                <span className="leading-snug">¿Cumple y respeta las restricciones de tiempo de incubación o de estilo?</span>
@@ -268,7 +269,7 @@ export function Aplicacion({ setPhase, state, updateState }: Props) {
                <input 
                  type="checkbox" 
                  checked={checks.feasible}
-                 onChange={() => setChecks(p => ({ ...p, feasible: !p.feasible }))}
+                 onChange={() => { soundCheck(); setChecks(p => ({ ...p, feasible: !p.feasible })); }}
                  className="w-6 h-6 rounded-lg text-calm-emeraldsea dark:text-calm-duckegg focus:ring-calm-emeraldsea border-calm-sage-300 dark:border-teal-900 cursor-pointer mt-0.5 shrink-0 scale-110 accent-calm-emeraldsea" 
                />
                <span className="leading-snug">¿Es factible tomar el primer paso hoy mismo?</span>
@@ -282,7 +283,7 @@ export function Aplicacion({ setPhase, state, updateState }: Props) {
        <div className="pt-6 flex space-x-3.5">
          <button
            type="button"
-           onClick={() => setPhase('eureka')}
+           onClick={() => { soundTap(); setPhase('eureka'); }}
            className="p-4 rounded-2xl border border-calm-sage-200 dark:border-teal-900 bg-calm-cream dark:bg-[#1C2621]/80 hover:bg-white dark:hover:bg-calm-sage-950 text-calm-olive dark:text-[#EBECEB] transition-colors flex items-center justify-center shadow-sm cursor-pointer"
            title="Regresar"
          >

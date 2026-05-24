@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Phase, AppState } from '../types';
 import { ArrowRight, ArrowLeft, Lightbulb, Plus, Shuffle, Sparkles, AlertCircle, Edit3, Image as ImageIcon } from 'lucide-react';
 import { motion } from 'motion/react';
+import { soundTap, soundTransition, soundIdeaAdded } from '../utils/sounds';
 import { SketchPad } from '../components/SketchPad';
 
 interface Props {
@@ -86,6 +87,7 @@ export function Eureka({ setPhase, state, updateState, isDark }: Props) {
 
   const addIdea = () => {
     if (newIdea.trim()) {
+      soundIdeaAdded();
       updateState({ ideas: [newIdea.trim(), ...state.ideas] });
       setNewIdea('');
     }
@@ -139,7 +141,7 @@ export function Eureka({ setPhase, state, updateState, isDark }: Props) {
           </p>
         </div>
         <button
-          onClick={() => setPhase('afinar')}
+          onClick={() => { soundTap(); setPhase('afinar'); }}
           className="py-3 px-6 bg-calm-sage-500 hover:bg-calm-sage-600 text-white font-bold text-sm rounded-xl transition-colors shadow-md shadow-calm-sage-200/50 cursor-pointer"
         >
           Afinar Problema Ahora
@@ -152,15 +154,14 @@ export function Eureka({ setPhase, state, updateState, isDark }: Props) {
 
   return (
     <div className="flex flex-col h-full overflow-y-auto pb-24 px-1">
-      {/* Intro Step Banner */}
-      <div className="flex items-center space-x-3 mb-6 pt-4">
-        <div className="p-3 bg-calm-coral/15 border border-calm-coral/35 dark:bg-calm-coral/25 dark:border-calm-coral/45 text-calm-coral rounded-2xl shadow-sm animate-float">
-          <Lightbulb size={24} />
+      {/* Header compacto */}
+      <div className="flex items-center space-x-3 pt-3 mb-4">
+        <div className="p-2.5 bg-calm-coral/15 border border-calm-coral/35 dark:bg-calm-coral/20 text-calm-coral rounded-xl shadow-sm animate-float shrink-0">
+          <Lightbulb size={20} />
         </div>
         <div>
-          <span className="text-[10px] uppercase tracking-widest text-calm-coral dark:text-calm-blush font-bold">Paso 3 de 4</span>
-          <h2 className="text-3xl font-bold text-calm-olive dark:text-[#EBECEB] serif-title">Lluvia de Eureka</h2>
-          <p className="text-sm text-calm-olive/95 dark:text-slate-200 font-semibold mt-1">La incubadora mental libera las soluciones</p>
+          <span className="text-[10px] uppercase tracking-widest text-calm-coral dark:text-calm-blush font-extrabold leading-none">Paso 3 de 4</span>
+          <h2 className="text-2xl font-bold text-calm-olive dark:text-[#EBECEB] serif-title leading-tight">Lluvia de Eureka</h2>
         </div>
       </div>
 
@@ -298,14 +299,14 @@ export function Eureka({ setPhase, state, updateState, isDark }: Props) {
       {/* Button actions */}
       <div className="pt-4 flex space-x-3">
         <button
-          onClick={() => setPhase('despeje')}
+          onClick={() => { soundTap(); setPhase('despeje'); }}
           className="p-4 rounded-2xl border border-calm-sage-200 dark:border-teal-900 bg-calm-cream dark:bg-[#1C2621]/80 hover:bg-calm-sage-100/60 dark:hover:bg-calm-sage-950 text-calm-olive dark:text-[#EBECEB] transition-colors flex items-center justify-center shadow-sm cursor-pointer"
           title="Regresar"
         >
           <ArrowLeft size={18} />
         </button>
         <button
-          onClick={() => setPhase('aplicacion')}
+          onClick={() => { soundTransition(); setPhase('aplicacion'); }}
           disabled={state.ideas.length === 0}
           className="flex-1 py-4 bg-calm-sage-500 hover:bg-calm-sage-600 disabled:bg-calm-sage-100 dark:disabled:bg-teal-950/40 disabled:text-calm-olive/30 dark:disabled:text-[#EBECEB]/25 disabled:cursor-not-allowed text-white rounded-2xl font-bold text-base flex items-center justify-center space-x-2 transition-all shadow-lg shadow-calm-sage-200/50 dark:shadow-none disabled:shadow-none"
         >

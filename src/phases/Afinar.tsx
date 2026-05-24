@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Phase, AppState } from '../types';
-import { ArrowRight, ArrowLeft, Target, AlertCircle, Sparkles, HelpCircle } from 'lucide-react';
+import { ArrowRight, ArrowLeft, Target, AlertCircle, Sparkles } from 'lucide-react';
 import { validateProblem } from '../services/ai';
+import { soundTap, soundTransition, soundError } from '../utils/sounds';
 
 interface Props {
   setPhase: (phase: Phase) => void;
@@ -15,18 +16,21 @@ export function Afinar({ setPhase, state, updateState }: Props) {
 
   const handleNext = async () => {
     if (!state.problem.trim()) return;
+    soundTap();
     setLoading(true);
     setFeedback(null);
     try {
       const result = await validateProblem(state.problem, state.definition, state.options);
       if (result.isValid) {
+        soundTransition();
         setPhase('despeje');
       } else {
+        soundError();
         setFeedback(result.feedback);
       }
-    } catch (e) {
-      console.error(e);
-      setFeedback("Ocurrió un error al validar. Por favor continúa a la etapa de despeje si estás listo.");
+    } catch {
+      soundError();
+      setFeedback('Ocurrió un error. Continúa si ya estás listo.');
     } finally {
       setLoading(false);
     }
@@ -34,95 +38,91 @@ export function Afinar({ setPhase, state, updateState }: Props) {
 
   return (
     <div className="flex flex-col h-full overflow-y-auto pb-24 px-1">
-      {/* Intro Step Banner */}
-      <div className="flex items-center space-x-3 mb-6 pt-4">
-        <div className="p-3 bg-calm-butterscotch/15 border border-calm-butterscotch/35 dark:bg-calm-butterscotch/25 dark:border-calm-butterscotch/45 text-calm-butterscotch rounded-2xl shadow-sm animate-float">
-          <Target size={24} />
+
+      {/* Header compacto */}
+      <div className="flex items-center space-x-3 pt-3 mb-5">
+        <div className="p-2.5 bg-calm-butterscotch/15 border border-calm-butterscotch/35 dark:bg-calm-butterscotch/20 text-calm-butterscotch rounded-xl shadow-sm animate-float shrink-0">
+          <Target size={20} />
         </div>
         <div>
-          <span className="text-[10px] uppercase tracking-widest text-calm-butterscotch dark:text-calm-butterscotch/90 font-bold">Paso 1 de 4</span>
-          <h2 className="text-3xl font-bold text-calm-olive dark:text-[#EBECEB] serif-title">Afinar el Enfoque</h2>
-          <p className="text-sm text-calm-olive/95 dark:text-slate-200 font-semibold mt-1">Clarifica el problema antes de ponerlo en reposo</p>
+          <span className="text-[10px] uppercase tracking-widest text-calm-butterscotch font-extrabold leading-none">Paso 1 de 4</span>
+          <h2 className="text-2xl font-bold text-calm-olive dark:text-[#EBECEB] serif-title leading-tight">Afinar el Enfoque</h2>
         </div>
       </div>
 
-      <div className="flex-1 space-y-5">
-        
-        {/* Creative Instruction Alert */}
-        <div className="p-4 bg-calm-butterscotch/10 dark:bg-calm-butterscotch/15 border border-calm-butterscotch/20 dark:border-calm-butterscotch/30 rounded-2xl text-xs text-calm-olive dark:text-calm-butterscotch/90 leading-relaxed flex items-start space-x-2">
-          <Sparkles size={16} className="text-calm-butterscotch mt-0.5 shrink-0" />
-          <span>
-            <strong>Consejo Zen:</strong> Al escribir detalladamente tu reto creativo, tu subconsciente guardará estas variables y trabajará en ellas durante la fase de ocio y descanso.
-          </span>
+      <div className="flex-1 space-y-4">
+
+        {/* Tip */}
+        <div className="p-3 bg-calm-butterscotch/10 dark:bg-calm-butterscotch/10 border border-calm-butterscotch/20 rounded-xl text-xs text-calm-olive dark:text-calm-butterscotch/90 leading-relaxed flex items-start space-x-2">
+          <Sparkles size={14} className="text-calm-butterscotch mt-0.5 shrink-0" />
+          <span><strong>Consejo:</strong> Al escribir tu reto con detalle, tu subconsciente trabajará en él durante el descanso.</span>
         </div>
 
-        {/* Text Area 1: Problem */}
+        {/* Campo 1 */}
         <div className="space-y-1.5">
-          <label className="block text-xs font-bold text-calm-sage-700 dark:text-calm-duckegg uppercase tracking-wider flex items-center justify-between">
+          <label className="flex items-center justify-between text-xs font-bold text-calm-sage-700 dark:text-calm-duckegg uppercase tracking-wider">
             <span>¿Cuál es el problema creativo exacto?</span>
-            <span className="text-[10px] text-calm-olive/75 dark:text-[#EBECEB]/65 font-semibold normal-case">Obligatorio</span>
+            <span className="text-[10px] text-calm-olive/60 dark:text-[#EBECEB]/50 font-semibold normal-case">Obligatorio</span>
           </label>
           <textarea
             value={state.problem}
-            onChange={(e) => updateState({ problem: e.target.value })}
-            placeholder="Ej: Necesito diseñar un logo llamativo para mi cafetería ecológica pero todos los bocetos de tazas y granos me parecen aburridos..."
-            className="w-full p-4 rounded-2xl border border-calm-sage-200/80 dark:border-teal-950 bg-calm-cream/90 dark:bg-[#1C2621]/80 focus:bg-calm-cream dark:focus:bg-[#1C2621] focus:ring-4 focus:ring-calm-butterscotch/20 focus:border-calm-butterscotch outline-none resize-none h-32 text-sm leading-relaxed transition-all placeholder:text-calm-olive/55 dark:placeholder:text-[#EBECEB]/45 text-calm-olive dark:text-[#EBECEB]"
+            onChange={e => updateState({ problem: e.target.value })}
+            placeholder="Ej: Necesito diseñar un logo llamativo para mi cafetería ecológica, pero todos mis bocetos se ven genéricos..."
+            className="w-full p-3.5 rounded-xl border border-calm-sage-200/80 dark:border-teal-950 bg-calm-cream/90 dark:bg-[#1C2621]/80 focus:bg-calm-cream dark:focus:bg-[#1C2621] focus:ring-4 focus:ring-calm-butterscotch/20 focus:border-calm-butterscotch outline-none resize-none h-28 text-sm leading-relaxed transition-all placeholder:text-calm-olive/45 dark:placeholder:text-[#EBECEB]/35 text-calm-olive dark:text-[#EBECEB]"
           />
         </div>
 
-        {/* Text Area 2: Restrictions */}
+        {/* Campo 2 */}
         <div className="space-y-1.5">
           <label className="block text-xs font-bold text-calm-sage-700 dark:text-calm-duckegg uppercase tracking-wider">
             ¿Cuáles son las restricciones o requisitos?
           </label>
           <textarea
             value={state.definition}
-            onChange={(e) => updateState({ definition: e.target.value })}
-            placeholder="Ej: Debe ser monocromático o en base a tonos tierra, minimalista y que transmita modernidad pero origen orgánico..."
-            className="w-full p-4 rounded-2xl border border-calm-sage-200/80 dark:border-teal-950 bg-calm-cream/90 dark:bg-[#1C2621]/80 focus:bg-calm-cream dark:focus:bg-[#1C2621] focus:ring-4 focus:ring-calm-butterscotch/20 focus:border-calm-butterscotch outline-none resize-none h-24 text-sm leading-relaxed transition-all placeholder:text-calm-olive/55 dark:placeholder:text-[#EBECEB]/45 text-calm-olive dark:text-[#EBECEB]"
+            onChange={e => updateState({ definition: e.target.value })}
+            placeholder="Ej: Monocromático, tonos tierra, minimalista, transmita modernidad y origen orgánico..."
+            className="w-full p-3.5 rounded-xl border border-calm-sage-200/80 dark:border-teal-950 bg-calm-cream/90 dark:bg-[#1C2621]/80 focus:bg-calm-cream dark:focus:bg-[#1C2621] focus:ring-4 focus:ring-calm-butterscotch/20 focus:border-calm-butterscotch outline-none resize-none h-20 text-sm leading-relaxed transition-all placeholder:text-calm-olive/45 dark:placeholder:text-[#EBECEB]/35 text-calm-olive dark:text-[#EBECEB]"
           />
         </div>
 
-        {/* Text Area 3: Attempted options */}
+        {/* Campo 3 */}
         <div className="space-y-1.5">
           <label className="block text-xs font-bold text-calm-sage-700 dark:text-calm-duckegg uppercase tracking-wider">
             ¿Qué has intentado hasta ahora?
           </label>
           <textarea
             value={state.options}
-            onChange={(e) => updateState({ options: e.target.value })}
-            placeholder="Ej: He probado dibujando hojas, tazas flotantes, pero se ve genérico. Intenté también tipografías serif clásicas..."
-            className="w-full p-4 rounded-2xl border border-calm-sage-200/80 dark:border-teal-950 bg-calm-cream/90 dark:bg-[#1C2621]/80 focus:bg-calm-cream dark:focus:bg-[#1C2621] focus:ring-4 focus:ring-calm-butterscotch/20 focus:border-calm-butterscotch outline-none resize-none h-24 text-sm leading-relaxed transition-all placeholder:text-calm-olive/55 dark:placeholder:text-[#EBECEB]/45 text-calm-olive dark:text-[#EBECEB]"
+            onChange={e => updateState({ options: e.target.value })}
+            placeholder="Ej: Probé hojas, tazas flotantes, tipografías serif clásicas, pero todo se ve genérico..."
+            className="w-full p-3.5 rounded-xl border border-calm-sage-200/80 dark:border-teal-950 bg-calm-cream/90 dark:bg-[#1C2621]/80 focus:bg-calm-cream dark:focus:bg-[#1C2621] focus:ring-4 focus:ring-calm-butterscotch/20 focus:border-calm-butterscotch outline-none resize-none h-20 text-sm leading-relaxed transition-all placeholder:text-calm-olive/45 dark:placeholder:text-[#EBECEB]/35 text-calm-olive dark:text-[#EBECEB]"
           />
         </div>
+
+        {feedback && (
+          <div className="bg-red-50 dark:bg-red-950/20 border border-red-100 dark:border-red-900/50 p-3 rounded-xl flex items-start space-x-2.5 shadow-sm">
+            <AlertCircle className="text-red-500 dark:text-red-400 mt-0.5 shrink-0" size={16} />
+            <div>
+              <h4 className="text-xs font-bold text-red-800 dark:text-red-400 mb-0.5">Sugerencia de Reflexión</h4>
+              <p className="text-xs text-red-700 dark:text-red-300 leading-relaxed">{feedback}</p>
+            </div>
+          </div>
+        )}
       </div>
 
-      {feedback && (
-        <div className="mt-4 bg-red-50 dark:bg-red-950/20 border border-red-100 dark:border-red-900/50 p-4 rounded-2xl flex items-start space-x-3 shadow-sm animate-shake">
-          <AlertCircle className="text-red-500 dark:text-red-400 mt-0.5 shrink-0" size={18} />
-          <div className="space-y-1">
-            <h4 className="text-xs font-bold text-red-800 dark:text-red-400">Sugerencia de Reflexión</h4>
-            <p className="text-xs text-red-700 dark:text-red-300 leading-relaxed">{feedback}</p>
-          </div>
-        </div>
-      )}
-
-      {/* Actions */}
-      <div className="pt-6 flex space-x-3">
+      <div className="pt-5 flex space-x-3">
         <button
-          onClick={() => setPhase('home')}
-          className="p-4 rounded-2xl border border-calm-sage-200/80 dark:border-teal-950 bg-calm-cream dark:bg-[#1C2621]/80 hover:bg-calm-sage-100/60 dark:hover:bg-[#25322B] text-calm-olive dark:text-[#EBECEB] transition-colors flex items-center justify-center shadow-sm cursor-pointer"
-          title="Regresar a Inicio"
+          onClick={() => { soundTap(); setPhase('home'); }}
+          className="p-3.5 rounded-xl border border-calm-sage-200/80 dark:border-teal-950 bg-calm-cream dark:bg-[#1C2621]/80 hover:bg-calm-sage-100/60 dark:hover:bg-[#25322B] text-calm-olive dark:text-[#EBECEB] transition-colors flex items-center justify-center shadow-sm cursor-pointer"
         >
-          <ArrowLeft size={20} />
+          <ArrowLeft size={18} />
         </button>
         <button
           onClick={handleNext}
           disabled={!state.problem.trim() || loading}
-          className="flex-1 py-4 bg-calm-sage-500 hover:bg-calm-sage-600 disabled:bg-calm-sage-100 dark:disabled:bg-teal-950/40 disabled:text-calm-olive/30 dark:disabled:text-[#EBECEB]/25 disabled:shadow-none text-white rounded-2xl font-bold text-base flex items-center justify-center space-x-2 transition-all shadow-lg shadow-calm-sage-200/50 dark:shadow-none cursor-pointer"
+          className="flex-1 py-3.5 bg-calm-sage-500 hover:bg-calm-sage-600 disabled:bg-calm-sage-100 dark:disabled:bg-teal-950/40 disabled:text-calm-olive/30 dark:disabled:text-[#EBECEB]/25 disabled:shadow-none text-white rounded-xl font-bold text-sm flex items-center justify-center space-x-2 transition-all shadow-lg shadow-calm-sage-200/40 dark:shadow-none cursor-pointer"
         >
-          <span>{loading ? "Evaluando claridad..." : "Siguiente: Despejar la mente"}</span>
-          {!loading && <ArrowRight size={18} />}
+          <span>{loading ? 'Evaluando claridad...' : 'Siguiente: Despeje mental'}</span>
+          {!loading && <ArrowRight size={16} />}
         </button>
       </div>
     </div>

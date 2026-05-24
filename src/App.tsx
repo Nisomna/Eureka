@@ -17,6 +17,8 @@ import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { doc, getDoc, setDoc, updateDoc, serverTimestamp } from 'firebase/firestore';
 import { LogOut, Compass, Target, Wind, Lightbulb, PenTool, Sparkles, Check, Smile, Sun, Moon, Bell, Trash2, History, X } from 'lucide-react';
 import { InstallPrompt } from './components/InstallPrompt';
+import { Intro } from './components/Intro';
+import { soundTransition } from './utils/sounds';
 
 enum OperationType {
   CREATE = 'create',
@@ -89,6 +91,10 @@ export default function App() {
   const isDark = true;
   const [showNotificationsDrawer, setShowNotificationsDrawer] = useState(false);
   const [selectedHistoricalTask, setSelectedHistoricalTask] = useState<any | null>(null);
+  const [showIntro, setShowIntro] = useState(() => {
+    // Solo mostrar la cinemática la primera vez que se abre la app
+    return !localStorage.getItem('incubapp_intro_seen');
+  });
 
   useEffect(() => {
     document.documentElement.classList.add('dark');
@@ -242,6 +248,11 @@ export default function App() {
   }
 
   return (
+    <>
+      {showIntro && <Intro onDone={() => {
+        localStorage.setItem('incubapp_intro_seen', '1');
+        setShowIntro(false);
+      }} />}
     <div className="min-h-screen creative-calm-backdrop text-calm-olive dark:text-[#E6EAE7] font-sans overflow-hidden flex flex-col relative">
       {/* Decorative Orbs */}
       <div className="absolute -top-40 -left-40 w-96 h-96 rounded-full bg-calm-duckegg/20 dark:bg-[#1E2B25]/20 filter blur-3xl pointer-events-none"></div>
@@ -327,7 +338,7 @@ export default function App() {
               return (
                 <button
                   key={step.id}
-                  onClick={() => setPhase(step.id)}
+                  onClick={() => { soundTransition(); setPhase(step.id); }}
                   className={`relative flex flex-col items-center justify-center p-3 rounded-full transition-all group cursor-pointer ${
                     isActive
                       ? `scale-110 bg-calm-duckegg/25 dark:bg-[#1C2621]/90 text-calm-emeraldsea dark:text-calm-duckegg shadow-md`
@@ -573,6 +584,7 @@ export default function App() {
 
       <InstallPrompt />
     </div>
+    </>
   );
 }
 
