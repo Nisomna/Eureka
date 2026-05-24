@@ -3,10 +3,12 @@
   "short_name": "Incubapp",
   "description": "Supera el bloqueo creativo con Incubapp",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
-  "background_color": "#f8fafc",
-  "theme_color": "#0d9488",
-  "orientation": "portrait",
+  "background_color": "#FAF7F4",
+  "theme_color": "#468285",
+  "orientation": "portrait-primary",
+  "categories": ["productivity", "lifestyle"],
   "icons": [
     {
       "src": "/icon-192.png",
