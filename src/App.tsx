@@ -91,6 +91,10 @@ export default function App() {
   const [breathState, setBreathState] = useState<'Inhala' | 'Retén' | 'Exhala'>('Inhala');
   const isDark = true;
   const [showNotificationsDrawer, setShowNotificationsDrawer] = useState(false);
+  // Aplicar dark mode de forma síncrona para evitar flash en incógnito
+  if (typeof document !== 'undefined' && !document.documentElement.classList.contains('dark')) {
+    document.documentElement.classList.add('dark');
+  }
   const [selectedHistoricalTask, setSelectedHistoricalTask] = useState<any | null>(null);
   const [showCredits, setShowCredits] = useState(false);
   const [showIntro, setShowIntro] = useState(() => {
@@ -99,8 +103,8 @@ export default function App() {
   });
 
   useEffect(() => {
-    document.documentElement.classList.add('dark');
-    localStorage.setItem('theme', 'dark');
+    // Guardar preferencia de tema (puede fallar en incógnito, no es crítico)
+    try { localStorage.setItem('theme', 'dark'); } catch {}
   }, []);
 
   useEffect(() => {

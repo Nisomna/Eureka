@@ -3,7 +3,7 @@ import { Phase, AppState, DespejeActivity } from '../types';
 import { 
   Lightbulb, Coffee, Headphones, Radio, Footprints, Activity, BookOpen, 
   Globe, Gamepad2, Puzzle, Wind, TreePine, PenTool, Palette, 
-  CheckCircle2, Circle, Clock, FastForward, RefreshCw, ChefHat, 
+  CheckCircle2, Circle, Clock, RefreshCw, ChefHat, 
   Dumbbell, Popcorn, PenLine, Sparkles, Utensils, Tv, Eraser, 
   CalendarDays, Moon, List, LayoutList, Play, Pause, SkipForward
 } from 'lucide-react';
@@ -47,7 +47,7 @@ export function Despeje({ setPhase, state, updateState, isDark }: Props) {
   const [taskCount, setTaskCount] = useState<number | 'all'>(3);
   const [modeSelected, setModeSelected] = useState(false);
 
-  const isDarkModeActive = isDark !== undefined ? isDark : document.documentElement.classList.contains('dark');
+  const isDarkModeActive = isDark !== undefined ? isDark : true;
 
   useEffect(() => {
     const interval = setInterval(() => setNow(Date.now()), 1000);
@@ -105,10 +105,6 @@ export function Despeje({ setPhase, state, updateState, isDark }: Props) {
     const act = state.despejeActivities.find(a => a.id === id);
     if (act?.completed) soundUncheck(); else soundCheck();
     updateState({ despejeActivities: state.despejeActivities.map(a => a.id === id ? { ...a, completed: !a.completed } : a) });
-  };
-
-  const devSkipTime = () => {
-    if (state.despejeStartTime) updateState({ despejeStartTime: state.despejeStartTime - 24 * 60 * 60 * 1000 });
   };
 
   const allCompleted = activeActivities.length > 0 && activeActivities.every(a => a.completed);
@@ -233,13 +229,13 @@ export function Despeje({ setPhase, state, updateState, isDark }: Props) {
   }
 
   return (
-    <div className="flex flex-col h-full bg-gradient-to-b from-calm-sand to-calm-duckegg/25 dark:from-[#1C2621] dark:to-[#121915] text-calm-olive dark:text-[#EBECEB] -m-4 md:-m-6 p-5 md:p-6 rounded-3xl relative overflow-hidden shadow-2xl transition-all">
+    <div className="flex flex-col bg-gradient-to-b from-calm-sand to-calm-duckegg/25 dark:from-[#1C2621] dark:to-[#121915] text-calm-olive dark:text-[#EBECEB] -m-4 md:-m-6 p-5 md:p-6 rounded-3xl relative overflow-hidden shadow-2xl transition-all" style={{ minHeight: 0, height: '100%' }}>
 
       {/* Starry dots */}
       <div className="absolute top-10 left-10 w-1.5 h-1.5 rounded-full bg-calm-emeraldsea/50 dark:bg-calm-duckegg opacity-60 animate-pulse pointer-events-none"></div>
       <div className="absolute top-24 right-16 w-1 h-1 rounded-full bg-calm-butterscotch/70 opacity-80 animate-pulse delay-500 pointer-events-none"></div>
 
-      <div className="flex-1 flex flex-col space-y-3 overflow-hidden">
+      <div className="flex-1 flex flex-col space-y-3 min-h-0 overflow-hidden">
 
         {/* Header */}
         <div className="flex items-center justify-between mt-1">
@@ -261,11 +257,6 @@ export function Despeje({ setPhase, state, updateState, isDark }: Props) {
             >
               <LayoutList size={14} />
             </button>
-            {!isTimeUp && !isGenerating && (
-              <button onClick={devSkipTime} className="p-2 bg-calm-cream hover:bg-white dark:bg-[#1C2621]/90 dark:hover:bg-[#25322B] text-calm-sage-700 dark:text-calm-duckegg border border-calm-sage-200 dark:border-teal-950/60 rounded-xl text-xs flex items-center space-x-1 shadow-md transition-all cursor-pointer font-bold" title="Simular 24h">
-                <FastForward size={13} /><span>24h</span>
-              </button>
-            )}
           </div>
         </div>
 
@@ -412,16 +403,32 @@ export function Despeje({ setPhase, state, updateState, isDark }: Props) {
       </div>
 
       {/* Botones footer */}
-      <div className="pt-3 pb-1 space-y-2 flex-shrink-0">
+      <div className="pt-3 pb-1 space-y-2 flex-shrink-0 border-t border-calm-sage-200/40 dark:border-teal-950/40 mt-1">
         {isTimeUp && !isGenerating && (
           <button type="button" onClick={() => { soundTap(); generateActivities(); setModeSelected(false); setRoutineActive(false); }}
             className="w-full py-2.5 bg-calm-cream/80 hover:bg-calm-cream dark:bg-[#1E2B25] dark:hover:bg-[#25322B] text-calm-sage-700 dark:text-calm-duckegg border border-calm-sage-200 dark:border-teal-950/40 rounded-xl font-bold text-xs flex items-center justify-center space-x-1.5 transition-all cursor-pointer">
             <RefreshCw size={13} /><span>Volver a iniciar despeje</span>
           </button>
         )}
-        <button type="button" onClick={() => { soundTransition(); setPhase('eureka'); }} disabled={!canProceed || isGenerating}
-          className={`w-full py-4 rounded-xl font-bold text-base flex items-center justify-center space-x-2.5 transition-all cursor-pointer ${canProceed && !isGenerating ? 'bg-calm-sage-500 hover:bg-calm-sage-600 text-white shadow-lg shadow-calm-sage-200/50 dark:shadow-none active:scale-[0.992]' : 'bg-calm-sage-50 dark:bg-[#1C2621]/40 text-calm-olive/30 dark:text-slate-600 border border-calm-sage-150/20 dark:border-teal-950/80 cursor-not-allowed'}`}>
-          <Lightbulb size={20} className={canProceed && !isGenerating ? 'text-calm-butterscotch animate-pulse' : 'text-slate-600'} />
+        {/* Tooltip cuando no se puede continuar */}
+        {!canProceed && !isGenerating && (
+          <p className="text-[10px] text-center text-calm-olive/40 dark:text-slate-500 leading-snug px-2">
+            {!allCompleted
+              ? `Completa las actividades para continuar (${activeActivities.filter(a => a.completed).length}/${activeActivities.length})`
+              : `Espera que transcurra el tiempo de incubación`}
+          </p>
+        )}
+        <button
+          type="button"
+          onClick={() => { if (canProceed && !isGenerating) { soundTransition(); setPhase('eureka'); } }}
+          disabled={!canProceed || isGenerating}
+          className={`w-full py-4 rounded-xl font-bold text-base flex items-center justify-center space-x-2.5 transition-all ${
+            canProceed && !isGenerating
+              ? 'bg-calm-sage-500 hover:bg-calm-sage-600 text-white shadow-lg shadow-calm-sage-200/50 dark:shadow-none active:scale-[0.992] cursor-pointer'
+              : 'bg-calm-sage-50 dark:bg-[#1C2621]/40 text-calm-olive/25 dark:text-slate-600 border border-calm-sage-150/20 dark:border-teal-950/80 cursor-not-allowed'
+          }`}
+        >
+          <Lightbulb size={20} className={canProceed && !isGenerating ? 'text-calm-butterscotch animate-pulse' : 'text-calm-olive/20 dark:text-slate-600'} />
           <span>¡Llegaron las ideas! Eureka</span>
         </button>
       </div>
