@@ -338,8 +338,8 @@ export default function App() {
       {/* Header */}
       <header className="py-4 md:py-6 flex items-center justify-between border-b border-calm-sage-100/60 dark:border-teal-950 px-6 max-w-5xl mx-auto w-full z-10">
         <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 rounded-full bg-calm-duckegg/20 dark:bg-[#1C2621] border border-calm-duckegg/60 dark:border-teal-900/40 flex items-center justify-center shadow-sm">
-            <Sparkles className="text-calm-emeraldsea dark:text-calm-duckegg w-5 h-5 animate-float" />
+          <div className="w-10 h-10 rounded-full overflow-hidden border border-calm-duckegg/60 dark:border-teal-900/40 shadow-sm shrink-0">
+            <img src="/icon-192.png" alt="Incubapp" className="w-full h-full object-cover" />
           </div>
           <div>
             <h1 className="text-2xl font-bold tracking-tight bg-gradient-to-r from-calm-emeraldsea to-calm-sage-700 dark:from-calm-duckegg dark:to-calm-emeraldsea bg-clip-text text-transparent serif-title">
