@@ -130,7 +130,7 @@ export function Eureka({ setPhase, state, updateState, isDark }: Props) {
   // Gracefully handle if problem is missing when coming directly
   if (!state.problem.trim()) {
     return (
-      <div className="flex flex-col h-full items-center justify-center text-center space-y-6 mt-12 px-4 pb-24">
+      <div className="flex flex-col items-center justify-center text-center space-y-6 mt-12 px-4 pb-24">
         <div className="w-16 h-16 bg-calm-butterscotch/15 rounded-full flex items-center justify-center border border-calm-butterscotch/35 text-calm-butterscotch animate-float">
           <AlertCircle size={32} />
         </div>
@@ -153,7 +153,7 @@ export function Eureka({ setPhase, state, updateState, isDark }: Props) {
   const isDarkModeActive = isDark !== undefined ? isDark : document.documentElement.classList.contains('dark');
 
   return (
-    <div className="flex flex-col h-full overflow-y-auto pb-24 px-1">
+    <div className="flex flex-col overflow-y-auto pb-4 px-1">
       {/* Header compacto */}
       <div className="flex items-center space-x-3 pt-3 mb-4">
         <div className="p-2.5 bg-calm-coral/15 border border-calm-coral/35 dark:bg-calm-coral/20 text-calm-coral rounded-xl shadow-sm animate-float shrink-0">
@@ -165,7 +165,7 @@ export function Eureka({ setPhase, state, updateState, isDark }: Props) {
         </div>
       </div>
 
-      <div className="flex-1 flex flex-col space-y-5 overflow-hidden">
+      <div className="flex-1 flex flex-col space-y-5 ">
         
         {/* Perspectives Block - Styled peacefully */}
         <div className="bg-gradient-to-tr from-calm-blush/25 to-calm-coral/10 dark:from-[#1E2E27] dark:to-teal-950/20 border border-calm-coral/30 dark:border-teal-900/60 p-5 rounded-3xl space-y-3 shadow-sm">
@@ -317,4 +317,3 @@ export function Eureka({ setPhase, state, updateState, isDark }: Props) {
     </div>
   );
 }
-

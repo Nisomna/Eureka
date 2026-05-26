@@ -15,8 +15,9 @@
     <link rel="apple-touch-icon" sizes="512x512" href="/icon-512.png" />
   </head>
   <body>
+    <!-- Aplica dark mode ANTES del primer render — sin esto hay flash de colores en incógnito -->
+    <script>document.documentElement.classList.add('dark');</script>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
-

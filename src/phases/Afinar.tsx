@@ -37,7 +37,7 @@ export function Afinar({ setPhase, state, updateState }: Props) {
   };
 
   return (
-    <div className="flex flex-col h-full overflow-y-auto pb-24 px-1">
+    <div className="flex flex-col pb-6 px-1">
 
       {/* Header compacto */}
       <div className="flex items-center space-x-3 pt-3 mb-5">

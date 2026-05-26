@@ -46,7 +46,7 @@ export function Aplicacion({ setPhase, state, updateState }: Props) {
   // Handle direct navigation fallback
   if (state.ideas.length === 0) {
     return (
-      <div className="flex flex-col h-full items-center justify-center text-center space-y-6 mt-12 px-4 pb-24">
+      <div className="flex flex-col items-center justify-center text-center space-y-6 mt-12 px-4 pb-24">
         <div className="w-16 h-16 bg-calm-duckegg/20 dark:bg-teal-950/45 rounded-full flex items-center justify-center border border-calm-duckegg/40 dark:border-teal-950 text-calm-emeraldsea animate-float">
           <AlertCircle size={32} />
         </div>
@@ -92,7 +92,7 @@ export function Aplicacion({ setPhase, state, updateState }: Props) {
 
   if (isDone) {
     return (
-      <div className="flex flex-col h-full items-center justify-center text-center space-y-6 px-4 mt-12 pb-24">
+      <div className="flex flex-col items-center justify-center text-center space-y-6 px-4 mt-12 pb-24">
         <div className="w-24 h-24 bg-gradient-to-tr from-calm-duckegg/30 to-calm-cream dark:from-teal-950 dark:to-[#17221D] border border-calm-duckegg text-calm-emeraldsea rounded-full flex items-center justify-center shadow-lg animate-float">
           <CheckCircle2 size={48} className="stroke-[2.5]" />
         </div>
@@ -126,7 +126,7 @@ export function Aplicacion({ setPhase, state, updateState }: Props) {
   }
 
   return (
-    <div className="flex flex-col h-full overflow-y-auto pb-24 px-1">
+    <div className="flex flex-col overflow-y-auto pb-4 px-1">
       {/* Header compacto */}
       <div className="flex items-center space-x-3 pt-3 mb-4">
         <div className="p-2.5 bg-calm-emeraldsea/15 border border-calm-emeraldsea/35 dark:bg-calm-emeraldsea/20 text-calm-emeraldsea rounded-xl shadow-sm animate-float shrink-0">
@@ -147,7 +147,7 @@ export function Aplicacion({ setPhase, state, updateState }: Props) {
             <span className="text-[11px] text-calm-olive/80 dark:text-[#EBECEB]/80 font-semibold lowercase">Selecciona una tarjeta</span>
           </label>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-h-[300px] overflow-y-auto pr-1 pb-1">
+          <div className="flex flex-col gap-3">
             {state.ideas.map((idea, idx) => {
               const isSelected = state.selectedIdea === idea;
               const isSketch = idea.startsWith('data:image/');
@@ -157,7 +157,7 @@ export function Aplicacion({ setPhase, state, updateState }: Props) {
                   key={idx}
                   type="button"
                   onClick={() => updateState({ selectedIdea: idea })}
-                  className={`p-5 border rounded-2xl text-left transition-all relative flex flex-col justify-between min-h-[130px] select-none cursor-pointer group ${
+                  className={`p-4 border rounded-2xl text-left transition-all relative flex items-center gap-3 select-none cursor-pointer group ${
                     isSelected
                       ? 'bg-calm-duckegg/25 border-calm-emeraldsea ring-2 ring-calm-emeraldsea/25 dark:bg-[#1E2E27]/50 dark:border-calm-duckegg'
                       : 'bg-calm-cream dark:bg-[#1C2621]/90 border-calm-sage-200 dark:border-teal-950/80 hover:border-calm-sage-400 dark:hover:border-teal-900 hover:bg-white dark:hover:bg-[#1E2822]'
@@ -172,7 +172,7 @@ export function Aplicacion({ setPhase, state, updateState }: Props) {
                     {isSelected && <span className="text-xs font-bold">✓</span>}
                   </span>
  
-                  <div className="pr-8 overflow-hidden flex-1 flex flex-col justify-center">
+                  <div className="flex-1 overflow-hidden min-w-0">
                     {isSketch ? (
                       <div className="flex items-center gap-2.5">
                         <img 
@@ -197,8 +197,8 @@ export function Aplicacion({ setPhase, state, updateState }: Props) {
                     )}
                   </div>
  
-                  <span className="text-[10px] uppercase font-bold text-calm-sage-600 dark:text-[#EBECEB]/60 tracking-wider mt-2.5 block">
-                    Opción {state.ideas.length - idx}
+                  <span className="text-[10px] uppercase font-bold text-calm-sage-600 dark:text-[#EBECEB]/60 tracking-wider shrink-0">
+                    #{state.ideas.length - idx}
                   </span>
                 </button>
               );

@@ -33,7 +33,7 @@ export function Home({ setPhase, state, updateState }: Props) {
   };
 
   return (
-    <div className="flex flex-col h-full overflow-y-auto pb-24 px-1">
+    <div className="flex flex-col pb-6 px-1">
       <div className="flex-1 flex flex-col space-y-5">
 
         {/* Header compacto horizontal */}

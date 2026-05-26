@@ -91,19 +91,16 @@ export default function App() {
   const [breathState, setBreathState] = useState<'Inhala' | 'Retén' | 'Exhala'>('Inhala');
   const isDark = true;
   const [showNotificationsDrawer, setShowNotificationsDrawer] = useState(false);
-  // Aplicar dark mode de forma síncrona para evitar flash en incógnito
-  if (typeof document !== 'undefined' && !document.documentElement.classList.contains('dark')) {
-    document.documentElement.classList.add('dark');
-  }
   const [selectedHistoricalTask, setSelectedHistoricalTask] = useState<any | null>(null);
   const [showCredits, setShowCredits] = useState(false);
   const [showIntro, setShowIntro] = useState(() => {
     // Solo mostrar la cinemática la primera vez que se abre la app
-    return !localStorage.getItem('incubapp_intro_seen');
+    try { return !localStorage.getItem('incubapp_intro_seen'); } catch { return false; }
   });
 
   useEffect(() => {
-    // Guardar preferencia de tema (puede fallar en incógnito, no es crítico)
+    // La clase dark ya se aplica en index.html antes del render.
+    // Aquí solo guardamos preferencia; puede fallar en incógnito.
     try { localStorage.setItem('theme', 'dark'); } catch {}
   }, []);
 
@@ -330,10 +327,10 @@ export default function App() {
     <>
       {showCredits && <Credits onClose={() => setShowCredits(false)} />}
       {showIntro && <Intro onDone={() => {
-        localStorage.setItem('incubapp_intro_seen', '1');
+        try { localStorage.setItem('incubapp_intro_seen', '1'); } catch {}
         setShowIntro(false);
       }} />}
-    <div className="min-h-screen creative-calm-backdrop text-calm-olive dark:text-[#E6EAE7] font-sans overflow-hidden flex flex-col relative">
+    <div className="h-screen creative-calm-backdrop text-calm-olive dark:text-[#E6EAE7] font-sans overflow-hidden flex flex-col relative">
       {/* Decorative Orbs */}
       <div className="absolute -top-40 -left-40 w-96 h-96 rounded-full bg-calm-duckegg/20 dark:bg-[#1E2B25]/20 filter blur-3xl pointer-events-none"></div>
       <div className="absolute -bottom-40 -right-40 w-96 h-96 rounded-full bg-calm-blush/15 dark:bg-[#111A16]/10 filter blur-3xl pointer-events-none"></div>
@@ -402,19 +399,18 @@ export default function App() {
       </header>
 
       {/* Main Content Area */}
-      <main className="flex-1 relative overflow-hidden max-w-lg md:max-w-2xl mx-auto w-full px-4 md:px-0">
+      {/* min-h-0 is critical: lets flex child shrink below its content size so overflow-y-auto works */}
+      <main className="flex-1 min-h-0 max-w-lg md:max-w-2xl mx-auto w-full px-4 md:px-0">
         <AnimatePresence mode="wait">
           <motion.div
             key={phase}
-            initial={{ opacity: 0, y: 15 }}
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -15 }}
-            transition={{ duration: 0.35, ease: 'easeOut' }}
-            className="absolute inset-x-0 top-0 bottom-24 p-2 md:p-6 overflow-hidden h-full"
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.3, ease: 'easeOut' }}
+            className="h-full overflow-y-auto overflow-x-hidden pb-28 pt-2 px-2 md:px-6 md:pt-4"
           >
-            <div className="h-full scroll-smooth">
-              {renderPhase()}
-            </div>
+            {renderPhase()}
           </motion.div>
         </AnimatePresence>
       </main>
@@ -422,7 +418,8 @@ export default function App() {
       {/* Floating Bottom Navigation (Menu Interactivo por Iconos) */}
       {(auth.currentUser || localStorage.getItem('incubapp_guest_user') === 'true') && phase !== 'login' && (
         <div className="fixed bottom-6 inset-x-0 mx-auto max-w-md w-11/12 z-40">
-          <div className="bg-calm-cream/90 dark:bg-[#1E2B25]/85 backdrop-blur-xl border border-calm-sage-200 dark:border-teal-950 rounded-full p-2 flex items-center justify-around shadow-xl shadow-calm-sage-200/40 dark:shadow-black/50">
+
+          <div className="bg-calm-cream/95 dark:bg-[#1A2520]/98 backdrop-blur-2xl border border-calm-sage-200 dark:border-teal-950 rounded-full p-2 flex items-center justify-around shadow-xl shadow-calm-sage-200/40 dark:shadow-black/60">
             {navigationSteps.map((step) => {
               const Icon = step.icon;
               const isActive = phase === step.id;
@@ -680,4 +677,3 @@ export default function App() {
     </>
   );
 }
-
