@@ -1,111 +1,207 @@
-@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
 @theme {
   --font-serif: "Instrument Serif", serif;
-  --font-sans: "Plus Jakarta Sans", "Outfit", system-ui, sans-serif;
-  
-  /* Color Palette mapping for fallbacks */
-  --color-calm-sage-50: #FAF7F4;
-  --color-calm-sage-100: #F2D5CB;
-  --color-calm-sage-150: #E2BFB4;
-  --color-calm-sage-200: #BCD1CE;
-  --color-calm-sage-250: #A2B9B6;
-  --color-calm-sage-300: #98AAB1;
-  --color-calm-sage-500: #468285;   /* Emerald Sea as Primary */
-  --color-calm-sage-600: #3A6D70;   /* Rich slightly darker Emerald Sea for states */
-  --color-calm-sage-700: #244547;   /* High-contrast deep teal for text and icons */
-  --color-calm-sage-800: #1B3335;
-  --color-calm-sage-900: #122223;
-  
-  /* Standard specific custom colors of the requested palette */
-  --color-calm-coral: #F7A08E;
-  --color-calm-blush: #F2D5CB;
-  --color-calm-butterscotch: #E4AD53;
-  --color-calm-smoke: #98AAB1;
-  --color-calm-duckegg: #BCD1CE;
-  --color-calm-emeraldsea: #468285;
-  --color-calm-cream: #F9F6F0;
-  --color-calm-olive: #2D3934;
-  --color-calm-sand: #FAF7F4;
-  --color-calm-terracotta: #F7A08E;
-  
+  --font-sans:  "Plus Jakarta Sans", system-ui, sans-serif;
+
+  --color-calm-coral:        #F28B74;
+  --color-calm-blush:        #F5C9B8;
+  --color-calm-butterscotch: #E8B84B;
+  --color-calm-smoke:        #8FA3AD;
+  --color-calm-duckegg:      #A8C9C4;
+  --color-calm-emeraldsea:   #3A7D8C;
+  --color-calm-cream:        #FDF8F3;
+  --color-calm-sand:         #FAF5EE;
+  --color-calm-olive:        #1A2E28;
+  --color-calm-terracotta:   #F28B74;
+
+  --color-calm-sage-50:  #F0FAF8;
+  --color-calm-sage-100: #D4EDE9;
+  --color-calm-sage-150: #B8DDD8;
+  --color-calm-sage-200: #A8C9C4;
+  --color-calm-sage-250: #8FBBB5;
+  --color-calm-sage-300: #6FA8B0;
+  --color-calm-sage-400: #4E90A0;
+  --color-calm-sage-500: #3A7D8C;
+  --color-calm-sage-600: #2E6672;
+  --color-calm-sage-700: #1F4F5A;
+  --color-calm-sage-800: #163A43;
+  --color-calm-sage-900: #0F282F;
+
   --animate-breath: breath 6s ease-in-out infinite;
-  --animate-float: float 4s ease-in-out infinite;
+  --animate-float:  float  4s ease-in-out infinite;
 }
 
 @keyframes breath {
-  0%, 100% {
-    transform: scale(1);
-    opacity: 0.6;
-    filter: blur(8px);
-  }
-  50% {
-    transform: scale(1.15);
-    opacity: 0.95;
-    filter: blur(4px);
-  }
+  0%,100% { transform:scale(1);    opacity:.6;  filter:blur(8px); }
+  50%      { transform:scale(1.15); opacity:.95; filter:blur(4px); }
 }
-
 @keyframes float {
-  0%, 100% {
-    transform: translateY(0px) rotate(0deg);
-  }
-  50% {
-    transform: translateY(-6px) rotate(1deg);
-  }
+  0%,100% { transform:translateY(0) rotate(0deg); }
+  50%      { transform:translateY(-6px) rotate(1deg); }
 }
 
-/* Custom classes for the luxury serene vibe */
+/* ══════════════════════════════════════════════
+   TOKENS
+   ══════════════════════════════════════════════ */
+:root {
+  /* Surfaces — light usa blanco real para contraste */
+  --surface-base:    #F7F2EC;
+  --surface-card:    #FFFFFF;
+  --surface-card2:   #F5F0E8;
+  --surface-input:   #F5F0E8;
+  --surface-hover:   #EDE5D8;
+  --surface-overlay: rgba(255,255,255,0.97);
+
+  /* Text — olive oscuro para máximo contraste */
+  --text-primary:   #1A2E28;
+  --text-secondary: #2E4A40;
+  --text-muted:     #5A7A6E;
+
+  /* Borders — visible pero suaves */
+  --border-default: rgba(58,125,140,0.2);
+  --border-strong:  rgba(58,125,140,0.45);
+  --border-card:    rgba(26,46,40,0.1);
+}
+
+.dark {
+  --surface-base:    #0A1410;
+  --surface-card:    #132018;
+  --surface-card2:   #182B1E;
+  --surface-input:   #0F1C14;
+  --surface-hover:   #1C2F22;
+  --surface-overlay: rgba(10,20,16,0.97);
+
+  --text-primary:   #E6EDE8;
+  --text-secondary: #9DBDA8;
+  --text-muted:     #5A8068;
+
+  --border-default: rgba(58,125,140,0.2);
+  --border-strong:  rgba(168,201,196,0.3);
+  --border-card:    rgba(58,125,140,0.18);
+}
+
+/* ══════════════════════════════════════════════
+   BACKDROP
+   ══════════════════════════════════════════════ */
 .creative-calm-backdrop {
-  background: linear-gradient(135deg, #FAF7F4 0%, #F2D5CB 65%, #BCD1CE 100%);
-  background-color: #FAF7F4;
+  /* Light: coral suave arriba, menta abajo — paleta con carácter */
+  background: linear-gradient(145deg,
+    #FDF4EE 0%,
+    #F7F2EC 40%,
+    #EEF5F3 100%);
   font-family: var(--font-sans);
+  color: var(--text-primary);
 }
-
-/* Premium Creative Calm Twilight Theme (Dark Mode) */
 .dark .creative-calm-backdrop {
-  background: radial-gradient(circle at 50% 50%, #1E2B25 0%, #111A16 100%);
-  background-color: #111A16;
-  color: #E6EAE7;
+  background: radial-gradient(ellipse at 20% 10%,
+    #182B1E 0%, #0F1C14 50%, #0A1410 100%);
+  color: var(--text-primary);
 }
 
+/* ══════════════════════════════════════════════
+   CARDS
+   Light: blancas con sombra visible y borde sutil
+   Dark:  verde forestal
+   ══════════════════════════════════════════════ */
+.calm-card {
+  background: var(--surface-card);
+  border: 1.5px solid var(--border-card);
+  border-radius: 20px;
+  box-shadow: 0 2px 16px rgba(26,46,40,0.07), 0 1px 4px rgba(26,46,40,0.05);
+}
+.dark .calm-card {
+  background: var(--surface-card);
+  border-color: var(--border-card);
+  box-shadow: 0 8px 28px rgba(0,0,0,0.4);
+}
+
+/* ══════════════════════════════════════════════
+   HEADER
+   ══════════════════════════════════════════════ */
+.app-header {
+  background: rgba(253,248,243,0.95);
+  backdrop-filter: blur(20px);
+  border-bottom: 1.5px solid rgba(26,46,40,0.08);
+}
+.dark .app-header {
+  background: rgba(10,20,16,0.92);
+  border-bottom-color: rgba(58,125,140,0.15);
+}
+
+/* ══════════════════════════════════════════════
+   NAV BAR
+   Light: blanca, sombra con color
+   Dark:  forestal oscuro
+   ══════════════════════════════════════════════ */
+.app-nav {
+  background: rgba(255,255,255,0.98);
+  backdrop-filter: blur(28px);
+  border: 1.5px solid rgba(26,46,40,0.1);
+  box-shadow:
+    0 -2px 20px rgba(58,125,140,0.1),
+    0 8px 32px rgba(26,46,40,0.1);
+}
+.dark .app-nav {
+  background: rgba(10,20,16,0.97);
+  border-color: rgba(58,125,140,0.18);
+  box-shadow: 0 -2px 20px rgba(0,0,0,0.3), 0 8px 32px rgba(0,0,0,0.5);
+}
+
+/* ══════════════════════════════════════════════
+   CHIPS — colores de paleta reales
+   ══════════════════════════════════════════════ */
+.chip-default {
+  background: #F5F0E8;
+  border: 1.5px solid rgba(26,46,40,0.12);
+  color: #2E4A40;
+  border-radius: 999px;
+  font-weight: 500;
+  transition: all 0.15s;
+}
+.chip-default:hover {
+  background: #EDE5D8;
+  border-color: #3A7D8C;
+  color: #1A2E28;
+}
+.chip-active {
+  background: #1A2E28;
+  border-color: #1A2E28;
+  color: #FFFFFF;
+  font-weight: 600;
+}
+.dark .chip-default {
+  background: #182B1E;
+  border-color: rgba(168,201,196,0.2);
+  color: #9DBDA8;
+}
+.dark .chip-default:hover {
+  background: #1C2F22;
+  border-color: #3A7D8C;
+  color: #E6EDE8;
+}
+.dark .chip-active {
+  background: #3A7D8C;
+  border-color: #4E9DAC;
+  color: #FFFFFF;
+}
+
+/* ══════════════════════════════════════════════
+   SERIF TITLE
+   ══════════════════════════════════════════════ */
 .serif-title {
   font-family: var(--font-serif);
-  font-weight: 300;
-  letter-spacing: -0.01em;
+  font-weight: 400;
+  letter-spacing: -0.015em;
 }
 
-.calm-card {
-  background-color: rgba(250, 246, 238, 0.95); /* Organic warm cream backdrop */
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(70, 130, 133, 0.32); /* Emerald Sea custom outline */
-  border-radius: 24px;
-}
-
-.dark .calm-card {
-  background-color: rgba(23, 34, 29, 0.85);
-  border-color: rgba(115, 147, 126, 0.22);
-  box-shadow: 0 10px 30px -10px rgba(0,0,0,0.3);
-}
-
-/* Scrollbar restyling */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-::-webkit-scrollbar-thumb {
-  background: rgba(115, 147, 126, 0.2);
-  border-radius: 99px;
-}
-.dark ::-webkit-scrollbar-thumb {
-  background: rgba(115, 147, 126, 0.35);
-}
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(115, 147, 126, 0.4);
-}
-
+/* ══════════════════════════════════════════════
+   SCROLLBAR
+   ══════════════════════════════════════════════ */
+::-webkit-scrollbar { width:3px; height:3px; }
+::-webkit-scrollbar-track { background:transparent; }
+::-webkit-scrollbar-thumb { background:rgba(58,125,140,0.2); border-radius:99px; }
+::-webkit-scrollbar-thumb:hover { background:rgba(58,125,140,0.4); }
+.dark ::-webkit-scrollbar-thumb { background:rgba(168,201,196,0.15); }

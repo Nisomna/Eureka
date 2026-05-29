@@ -43,26 +43,26 @@ export function InstallPrompt() {
           exit={{ y: 100, opacity: 0 }}
           className="fixed bottom-6 left-6 right-6 z-50 md:left-auto md:max-w-sm"
         >
-          <div className="bg-white dark:bg-[#1E2B25] border border-calm-sage-200 dark:border-teal-900/40 shadow-2xl rounded-2xl p-4 flex items-center justify-between space-x-4">
+          <div className="bg-[var(--surface-card)] dark:bg-[var(--surface-card2)] border border-[var(--border-card)] dark:border-[var(--border-default)]/40 shadow-2xl rounded-2xl p-4 flex items-center justify-between space-x-4">
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-calm-duckegg/20 dark:bg-[#111A16] text-calm-emeraldsea dark:text-calm-duckegg rounded-xl flex items-center justify-center">
+              <div className="w-10 h-10 bg-calm-duckegg/20 dark:bg-[var(--surface-base)] text-calm-emeraldsea dark:text-calm-duckegg rounded-xl flex items-center justify-center">
                 <Download size={20} />
               </div>
               <div>
-                <h4 className="font-bold text-calm-olive dark:text-white text-sm">Instalar Incubapp</h4>
-                <p className="text-calm-sage-600 dark:text-[#EBECEB]/60 text-xs text-balance">Accede más rápido desde tu pantalla de inicio.</p>
+                <h4 className="font-bold text-[var(--text-primary)] dark:text-[var(--text-primary)] text-sm">Instalar Incubapp</h4>
+                <p className="text-calm-sage-600 dark:text-[var(--text-primary)]/60 text-xs text-balance">Accede más rápido desde tu pantalla de inicio.</p>
               </div>
             </div>
             <div className="flex items-center space-x-2">
               <button
                 onClick={handleInstall}
-                className="bg-calm-sage-500 hover:bg-calm-sage-600 text-white px-4 py-2 rounded-xl text-sm font-bold transition-colors cursor-pointer"
+                className="bg-calm-sage-800 hover:bg-calm-sage-900 dark:bg-calm-emeraldsea dark:hover:bg-calm-sage-600 text-white px-4 py-2 rounded-xl text-sm font-bold transition-colors cursor-pointer"
               >
                 Instalar
               </button>
               <button
                 onClick={() => setShowPrompt(false)}
-                className="p-2 text-calm-sage-600 dark:text-[#EBECEB]/50 hover:text-calm-olive dark:hover:text-white cursor-pointer"
+                className="p-2 text-calm-sage-600 dark:text-[var(--text-primary)]/50 hover:text-[var(--text-primary)] dark:hover:text-white cursor-pointer"
               >
                 <X size={20} />
               </button>
