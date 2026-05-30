@@ -58,6 +58,7 @@ export function Despeje({ setPhase, state, updateState, isDark }: Props) {
   const [routineStep, setRoutineStep] = useState(0);
   const [taskCount, setTaskCount] = useState<number | 'all'>(3);
   const [modeSelected, setModeSelected] = useState(false);
+  const [routineCompleted, setRoutineCompleted] = useState(false);
 
   useEffect(() => {
     const interval = setInterval(() => setNow(Date.now()), 1000);
@@ -120,10 +121,11 @@ export function Despeje({ setPhase, state, updateState, isDark }: Props) {
   };
 
   const allCompleted = activeActivities.length > 0 && activeActivities.every(a => a.completed);
+  const isDespejeDone = allCompleted || routineCompleted;
   const ONE_DAY_MS = 24 * 60 * 60 * 1000;
   const timeLeft = Math.max(0, ONE_DAY_MS - (state.despejeStartTime ? now - state.despejeStartTime : 0));
   const isTimeUp = timeLeft === 0;
-  const canProceed = allCompleted && isTimeUp;
+  const canProceed = isDespejeDone && isTimeUp;
 
   const formatTime = (ms: number) => {
     const h = Math.floor(ms / 3600000);
@@ -140,6 +142,7 @@ export function Despeje({ setPhase, state, updateState, isDark }: Props) {
       setRoutineStep(s => s + 1);
     } else {
       setRoutineActive(false);
+      setRoutineCompleted(true);
       soundSuccess();
     }
   };
@@ -321,12 +324,20 @@ export function Despeje({ setPhase, state, updateState, isDark }: Props) {
                     </div>
                   ))}
                 </div>
-                <div className="flex-shrink-0 pb-1">
+                <div className="flex-shrink-0 pb-1 space-y-2">
+                  {routineCompleted && (
+                    <div className="p-3 bg-[var(--accent-mint)]/10 dark:bg-[var(--surface-hover)] border border-[var(--accent-mint)]/30 rounded-xl text-center">
+                      <p className="text-xs text-[var(--text-primary)] font-bold flex items-center justify-center gap-1.5">
+                        <Star size={12} className="text-[var(--accent-gold)] animate-pulse hover:rotate-12 transition-transform" />
+                        ¡Felicidades! Completaste los 10 pasos de la rutina diaria.
+                      </p>
+                    </div>
+                  )}
                   <button
                     onClick={() => { soundTransition(); setRoutineActive(true); setRoutineStep(0); }}
                     className="w-full py-3 bg-[#1E3A8A] hover:bg-[#12164A] dark:bg-[var(--accent-teal)] dark:hover:bg-[#2E6DA4] text-white rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all shadow-md cursor-pointer"
                   >
-                    <Play size={16} /> Iniciar Rutina Guiada
+                    <Play size={16} /> {routineCompleted ? 'Re-iniciar Rutina Guiada' : 'Iniciar Rutina Guiada'}
                   </button>
                 </div>
               </>
@@ -471,11 +482,31 @@ export function Despeje({ setPhase, state, updateState, isDark }: Props) {
           </button>
         )}
         {!canProceed && !isGenerating && (
-          <p className="text-[10px] text-center text-[var(--text-secondary)] dark:text-slate-500 leading-snug">
-            {!allCompleted
-              ? `Completa las actividades (${activeActivities.filter(a => a.completed).length}/${activeActivities.length}) y espera 24 h`
-              : 'Espera que transcurra el tiempo de incubación'}
-          </p>
+          <div className="text-center py-1">
+            {!isDespejeDone ? (
+              <p className="text-[10px] text-center text-[var(--text-secondary)] dark:text-slate-500 leading-snug">
+                {viewMode === 'activities'
+                  ? `Completa las actividades (${activeActivities.filter(a => a.completed).length}/${activeActivities.length}) y espera 24 h`
+                  : 'Sigue el paso a paso hasta completar tu rutina diaria'}
+              </p>
+            ) : (
+              <div className="flex flex-col items-center justify-center gap-1.5 bg-[var(--surface-base)] dark:bg-[var(--surface-input)] p-2.5 rounded-xl border border-dashed border-[var(--border-card)] dark:border-[var(--border-default)]/40">
+                <p className="text-[11px] text-[var(--text-secondary)] dark:text-[var(--accent-mint)] font-bold flex items-center justify-center gap-1">
+                  ⏱️ Reposo activo iniciado (Espera de 24h)
+                </p>
+                <button
+                  type="button"
+                  onClick={() => {
+                    soundSuccess();
+                    updateState({ despejeStartTime: Date.now() - ONE_DAY_MS - 10000 });
+                  }}
+                  className="px-3 py-1 bg-[var(--surface-card)] dark:bg-[var(--surface-card2)] hover:bg-[var(--surface-hover)] dark:hover:bg-[var(--surface-hover)] border border-[var(--border-card)] dark:border-[var(--border-default)] rounded-lg text-[10px] text-[var(--text-primary)] dark:text-white font-extrabold transition-colors cursor-pointer hover:scale-102 active:scale-98"
+                >
+                  ⚡ Acelerar incubación (Simular paso de 24h)
+                </button>
+              </div>
+            )}
+          </div>
         )}
         <button
           type="button"
