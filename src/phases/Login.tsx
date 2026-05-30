@@ -7,9 +7,10 @@ import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 interface Props {
   setPhase: (phase: Phase) => void;
   onLoginSuccess: (userId: string) => void;
+  isDark: boolean;
 }
 
-export function Login({ setPhase, onLoginSuccess }: Props) {
+export function Login({ setPhase, onLoginSuccess, isDark }: Props) {
   const [error, setError] = useState<string | null>(null);
   const [isLoggingIn, setIsLoggingIn] = useState(false);
 
@@ -47,22 +48,21 @@ export function Login({ setPhase, onLoginSuccess }: Props) {
   };
 
   return (
-    <div className="flex flex-col h-full items-center justify-center space-y-8 max-w-sm mx-auto px-4 mt-12 md:mt-16">
-      {/* Visual Identity Ring Container */}
-      <div className="text-center space-y-5 relative">
-        {/* Glow ambiental detrás del logo */}
-        <div className="absolute inset-0 bg-[var(--accent-mint)]/30 rounded-full filter blur-3xl w-36 h-36 mx-auto pointer-events-none"></div>
-        <div className="absolute inset-0 bg-[var(--accent-teal)]/10 rounded-full filter blur-2xl w-28 h-28 mx-auto mt-4 pointer-events-none animate-breath"></div>
-        
-        {/* Logo con ring animado */}
-        <div className="relative inline-flex items-center justify-center mb-2 mx-auto animate-float">
-          {/* Outer ring pulsante */}
-          <div className="absolute w-32 h-32 rounded-full border border-[var(--accent-mint)]/30 dark:border-[var(--accent-teal)]/20 animate-ping" style={{ animationDuration: '3s' }}></div>
-          {/* Inner ring */}
-          <div className="absolute w-28 h-28 rounded-full border border-[var(--accent-mint)]/50 dark:border-[var(--accent-teal)]/35"></div>
-          {/* Logo */}
-          <div className="w-24 h-24 rounded-full overflow-hidden border-2 border-[var(--accent-mint)]/60 dark:border-[var(--accent-teal)]/50 shadow-xl shadow-calm-emeraldsea/20 dark:shadow-calm-emeraldsea/30">
-            <img src="/logo.svg" alt="Incubapp" className="w-full h-full object-cover p-2" />
+    <div className="flex flex-col min-h-full items-center justify-center space-y-7 max-w-sm mx-auto px-6 py-10">
+      {/* Visual Identity */}
+      <div className="text-center space-y-4 relative flex flex-col items-center">
+        {/* Glow ambiental */}
+        <div className="absolute w-48 h-48 rounded-full bg-[#2AAFA8]/20 filter blur-3xl pointer-events-none animate-breath"></div>
+
+        {/* Logo con rings */}
+        <div className="relative flex items-center justify-center animate-float mb-1">
+          {/* Pulse ring exterior */}
+          <div className="absolute w-44 h-44 rounded-full border border-[#2AAFA8]/20 animate-ping" style={{ animationDuration: '3.5s' }}></div>
+          {/* Ring decorativo */}
+          <div className="absolute w-36 h-36 rounded-full border-2 border-[#2AAFA8]/30 dark:border-[#2AAFA8]/20"></div>
+          {/* Círculo del logo — grande, sin padding interno */}
+          <div className="w-28 h-28 rounded-full overflow-hidden border-2 border-[#2AAFA8]/60 shadow-2xl shadow-[#2AAFA8]/25 dark:shadow-[#2AAFA8]/40 bg-[#2AAFA8]/5">
+            <img src={isDark ? "/logo.svg" : "/logo-light.svg"} alt="Incubapp" className="w-full h-full object-cover" />
           </div>
         </div>
         
