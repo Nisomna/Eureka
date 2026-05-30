@@ -348,7 +348,7 @@ export default function App() {
       {(phase as string) !== 'login' && <header className="app-header py-3 md:py-4 flex items-center justify-between px-6 max-w-5xl mx-auto w-full z-10">
         <div className="flex items-center space-x-3">
           <div className="w-10 h-10 rounded-2xl overflow-hidden border-2 border-[var(--accent-teal)]/30 shadow-md shrink-0 bg-[var(--accent-teal)]/8">
-            <img src="/icon-192.png" alt="Incubapp" className="w-full h-full object-cover" />
+            <img src="/logo.svg" alt="Incubapp" className="w-full h-full object-cover p-1.5" />
           </div>
           <div>
             <h1 className="text-2xl font-bold tracking-tight bg-gradient-to-r from-calm-emeraldsea to-calm-sage-700 dark:from-calm-duckegg dark:to-calm-emeraldsea bg-clip-text text-transparent serif-title">

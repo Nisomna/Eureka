@@ -62,7 +62,7 @@ export function Login({ setPhase, onLoginSuccess }: Props) {
           <div className="absolute w-28 h-28 rounded-full border border-[var(--accent-mint)]/50 dark:border-[var(--accent-teal)]/35"></div>
           {/* Logo */}
           <div className="w-24 h-24 rounded-full overflow-hidden border-2 border-[var(--accent-mint)]/60 dark:border-[var(--accent-teal)]/50 shadow-xl shadow-calm-emeraldsea/20 dark:shadow-calm-emeraldsea/30">
-            <img src="/icon-192.png" alt="Incubapp" className="w-full h-full object-cover" />
+            <img src="/logo.svg" alt="Incubapp" className="w-full h-full object-cover p-2" />
           </div>
         </div>
         
