@@ -148,8 +148,8 @@ export function Despeje({ setPhase, state, updateState, isDark }: Props) {
   const stageOf = (idx: number) => guidedActivities[idx]?.stage;
   const stageColor = (stage: string) => {
     if (stage === 'Mañana') return 'bg-calm-butterscotch';
-    if (stage === 'Tarde') return 'bg-calm-emeraldsea';
-    return 'bg-calm-sage-700';
+    if (stage === 'Tarde') return 'bg-[var(--accent-teal)]';
+    return 'bg-[#1E3A8A]';
   };
 
   // ── PANTALLA DE CONFIGURACIÓN ──
@@ -159,45 +159,45 @@ export function Despeje({ setPhase, state, updateState, isDark }: Props) {
       <div className="flex flex-col bg-[var(--surface-card)] rounded-3xl">
         <div className="flex-1 overflow-y-auto p-5 md:p-6 space-y-5">
           <div className="flex items-center space-x-3">
-            <div className="p-2.5 bg-calm-smoke/15 border border-calm-smoke/35 dark:border-calm-smoke/45 text-calm-sage-700 dark:text-calm-duckegg rounded-xl shadow-sm animate-float">
+            <div className="p-2.5 bg-calm-smoke/15 border border-calm-smoke/35 dark:border-calm-smoke/45 text-[var(--text-secondary)] dark:text-[var(--accent-mint)] rounded-xl shadow-sm animate-float">
               <Moon size={20} />
             </div>
             <div>
-              <span className="block text-[10px] uppercase tracking-widest text-calm-sage-700 dark:text-calm-duckegg font-extrabold">Paso 2 de 4</span>
+              <span className="block text-[10px] uppercase tracking-widest text-[var(--text-secondary)] dark:text-[var(--accent-mint)] font-extrabold">Paso 2 de 4</span>
               <h2 className="text-xl font-bold text-[var(--text-primary)] serif-title">Configura tu Despeje</h2>
             </div>
           </div>
 
           <div className="space-y-2">
-            <p className="text-xs font-extrabold text-calm-sage-700 dark:text-calm-duckegg uppercase tracking-widest">¿Cómo quieres despejar tu mente?</p>
+            <p className="text-xs font-extrabold text-[var(--text-secondary)] dark:text-[var(--accent-mint)] uppercase tracking-widest">¿Cómo quieres despejar tu mente?</p>
             <div className="grid grid-cols-2 gap-3">
               <button onClick={() => { soundTap(); setViewMode('activities'); }}
-                className={`p-4 rounded-2xl border text-left transition-all cursor-pointer ${viewMode === 'activities' ? 'bg-calm-emeraldsea text-white border-calm-emeraldsea shadow-md' : 'bg-[var(--surface-card)] dark:bg-[var(--surface-card)] border-[var(--border-card)] dark:border-[var(--border-default)] text-[var(--text-primary)] hover:border-calm-emeraldsea/50'}`}
+                className={`p-4 rounded-2xl border text-left transition-all cursor-pointer ${viewMode === 'activities' ? 'bg-[var(--accent-teal)] text-white border-[var(--accent-teal)] shadow-md' : 'bg-[var(--surface-card)] dark:bg-[var(--surface-card)] border-[var(--border-card)] dark:border-[var(--border-default)] text-[var(--text-primary)] hover:border-[var(--accent-teal)]/50'}`}
               >
                 <List size={20} className="mb-2" />
                 <p className="font-bold text-sm">Actividades sueltas</p>
-                <p className={`text-xs mt-0.5 ${viewMode === 'activities' ? 'text-white/80' : 'text-calm-sage-600 dark:text-[var(--text-primary)]/60'}`}>Marca a tu ritmo</p>
+                <p className={`text-xs mt-0.5 ${viewMode === 'activities' ? 'text-white/80' : 'text-[var(--text-secondary)] dark:text-[var(--text-primary)]/60'}`}>Marca a tu ritmo</p>
               </button>
               <button onClick={() => { soundTap(); setViewMode('plan'); }}
-                className={`p-4 rounded-2xl border text-left transition-all cursor-pointer ${viewMode === 'plan' ? 'bg-calm-emeraldsea text-white border-calm-emeraldsea shadow-md' : 'bg-[var(--surface-card)] dark:bg-[var(--surface-card)] border-[var(--border-card)] dark:border-[var(--border-default)] text-[var(--text-primary)] hover:border-calm-emeraldsea/50'}`}
+                className={`p-4 rounded-2xl border text-left transition-all cursor-pointer ${viewMode === 'plan' ? 'bg-[var(--accent-teal)] text-white border-[var(--accent-teal)] shadow-md' : 'bg-[var(--surface-card)] dark:bg-[var(--surface-card)] border-[var(--border-card)] dark:border-[var(--border-default)] text-[var(--text-primary)] hover:border-[var(--accent-teal)]/50'}`}
               >
                 <CalendarDays size={20} className="mb-2" />
                 <p className="font-bold text-sm">Rutina completa</p>
-                <p className={`text-xs mt-0.5 ${viewMode === 'plan' ? 'text-white/80' : 'text-calm-sage-600 dark:text-[var(--text-primary)]/60'}`}>10 pasos por el día</p>
+                <p className={`text-xs mt-0.5 ${viewMode === 'plan' ? 'text-white/80' : 'text-[var(--text-secondary)] dark:text-[var(--text-primary)]/60'}`}>10 pasos por el día</p>
               </button>
             </div>
           </div>
 
           {viewMode === 'activities' && (
             <div className="space-y-2">
-              <p className="text-xs font-extrabold text-calm-sage-700 dark:text-calm-duckegg uppercase tracking-widest">¿Cuántas actividades quieres hacer?</p>
+              <p className="text-xs font-extrabold text-[var(--text-secondary)] dark:text-[var(--accent-mint)] uppercase tracking-widest">¿Cuántas actividades quieres hacer?</p>
               <div className="flex gap-2 flex-wrap">
                 {[1, 2, 3, maxCount > 3 ? maxCount : null].filter(Boolean).map(n => (
                   <button key={n}
                     onClick={() => { soundTap(); setTaskCount(n === maxCount ? 'all' : n as number); }}
                     className={`px-4 py-2 rounded-xl border font-bold text-sm transition-all cursor-pointer ${
                       (n === maxCount ? taskCount === 'all' : taskCount === n)
-                        ? 'bg-calm-sage-600 text-white border-calm-sage-600'
+                        ? 'bg-[#2E6DA4] text-white border-calm-sage-600'
                         : 'bg-[var(--surface-card)] border-[var(--border-card)] dark:border-[var(--border-default)] text-[var(--text-primary)] dark:text-[var(--text-primary)]'
                     }`}
                   >
@@ -210,7 +210,7 @@ export function Despeje({ setPhase, state, updateState, isDark }: Props) {
 
           {viewMode === 'plan' && (
             <div className="bg-[var(--surface-card)]/60 dark:bg-[var(--surface-card)]/60 border border-[var(--border-card)]/60 dark:border-[var(--border-default)]/60 rounded-2xl p-4 space-y-2">
-              <p className="text-[10px] uppercase font-bold text-calm-emeraldsea dark:text-calm-duckegg tracking-widest mb-2">10 actividades del día</p>
+              <p className="text-[10px] uppercase font-bold text-[var(--accent-teal)] dark:text-[var(--accent-mint)] tracking-widest mb-2">10 actividades del día</p>
               {GUIDED_ROUTINE.map((a, i) => (
                 <div key={a.id} className="flex items-center gap-2 text-xs text-[var(--text-secondary)] dark:text-[var(--text-primary)]/70">
                   <span className={`w-4 h-4 rounded-full flex items-center justify-center text-[8px] font-bold text-white flex-shrink-0 ${stageColor(a.stage)}`}>{i + 1}</span>
@@ -223,10 +223,10 @@ export function Despeje({ setPhase, state, updateState, isDark }: Props) {
 
           {viewMode === 'activities' && (
             <div className="bg-[var(--surface-card)]/60 dark:bg-[var(--surface-card)]/60 border border-[var(--border-card)]/60 dark:border-[var(--border-default)]/60 rounded-2xl p-4 space-y-2">
-              <p className="text-[10px] uppercase font-bold text-calm-emeraldsea dark:text-calm-duckegg tracking-widest">Vista previa</p>
+              <p className="text-[10px] uppercase font-bold text-[var(--accent-teal)] dark:text-[var(--accent-mint)] tracking-widest">Vista previa</p>
               {(taskCount === 'all' ? state.despejeActivities : state.despejeActivities.slice(0, taskCount as number)).map((a, i) => (
                 <div key={a.id} className="flex items-center gap-2 text-xs text-[var(--text-secondary)] dark:text-[var(--text-primary)]/70">
-                  <span className="w-4 h-4 rounded-full bg-calm-sage-200/60 dark:bg-teal-900/40 flex items-center justify-center text-[9px] font-bold text-calm-emeraldsea">{i + 1}</span>
+                  <span className="w-4 h-4 rounded-full bg-calm-sage-200/60 dark:bg-teal-900/40 flex items-center justify-center text-[9px] font-bold text-[var(--accent-teal)]">{i + 1}</span>
                   <span>{a.title}</span>
                 </div>
               ))}
@@ -237,7 +237,7 @@ export function Despeje({ setPhase, state, updateState, isDark }: Props) {
         {/* Footer siempre visible */}
         <div className="flex-shrink-0 px-5 pb-5 pt-3 border-t border-[var(--border-card)]/40 dark:border-[var(--border-default)]/40 bg-[var(--surface-card)] dark:bg-[var(--surface-card)]">
           <button onClick={() => { soundTransition(); setModeSelected(true); }}
-            className="w-full py-3.5 bg-calm-sage-800 hover:bg-calm-sage-900 dark:bg-calm-emeraldsea dark:hover:bg-calm-sage-600 text-white rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all shadow-lg cursor-pointer"
+            className="w-full py-3.5 bg-[#1E3A8A] hover:bg-[#12164A] dark:bg-[var(--accent-teal)] dark:hover:bg-[#2E6DA4] text-white rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all shadow-lg cursor-pointer"
           >
             <Play size={16} />
             Comenzar Despeje
@@ -254,7 +254,7 @@ export function Despeje({ setPhase, state, updateState, isDark }: Props) {
       style={{ height: '100%', overflow: 'hidden' }}
     >
       {/* Starry dots */}
-      <div className="absolute top-10 left-10 w-1.5 h-1.5 rounded-full bg-calm-emeraldsea/50 dark:bg-calm-duckegg opacity-60 animate-pulse pointer-events-none" />
+      <div className="absolute top-10 left-10 w-1.5 h-1.5 rounded-full bg-[var(--accent-teal)]/50 dark:bg-calm-duckegg opacity-60 animate-pulse pointer-events-none" />
       <div className="absolute top-24 right-16 w-1 h-1 rounded-full bg-calm-butterscotch/70 opacity-80 animate-pulse delay-500 pointer-events-none" />
 
       {/* ── Scrollable content ── */}
@@ -263,17 +263,17 @@ export function Despeje({ setPhase, state, updateState, isDark }: Props) {
         {/* Header */}
         <div className="flex items-center justify-between mt-1 flex-shrink-0">
           <div className="flex items-center space-x-3">
-            <div className="flex-shrink-0 p-2.5 bg-calm-smoke/15 dark:bg-calm-smoke/25 border border-calm-smoke/35 dark:border-calm-smoke/45 text-calm-sage-700 dark:text-calm-duckegg rounded-xl shadow-sm animate-float">
+            <div className="flex-shrink-0 p-2.5 bg-calm-smoke/15 dark:bg-calm-smoke/25 border border-calm-smoke/35 dark:border-calm-smoke/45 text-[var(--text-secondary)] dark:text-[var(--accent-mint)] rounded-xl shadow-sm animate-float">
               <Moon size={20} />
             </div>
             <div>
-              <span className="block text-[10px] uppercase tracking-widest text-calm-sage-600 dark:text-calm-duckegg font-extrabold leading-none mb-0.5">Paso 2 de 4</span>
+              <span className="block text-[10px] uppercase tracking-widest text-[var(--text-secondary)] dark:text-[var(--accent-mint)] font-extrabold leading-none mb-0.5">Paso 2 de 4</span>
               <h2 className="text-xl font-bold text-[var(--text-primary)] serif-title leading-tight">Momento de Despeje</h2>
             </div>
           </div>
           <button
             onClick={() => { soundTap(); setModeSelected(false); setRoutineActive(false); setRoutineStep(0); setGuidedCompleted({}); }}
-            className="p-2 bg-[var(--surface-card)] dark:bg-[var(--surface-card2)]/60 border border-[var(--border-card)] dark:border-[var(--border-default)]/60 rounded-xl text-calm-sage-600 dark:text-calm-duckegg hover:bg-[var(--surface-hover)] transition-all cursor-pointer"
+            className="p-2 bg-[var(--surface-card)] dark:bg-[var(--surface-card2)]/60 border border-[var(--border-card)] dark:border-[var(--border-default)]/60 rounded-xl text-[var(--text-secondary)] dark:text-[var(--accent-mint)] hover:bg-[var(--surface-hover)] transition-all cursor-pointer"
             title="Cambiar configuración"
           >
             <LayoutList size={14} />
@@ -284,10 +284,10 @@ export function Despeje({ setPhase, state, updateState, isDark }: Props) {
         {isGenerating ? (
           <div className="flex-1 flex flex-col items-center justify-center space-y-4 py-12">
             <div className="relative flex items-center justify-center">
-              <div className="w-14 h-14 border-4 border-calm-emeraldsea border-t-transparent rounded-full animate-spin" />
-              <div className="absolute w-8 h-8 rounded-full bg-calm-emeraldsea/20 animate-breath" />
+              <div className="w-14 h-14 border-4 border-[var(--accent-teal)] border-t-transparent rounded-full animate-spin" />
+              <div className="absolute w-8 h-8 rounded-full bg-[var(--accent-teal)]/20 animate-breath" />
             </div>
-            <p className="text-calm-emeraldsea dark:text-calm-duckegg font-bold text-sm tracking-wide">Estructurando tu santuario de descanso...</p>
+            <p className="text-[var(--accent-teal)] dark:text-[var(--accent-mint)] font-bold text-sm tracking-wide">Estructurando tu santuario de descanso...</p>
           </div>
 
         ) : viewMode === 'plan' ? (
@@ -296,7 +296,7 @@ export function Despeje({ setPhase, state, updateState, isDark }: Props) {
             {!routineActive ? (
               <>
                 <div className="flex-1 overflow-y-auto rounded-2xl border bg-[var(--surface-card)] dark:bg-[var(--surface-card2)] border-[var(--border-card)] dark:border-[var(--border-default)]/50 p-4">
-                  <div className="flex items-center gap-2 text-calm-emeraldsea dark:text-calm-duckegg mb-3 pb-2 border-b border-[var(--border-card)]/60 dark:border-[var(--border-default)]/30">
+                  <div className="flex items-center gap-2 text-[var(--accent-teal)] dark:text-[var(--accent-mint)] mb-3 pb-2 border-b border-[var(--border-card)]/60 dark:border-[var(--border-default)]/30">
                     <CalendarDays size={18} />
                     <h3 className="text-sm font-bold text-[var(--text-primary)]">Tu Día Sin Prisa · 10 actividades</h3>
                   </div>
@@ -305,16 +305,16 @@ export function Despeje({ setPhase, state, updateState, isDark }: Props) {
                     <div key={stage} className="mb-4">
                       <div className="flex items-center gap-2 mb-2">
                         <div className={`w-2 h-2 rounded-full ${stageColor(stage)}`} />
-                        <p className="text-[10px] uppercase font-extrabold tracking-widest text-calm-sage-700 dark:text-calm-duckegg">{stage}</p>
+                        <p className="text-[10px] uppercase font-extrabold tracking-widest text-[var(--text-secondary)] dark:text-[var(--accent-mint)]">{stage}</p>
                       </div>
                       {GUIDED_ROUTINE.filter(r => r.stage === stage).map((r, i) => (
                         <div key={r.id} className="flex items-start gap-3 py-2 border-b border-[var(--border-card)]/30 dark:border-[var(--border-default)]/30 last:border-0">
-                          <div className="w-8 h-8 rounded-lg bg-[var(--surface-card2)] dark:bg-[var(--surface-card)] border border-calm-duckegg/30 dark:border-[var(--border-default)]/30 flex items-center justify-center text-calm-emeraldsea dark:text-calm-duckegg flex-shrink-0 [&_svg]:w-4 [&_svg]:h-4">
+                          <div className="w-8 h-8 rounded-lg bg-[var(--surface-card2)] dark:bg-[var(--surface-card)] border border-[var(--accent-mint)]/30 dark:border-[var(--border-default)]/30 flex items-center justify-center text-[var(--accent-teal)] dark:text-[var(--accent-mint)] flex-shrink-0 [&_svg]:w-4 [&_svg]:h-4">
                             {ICON_MAP[r.iconId] || <Coffee size={16} />}
                           </div>
                           <div>
                             <p className="text-xs font-bold text-[var(--text-primary)]">{r.title}</p>
-                            <p className="text-[11px] text-calm-sage-600 dark:text-[var(--text-primary)]/55 leading-snug mt-0.5">{r.desc}</p>
+                            <p className="text-[11px] text-[var(--text-secondary)] dark:text-[var(--text-primary)]/55 leading-snug mt-0.5">{r.desc}</p>
                           </div>
                         </div>
                       ))}
@@ -324,7 +324,7 @@ export function Despeje({ setPhase, state, updateState, isDark }: Props) {
                 <div className="flex-shrink-0 pb-1">
                   <button
                     onClick={() => { soundTransition(); setRoutineActive(true); setRoutineStep(0); }}
-                    className="w-full py-3 bg-calm-sage-800 hover:bg-calm-sage-900 dark:bg-calm-emeraldsea dark:hover:bg-calm-sage-600 text-white rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all shadow-md cursor-pointer"
+                    className="w-full py-3 bg-[#1E3A8A] hover:bg-[#12164A] dark:bg-[var(--accent-teal)] dark:hover:bg-[#2E6DA4] text-white rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all shadow-md cursor-pointer"
                   >
                     <Play size={16} /> Iniciar Rutina Guiada
                   </button>
@@ -337,7 +337,7 @@ export function Despeje({ setPhase, state, updateState, isDark }: Props) {
                 <div className="flex items-center gap-1 mb-1 flex-shrink-0">
                   {guidedActivities.map((a, i) => (
                     <div key={i} className={`h-1.5 flex-1 rounded-full transition-all duration-500 ${
-                      a.completed ? 'bg-calm-emeraldsea' :
+                      a.completed ? 'bg-[var(--accent-teal)]' :
                       i === routineStep ? 'bg-calm-butterscotch' :
                       'bg-calm-sage-200/40 dark:bg-teal-950/40'
                     }`} />
@@ -348,7 +348,7 @@ export function Despeje({ setPhase, state, updateState, isDark }: Props) {
                   <span className={`text-[10px] font-extrabold uppercase tracking-widest px-2 py-0.5 rounded-full text-white ${stageColor(stageOf(routineStep))}`}>
                     {stageOf(routineStep)}
                   </span>
-                  <p className="text-[10px] text-calm-sage-500 dark:text-[var(--text-primary)]/40">
+                  <p className="text-[10px] text-[var(--accent-teal)] dark:text-[var(--text-primary)]/40">
                     {routineStep + 1} / {guidedActivities.length}
                   </p>
                 </div>
@@ -363,14 +363,14 @@ export function Despeje({ setPhase, state, updateState, isDark }: Props) {
                     transition={{ duration: 0.28 }}
                     className="flex-1 flex flex-col items-center justify-center text-center space-y-4 p-6 bg-[var(--surface-card)] dark:bg-[var(--surface-card)] border border-[var(--border-card)] dark:border-[var(--border-default)] rounded-2xl min-h-0"
                   >
-                    <div className="w-16 h-16 rounded-2xl bg-calm-emeraldsea/15 dark:bg-[var(--surface-card2)] border border-calm-emeraldsea/30 flex items-center justify-center text-calm-emeraldsea dark:text-calm-duckegg [&_svg]:w-8 [&_svg]:h-8">
+                    <div className="w-16 h-16 rounded-2xl bg-[var(--accent-teal)]/15 dark:bg-[var(--surface-card2)] border border-[var(--accent-teal)]/30 flex items-center justify-center text-[var(--accent-teal)] dark:text-[var(--accent-mint)] [&_svg]:w-8 [&_svg]:h-8">
                       {ICON_MAP[guidedActivities[routineStep]?.iconId] || <Coffee size={32} />}
                     </div>
                     <div className="space-y-2">
                       <h3 className="text-lg font-bold text-[var(--text-primary)] dark:text-[var(--text-primary)] leading-snug">
                         {guidedActivities[routineStep]?.title}
                       </h3>
-                      <p className="text-sm text-calm-sage-700 dark:text-[var(--text-primary)]/70 leading-relaxed max-w-xs">
+                      <p className="text-sm text-[var(--text-secondary)] dark:text-[var(--text-primary)]/70 leading-relaxed max-w-xs">
                         {guidedActivities[routineStep]?.desc}
                       </p>
                     </div>
@@ -387,13 +387,13 @@ export function Despeje({ setPhase, state, updateState, isDark }: Props) {
                 <div className="flex gap-3 mt-3 flex-shrink-0">
                   <button
                     onClick={() => { soundTap(); setRoutineActive(false); }}
-                    className="p-3 rounded-xl border border-[var(--border-card)] dark:border-[var(--border-default)] bg-[var(--surface-card)] dark:bg-[var(--surface-card)]/80 text-calm-sage-600 dark:text-[var(--text-primary)]/60 cursor-pointer hover:bg-[var(--surface-hover)] transition-all"
+                    className="p-3 rounded-xl border border-[var(--border-card)] dark:border-[var(--border-default)] bg-[var(--surface-card)] dark:bg-[var(--surface-card)]/80 text-[var(--text-secondary)] dark:text-[var(--text-primary)]/60 cursor-pointer hover:bg-[var(--surface-hover)] transition-all"
                   >
                     <Pause size={18} />
                   </button>
                   <button
                     onClick={nextRoutineStep}
-                    className="flex-1 py-3 bg-calm-sage-800 hover:bg-calm-sage-900 dark:bg-calm-emeraldsea dark:hover:bg-calm-sage-600 text-white rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all shadow-md cursor-pointer"
+                    className="flex-1 py-3 bg-[#1E3A8A] hover:bg-[#12164A] dark:bg-[var(--accent-teal)] dark:hover:bg-[#2E6DA4] text-white rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all shadow-md cursor-pointer"
                   >
                     {routineStep < guidedActivities.length - 1 ? (
                       <><span>Siguiente actividad</span><SkipForward size={16} /></>
@@ -419,19 +419,19 @@ export function Despeje({ setPhase, state, updateState, isDark }: Props) {
                   onClick={() => toggleActivity(rec.id)}
                   className={`p-4 border rounded-2xl transition-all duration-200 cursor-pointer group flex items-center space-x-4 select-none active:scale-[0.985] ${
                     rec.completed
-                      ? 'bg-calm-duckegg/20 dark:bg-[var(--surface-card2)]/30 border-calm-duckegg/50 dark:border-[var(--border-default)]/50 opacity-75'
-                      : 'bg-[var(--surface-card)] dark:bg-[var(--surface-card)] border-[var(--border-card)]/80 dark:border-[var(--border-default)] hover:bg-[var(--surface-hover)] dark:hover:bg-[var(--surface-hover)] hover:border-calm-duckegg/60 hover:shadow-md'
+                      ? 'bg-[var(--accent-mint)]/25 dark:bg-[var(--surface-card2)]/30 border-[var(--accent-mint)]/50 dark:border-[var(--border-default)]/50 opacity-75'
+                      : 'bg-[var(--surface-card)] dark:bg-[var(--surface-card)] border-[var(--border-card)]/80 dark:border-[var(--border-default)] hover:bg-[var(--surface-hover)] dark:hover:bg-[var(--surface-hover)] hover:border-[var(--accent-mint)]/60 hover:shadow-md'
                   }`}
                 >
-                  <div className={`flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center transition-all ${rec.completed ? 'bg-calm-emeraldsea text-white shadow-sm' : 'bg-[var(--surface-card2)] dark:bg-[var(--surface-card)] border-2 border-[var(--border-card)] dark:border-[var(--border-default)] text-calm-sage-400 group-hover:border-calm-emeraldsea/60'}`}>
+                  <div className={`flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center transition-all ${rec.completed ? 'bg-[var(--accent-teal)] text-white shadow-sm' : 'bg-[var(--surface-card2)] dark:bg-[var(--surface-card)] border-2 border-[var(--border-card)] dark:border-[var(--border-default)] text-calm-sage-400 group-hover:border-[var(--accent-teal)]/60'}`}>
                     {rec.completed ? <CheckCircle2 size={22} className="stroke-[2.5]" /> : <Circle size={20} className="stroke-2" />}
                   </div>
-                  <div className={`flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center [&_svg]:w-5 [&_svg]:h-5 ${rec.completed ? 'bg-calm-duckegg/30 dark:bg-[var(--surface-card2)]/50 text-calm-emeraldsea/60' : 'bg-[var(--surface-base)] dark:bg-[var(--surface-base)] text-calm-emeraldsea dark:text-calm-duckegg border border-calm-duckegg/30 dark:border-[var(--border-default)]/30'}`}>
+                  <div className={`flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center [&_svg]:w-5 [&_svg]:h-5 ${rec.completed ? 'bg-[var(--accent-mint)]/30 dark:bg-[var(--surface-card2)]/50 text-[var(--accent-teal)]/60' : 'bg-[var(--surface-base)] dark:bg-[var(--surface-base)] text-[var(--accent-teal)] dark:text-[var(--accent-mint)] border border-[var(--accent-mint)]/30 dark:border-[var(--border-default)]/30'}`}>
                     {ICON_MAP[rec.iconId] || <Coffee size={20} />}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h3 className={`font-bold text-sm leading-snug ${rec.completed ? 'line-through text-calm-sage-600/50 dark:text-calm-duckegg/50' : 'text-[var(--text-primary)] dark:text-white'}`}>{rec.title}</h3>
-                    <p className={`text-xs mt-0.5 leading-relaxed line-clamp-2 ${rec.completed ? 'text-calm-sage-500/50 dark:text-calm-duckegg/35' : 'text-calm-sage-700 dark:text-[var(--text-primary)]/70'}`}>{rec.desc}</p>
+                    <h3 className={`font-bold text-sm leading-snug ${rec.completed ? 'line-through text-[var(--text-secondary)]/50 dark:text-[var(--accent-mint)]/50' : 'text-[var(--text-primary)] dark:text-white'}`}>{rec.title}</h3>
+                    <p className={`text-xs mt-0.5 leading-relaxed line-clamp-2 ${rec.completed ? 'text-[var(--accent-teal)]/50 dark:text-[var(--accent-mint)]/35' : 'text-[var(--text-secondary)] dark:text-[var(--text-primary)]/70'}`}>{rec.desc}</p>
                   </div>
                 </motion.div>
               ))}
@@ -445,15 +445,15 @@ export function Despeje({ setPhase, state, updateState, isDark }: Props) {
                 </p>
               ) : !isTimeUp ? (
                 <div className="flex items-center justify-center gap-3">
-                  <p className="text-calm-sage-700 dark:text-calm-duckegg text-xs font-bold flex items-center gap-1.5">
+                  <p className="text-[var(--text-secondary)] dark:text-[var(--accent-mint)] text-xs font-bold flex items-center gap-1.5">
                     <CheckCircle2 size={13} className="stroke-[2.5]" /> Listas. Deja reposar la mente.
                   </p>
-                  <div className="flex items-center gap-1.5 text-calm-emeraldsea dark:text-calm-duckegg font-mono text-sm bg-[var(--surface-card)] dark:bg-[var(--surface-card)]/80 border border-[var(--border-card)] dark:border-[var(--border-default)]/45 px-3 py-1 rounded-full shadow-sm">
+                  <div className="flex items-center gap-1.5 text-[var(--accent-teal)] dark:text-[var(--accent-mint)] font-mono text-sm bg-[var(--surface-card)] dark:bg-[var(--surface-card)]/80 border border-[var(--border-card)] dark:border-[var(--border-default)]/45 px-3 py-1 rounded-full shadow-sm">
                     <Clock size={13} /><span>{formatTime(timeLeft)}</span>
                   </div>
                 </div>
               ) : (
-                <p className="text-calm-sage-700 dark:text-calm-duckegg text-xs font-bold flex items-center justify-center gap-1.5">
+                <p className="text-[var(--text-secondary)] dark:text-[var(--accent-mint)] text-xs font-bold flex items-center justify-center gap-1.5">
                   <Sparkles size={13} /> ¡Incubación completada! Es hora de las ideas.
                 </p>
               )}
@@ -466,7 +466,7 @@ export function Despeje({ setPhase, state, updateState, isDark }: Props) {
       <div className="flex-shrink-0 px-5 pb-5 pt-3 space-y-2 border-t border-[var(--border-card)]/40 dark:border-[var(--border-default)]/40 bg-[var(--surface-card)] dark:bg-[var(--surface-card)]">
         {isTimeUp && !isGenerating && (
           <button type="button" onClick={() => { soundTap(); generateActivities(); setModeSelected(false); setRoutineActive(false); setGuidedCompleted({}); }}
-            className="w-full py-2.5 bg-[var(--surface-card)] hover:bg-[var(--surface-card2)] dark:bg-[var(--surface-card2)] dark:hover:bg-[var(--surface-hover)] text-calm-sage-700 dark:text-calm-duckegg border border-[var(--border-card)] dark:border-[var(--border-default)]/40 rounded-xl font-bold text-xs flex items-center justify-center space-x-1.5 transition-all cursor-pointer">
+            className="w-full py-2.5 bg-[var(--surface-card)] hover:bg-[var(--surface-card2)] dark:bg-[var(--surface-card2)] dark:hover:bg-[var(--surface-hover)] text-[var(--text-secondary)] dark:text-[var(--accent-mint)] border border-[var(--border-card)] dark:border-[var(--border-default)]/40 rounded-xl font-bold text-xs flex items-center justify-center space-x-1.5 transition-all cursor-pointer">
             <RefreshCw size={13} /><span>Volver a iniciar despeje</span>
           </button>
         )}
@@ -483,11 +483,11 @@ export function Despeje({ setPhase, state, updateState, isDark }: Props) {
           disabled={!canProceed || isGenerating}
           className={`w-full py-4 rounded-xl font-bold text-base flex items-center justify-center space-x-2.5 transition-all ${
             canProceed && !isGenerating
-              ? 'bg-calm-sage-800 hover:bg-calm-sage-900 dark:bg-calm-emeraldsea dark:hover:bg-calm-sage-600 text-white shadow-lg shadow-calm-sage-200/50 dark:shadow-none active:scale-[0.992] cursor-pointer'
+              ? 'bg-[#1E3A8A] hover:bg-[#12164A] dark:bg-[var(--accent-teal)] dark:hover:bg-[#2E6DA4] text-white shadow-lg shadow-calm-sage-200/50 dark:shadow-none active:scale-[0.992] cursor-pointer'
               : 'bg-[var(--surface-card2)] dark:bg-[var(--surface-card)]/40 text-[var(--text-secondary)] dark:text-slate-600 border border-calm-sage-150/20 dark:border-[var(--border-default)]/80 cursor-not-allowed'
           }`}
         >
-          <Lightbulb size={20} className={canProceed && !isGenerating ? 'text-calm-butterscotch animate-pulse' : 'text-[var(--text-secondary)] dark:text-slate-600'} />
+          <Lightbulb size={20} className={canProceed && !isGenerating ? 'text-[var(--accent-gold)] animate-pulse' : 'text-[var(--text-secondary)] dark:text-slate-600'} />
           <span>¡Llegaron las ideas! Eureka</span>
         </button>
       </div>

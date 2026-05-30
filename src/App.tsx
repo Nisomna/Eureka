@@ -313,11 +313,11 @@ export default function App() {
   };
 
   const navigationSteps = [
-    { id: 'home' as Phase, label: 'Inicio', icon: Compass, colorClass: 'text-calm-emeraldsea' },
-    { id: 'afinar' as Phase, label: '1. Afinar', icon: Target, colorClass: 'text-calm-butterscotch' },
+    { id: 'home' as Phase, label: 'Inicio', icon: Compass, colorClass: 'text-[var(--accent-teal)]' },
+    { id: 'afinar' as Phase, label: '1. Afinar', icon: Target, colorClass: 'text-[var(--accent-gold)]' },
     { id: 'despeje' as Phase, label: '2. Despejar', icon: Wind, colorClass: 'text-calm-smoke' },
-    { id: 'eureka' as Phase, label: '3. Eureka', icon: Lightbulb, colorClass: 'text-calm-coral' },
-    { id: 'aplicacion' as Phase, label: '4. Aplicar', icon: PenTool, colorClass: 'text-calm-emeraldsea' },
+    { id: 'eureka' as Phase, label: '3. Eureka', icon: Lightbulb, colorClass: 'text-[var(--accent-action)]' },
+    { id: 'aplicacion' as Phase, label: '4. Aplicar', icon: PenTool, colorClass: 'text-[var(--accent-teal)]' },
   ];
 
   if (loading) {
@@ -341,20 +341,20 @@ export default function App() {
       }} />}
     <div className="h-screen creative-calm-backdrop text-[var(--text-primary)] dark:text-[var(--text-primary)] font-sans overflow-hidden flex flex-col relative">
       {/* Decorative Orbs */}
-      <div className="absolute -top-40 -left-40 w-96 h-96 rounded-full bg-calm-duckegg/20 dark:bg-[var(--surface-card2)]/20 filter blur-3xl pointer-events-none"></div>
+      <div className="absolute -top-40 -left-40 w-96 h-96 rounded-full bg-[var(--accent-mint)]/25 dark:bg-[var(--surface-card2)]/20 filter blur-3xl pointer-events-none"></div>
       <div className="absolute -bottom-40 -right-40 w-96 h-96 rounded-full bg-calm-blush/15 dark:bg-[var(--surface-base)]/10 filter blur-3xl pointer-events-none"></div>
 
       {/* Header — hidden on login */}
       {(phase as string) !== 'login' && <header className="app-header py-3 md:py-4 flex items-center justify-between px-6 max-w-5xl mx-auto w-full z-10">
         <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 rounded-2xl overflow-hidden border-2 border-calm-emeraldsea/30 shadow-md shrink-0 bg-calm-emeraldsea/8">
+          <div className="w-10 h-10 rounded-2xl overflow-hidden border-2 border-[var(--accent-teal)]/30 shadow-md shrink-0 bg-[var(--accent-teal)]/8">
             <img src="/icon-192.png" alt="Incubapp" className="w-full h-full object-cover" />
           </div>
           <div>
             <h1 className="text-2xl font-bold tracking-tight bg-gradient-to-r from-calm-emeraldsea to-calm-sage-700 dark:from-calm-duckegg dark:to-calm-emeraldsea bg-clip-text text-transparent serif-title">
               Incubapp
             </h1>
-            <p className="text-[10px] tracking-widest text-calm-sage-600/80 dark:text-[var(--text-primary)]/40 uppercase font-semibold">Creative Calm Nest</p>
+            <p className="text-[10px] tracking-widest text-[var(--text-secondary)]/80 dark:text-[var(--text-primary)]/40 uppercase font-semibold">Creative Calm Nest</p>
           </div>
         </div>
 
@@ -363,21 +363,21 @@ export default function App() {
           <div className="flex items-center space-x-2.5">
             <button
                onClick={() => setShowBreathingModal(true)}
-               className="hidden sm:flex items-center space-x-2 px-3 py-1.5 rounded-full border border-[var(--border-card)] dark:border-teal-900 bg-white/60 dark:bg-[var(--surface-card)]/60 hover:bg-[var(--surface-hover)] dark:hover:bg-[var(--surface-hover)] text-xs text-calm-sage-700 dark:text-[var(--text-primary)] transition-all shadow-sm cursor-pointer"
+               className="hidden sm:flex items-center space-x-2 px-3 py-1.5 rounded-full border border-[var(--border-card)] dark:border-teal-900 bg-white/60 dark:bg-[var(--surface-card)]/60 hover:bg-[#D0DFF0] dark:hover:bg-[var(--surface-hover)] text-xs text-[var(--text-secondary)] dark:text-[var(--text-primary)] transition-all shadow-sm cursor-pointer"
             >
-               <div className="w-2.5 h-2.5 rounded-full bg-calm-emeraldsea animate-pulse"></div>
+               <div className="w-2.5 h-2.5 rounded-full bg-[var(--accent-teal)] animate-pulse"></div>
                <span className="font-semibold">Espacio de Alivio</span>
             </button>
 
             {/* Notification Bell with Badge */}
             <button
                onClick={() => setShowNotificationsDrawer(true)}
-               className="p-2.5 text-calm-sage-600 dark:text-[var(--text-primary)]/65 hover:text-calm-emeraldsea dark:hover:text-[#90C2A0] rounded-full bg-white/50 dark:bg-[var(--surface-card)]/55 hover:bg-[var(--surface-hover)] dark:hover:bg-[var(--surface-hover)] border border-transparent hover:border-calm-sage-100 dark:hover:border-teal-900 transition-all shadow-sm relative cursor-pointer"
+               className="p-2.5 text-[var(--text-secondary)] dark:text-[var(--text-primary)]/65 hover:text-[var(--accent-teal)] dark:hover:text-[#90C2A0] rounded-full bg-white/50 dark:bg-[var(--surface-card)]/55 hover:bg-[#D0DFF0] dark:hover:bg-[var(--surface-hover)] border border-transparent hover:border-calm-sage-100 dark:hover:border-teal-900 transition-all shadow-sm relative cursor-pointer"
                title="Centro de Notificaciones / Planes Pendientes"
             >
                <Bell size={17} />
                {state.historicalTasks && state.historicalTasks.filter(t => !t.completed).length > 0 && (
-                 <span className="absolute top-1.5 right-1.5 min-w-[16px] h-4 text-[9px] font-black text-white bg-calm-emeraldsea rounded-full flex items-center justify-center px-1">
+                 <span className="absolute top-1.5 right-1.5 min-w-[16px] h-4 text-[9px] font-black text-white bg-[var(--accent-teal)] rounded-full flex items-center justify-center px-1">
                    {state.historicalTasks.filter(t => !t.completed).length}
                  </span>
                )}
@@ -386,7 +386,7 @@ export default function App() {
             {/* Dark / Light toggle */}
             <button
                onClick={toggleDark}
-               className="p-2.5 rounded-full bg-white/50 dark:bg-[var(--surface-card)]/55 hover:bg-[var(--surface-hover)] dark:hover:bg-[var(--surface-hover)] border border-transparent hover:border-[var(--border-card)] dark:hover:border-teal-900/60 transition-all shadow-sm cursor-pointer text-calm-butterscotch dark:text-calm-duckegg"
+               className="p-2.5 rounded-full bg-white/50 dark:bg-[var(--surface-card)]/55 hover:bg-[#D0DFF0] dark:hover:bg-[var(--surface-hover)] border border-transparent hover:border-[var(--border-card)] dark:hover:border-teal-900/60 transition-all shadow-sm cursor-pointer text-[var(--accent-gold)] dark:text-[var(--accent-mint)]"
                title={isDark ? 'Modo claro' : 'Modo oscuro'}
             >
                {isDark ? <Sun size={16} /> : <Moon size={16} />}
@@ -394,7 +394,7 @@ export default function App() {
 
             <button
                onClick={() => setShowCredits(true)}
-               className="p-2.5 text-calm-sage-600 dark:text-[var(--text-primary)]/55 hover:text-calm-butterscotch rounded-full bg-white/50 dark:bg-[var(--surface-card)]/55 hover:bg-[var(--surface-hover)] dark:hover:bg-[var(--surface-hover)] border border-transparent hover:border-[var(--border-card)] dark:hover:border-teal-900/60 transition-all shadow-sm cursor-pointer"
+               className="p-2.5 text-[var(--text-secondary)] dark:text-[var(--text-primary)]/55 hover:text-[var(--accent-gold)] rounded-full bg-white/50 dark:bg-[var(--surface-card)]/55 hover:bg-[#D0DFF0] dark:hover:bg-[var(--surface-hover)] border border-transparent hover:border-[var(--border-card)] dark:hover:border-teal-900/60 transition-all shadow-sm cursor-pointer"
                title="Créditos"
             >
                <Trophy size={16} />
@@ -407,7 +407,7 @@ export default function App() {
                    setState(initialState);
                  });
                }} 
-               className="p-2.5 text-calm-sage-600 dark:text-[var(--text-primary)]/55 hover:text-red-500 rounded-full bg-white/50 dark:bg-[var(--surface-card)]/55 hover:bg-[var(--surface-hover)] dark:hover:bg-[var(--surface-hover)] border border-transparent hover:border-[var(--border-card)] dark:hover:border-teal-900/60 transition-all shadow-sm cursor-pointer"
+               className="p-2.5 text-[var(--text-secondary)] dark:text-[var(--text-primary)]/55 hover:text-red-500 rounded-full bg-white/50 dark:bg-[var(--surface-card)]/55 hover:bg-[#D0DFF0] dark:hover:bg-[var(--surface-hover)] border border-transparent hover:border-[var(--border-card)] dark:hover:border-teal-900/60 transition-all shadow-sm cursor-pointer"
                title="Cerrar sesión"
             >
                <LogOut size={16} />
@@ -445,14 +445,14 @@ export default function App() {
 
               // Active color per step
               const activeColors: Record<string, string> = {
-                home:       'bg-calm-emeraldsea/12 text-calm-emeraldsea border-calm-emeraldsea/25',
-                afinar:     'bg-calm-butterscotch/15 text-calm-butterscotch border-calm-butterscotch/30',
-                despeje:    'bg-calm-smoke/15 text-calm-sage-700 border-calm-smoke/30',
-                eureka:     'bg-calm-coral/15 text-calm-coral border-calm-coral/25',
-                aplicacion: 'bg-calm-duckegg/20 text-calm-emeraldsea border-calm-duckegg/30',
+                home:       'bg-[var(--accent-teal)]/12 text-[var(--accent-teal)] border-[var(--accent-teal)]/25',
+                afinar:     'bg-calm-butterscotch/15 text-[var(--accent-gold)] border-calm-butterscotch/30',
+                despeje:    'bg-calm-smoke/15 text-[var(--text-secondary)] border-calm-smoke/30',
+                eureka:     'bg-[var(--accent-action)]/10 text-[var(--accent-action)] border-calm-coral/25',
+                aplicacion: 'bg-[var(--accent-mint)]/25 text-[var(--accent-teal)] border-[var(--accent-mint)]/30',
               };
               const dotColors: Record<string, string> = {
-                home: 'bg-calm-emeraldsea', afinar: 'bg-calm-butterscotch',
+                home: 'bg-[var(--accent-teal)]', afinar: 'bg-calm-butterscotch',
                 despeje: 'bg-calm-smoke', eureka: 'bg-calm-coral', aplicacion: 'bg-calm-duckegg',
               };
 
@@ -463,7 +463,7 @@ export default function App() {
                   className={`relative flex items-center justify-center gap-2 transition-all duration-300 cursor-pointer select-none
                     ${isActive
                       ? `flex-1 px-3 py-2.5 rounded-2xl border font-bold text-sm ${activeColors[step.id]}`
-                      : 'w-11 h-11 rounded-xl text-calm-sage-500/70 dark:text-[var(--text-primary)]/45 hover:text-[var(--text-primary)] dark:hover:text-white hover:bg-calm-sage-100/50 dark:hover:bg-[var(--surface-hover)]/40'
+                      : 'w-11 h-11 rounded-xl text-[var(--accent-teal)]/70 dark:text-[var(--text-primary)]/45 hover:text-[var(--text-primary)] dark:hover:text-white hover:bg-calm-sage-100/50 dark:hover:bg-[var(--surface-hover)]/40'
                     }`}
                 >
                   {/* Spring-animated indicator dot on top when active */}
@@ -515,7 +515,7 @@ export default function App() {
               className="bg-[var(--surface-card)] dark:bg-[var(--surface-base)] p-8 rounded-[32px] border border-[var(--border-card)] dark:border-teal-900/40 shadow-2xl max-w-sm w-full text-center space-y-8 relative"
             >
               <div className="space-y-2">
-                <span className="text-2xl font-serif text-calm-sage-700 dark:text-calm-duckegg font-extrabold italic">Pausa Consciente</span>
+                <span className="text-2xl font-serif text-[var(--text-secondary)] dark:text-[var(--accent-mint)] font-extrabold italic">Pausa Consciente</span>
                 <h3 className="text-xl font-bold text-[var(--text-primary)]">
                   Sincroniza tu Respiración
                 </h3>
@@ -527,7 +527,7 @@ export default function App() {
               {/* Breathing Animation Orb */}
               <div className="flex items-center justify-center py-6">
                 <div className="relative w-40 h-40 flex items-center justify-center">
-                  <div className={`absolute inset-0 rounded-full bg-calm-duckegg/25 dark:bg-teal-950 border border-calm-duckegg/50 dark:border-teal-900/45 transition-all duration-[2000ms] ${
+                  <div className={`absolute inset-0 rounded-full bg-calm-duckegg/25 dark:bg-teal-950 border border-[var(--accent-mint)]/50 dark:border-teal-900/45 transition-all duration-[2000ms] ${
                     breathState === 'Inhala' ? 'scale-110 opacity-70' :
                     breathState === 'Retén' ? 'scale-115 opacity-80' : 'scale-90 opacity-40'
                   }`}></div>
@@ -535,8 +535,8 @@ export default function App() {
                     breathState === 'Inhala' ? 'scale-105' :
                     breathState === 'Retén' ? 'scale-110' : 'scale-95'
                   }`}></div>
-                  <div className="absolute flex flex-col items-center justify-center text-calm-sage-700 dark:text-calm-duckegg font-extrabold tracking-wider capitalize text-sm">
-                    <Smile className="w-5 h-5 mb-1 text-calm-emeraldsea dark:text-calm-duckegg" />
+                  <div className="absolute flex flex-col items-center justify-center text-[var(--text-secondary)] dark:text-[var(--accent-mint)] font-extrabold tracking-wider capitalize text-sm">
+                    <Smile className="w-5 h-5 mb-1 text-[var(--accent-teal)] dark:text-[var(--accent-mint)]" />
                     {breathState}
                   </div>
                 </div>
@@ -544,7 +544,7 @@ export default function App() {
 
               <button
                 onClick={() => setShowBreathingModal(false)}
-                className="w-full py-3.5 bg-[var(--surface-card2)]0 hover:bg-calm-sage-600 dark:bg-[var(--surface-card2)]0/95 dark:hover:bg-calm-sage-600 text-white rounded-2xl font-bold text-sm transition-colors shadow-lg shadow-calm-sage-200/50 dark:shadow-none"
+                className="w-full py-3.5 bg-[var(--surface-card2)]0 hover:bg-[#2E6DA4] dark:bg-[var(--surface-card2)]0/95 dark:hover:bg-[#2E6DA4] text-white rounded-2xl font-bold text-sm transition-colors shadow-lg shadow-calm-sage-200/50 dark:shadow-none"
               >
                 Volver a la calma
               </button>
@@ -575,17 +575,17 @@ export default function App() {
               {/* Header */}
               <div className="p-6 border-b border-calm-sage-100/60 dark:border-teal-950/40 flex items-center justify-between shrink-0">
                 <div className="flex items-center space-x-2.5">
-                  <div className="w-10 h-10 rounded-full bg-calm-duckegg/25 dark:bg-teal-950/40 text-calm-emeraldsea dark:text-calm-duckegg flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-full bg-calm-duckegg/25 dark:bg-teal-950/40 text-[var(--accent-teal)] dark:text-[var(--accent-mint)] flex items-center justify-center">
                     <History size={18} />
                   </div>
                   <div>
                     <h3 className="text-lg font-bold text-[var(--text-primary)] serif-title leading-tight">Planes Guardados</h3>
-                    <p className="text-[10px] text-calm-sage-600 dark:text-[var(--text-primary)]/40 uppercase tracking-widest font-semibold">Tus tareas de incubación</p>
+                    <p className="text-[10px] text-[var(--text-secondary)] dark:text-[var(--text-primary)]/40 uppercase tracking-widest font-semibold">Tus tareas de incubación</p>
                   </div>
                 </div>
                 <button
                   onClick={() => setShowNotificationsDrawer(false)}
-                  className="p-2.5 hover:bg-stone-100 dark:hover:bg-[var(--surface-hover)] text-calm-sage-600 dark:text-[var(--text-primary)]/75 rounded-full transition-all cursor-pointer"
+                  className="p-2.5 hover:bg-stone-100 dark:hover:bg-[var(--surface-hover)] text-[var(--text-secondary)] dark:text-[var(--text-primary)]/75 rounded-full transition-all cursor-pointer"
                 >
                   <X size={18} />
                 </button>
@@ -595,7 +595,7 @@ export default function App() {
               <div className="flex-1 overflow-y-auto p-6 space-y-4">
                 {!state.historicalTasks || state.historicalTasks.length === 0 ? (
                   <div className="h-full flex flex-col items-center justify-center text-center p-4 space-y-4">
-                    <div className="w-14 h-14 rounded-full bg-calm-duckegg/20 dark:bg-[var(--surface-card)]/95 text-calm-sage-600 dark:text-calm-duckegg flex items-center justify-center animate-pulse">
+                    <div className="w-14 h-14 rounded-full bg-[var(--accent-mint)]/25 dark:bg-[var(--surface-card)]/95 text-[var(--text-secondary)] dark:text-[var(--accent-mint)] flex items-center justify-center animate-pulse">
                       <Bell size={24} />
                     </div>
                     <div className="space-y-1">
@@ -615,7 +615,7 @@ export default function App() {
                         key={task.id}
                         className={`p-4 border rounded-2xl transition-all flex flex-col space-y-3 ${
                           task.completed
-                            ? 'bg-calm-duckegg/10 dark:bg-[var(--surface-card2)]/30 border-calm-duckegg/40 dark:border-teal-950/50 opacity-75'
+                            ? 'bg-calm-duckegg/10 dark:bg-[var(--surface-card2)]/30 border-[var(--accent-mint)]/40 dark:border-teal-950/50 opacity-75'
                             : 'bg-[var(--surface-card)] dark:bg-[var(--surface-card)] border-[var(--border-card)] dark:border-teal-950/80 shadow-sm'
                         }`}
                       >
@@ -630,8 +630,8 @@ export default function App() {
                             }}
                             className={`w-6 h-6 rounded-lg border flex items-center justify-center transition-all shrink-0 mt-0.5 cursor-pointer ${
                               task.completed
-                                ? 'bg-calm-emeraldsea border-calm-emeraldsea text-white'
-                                : 'border-[var(--border-card)] dark:border-teal-900 bg-white/50 dark:bg-[var(--surface-card)]/45 hover:bg-calm-duckegg/20 dark:hover:bg-[#1D2E22]'
+                                ? 'bg-[var(--accent-teal)] border-[var(--accent-teal)] text-white'
+                                : 'border-[var(--border-card)] dark:border-teal-900 bg-white/50 dark:bg-[var(--surface-card)]/45 hover:bg-[var(--accent-mint)]/25 dark:hover:bg-[#1D2E22]'
                             }`}
                             title={task.completed ? "Marcar como pendiente" : "Marcar como completado/resuelto"}
                           >
@@ -663,7 +663,7 @@ export default function App() {
                         <div>
                           <button
                             onClick={() => setSelectedHistoricalTask(isExpanded ? null : task.id)}
-                            className="text-[10px] font-bold text-calm-emeraldsea hover:text-calm-sage-600 dark:text-calm-duckegg uppercase tracking-wider flex items-center gap-1.5 cursor-pointer"
+                            className="text-[10px] font-bold text-[var(--accent-teal)] hover:text-[var(--text-secondary)] dark:text-[var(--accent-mint)] uppercase tracking-wider flex items-center gap-1.5 cursor-pointer"
                           >
                             <span>{isExpanded ? 'Ocultar Plan' : 'Ver Plan de Acción'}</span>
                           </button>
@@ -675,7 +675,7 @@ export default function App() {
                               className="mt-3 p-3 bg-stone-50 dark:bg-[#141C18] rounded-xl border border-stone-150/40 dark:border-teal-900/30 text-xs space-y-2.5"
                             >
                               <div className="space-y-1">
-                                <span className="text-[9px] uppercase font-bold text-calm-emeraldsea dark:text-calm-duckegg tracking-wider">La Mejor Idea:</span>
+                                <span className="text-[9px] uppercase font-bold text-[var(--accent-teal)] dark:text-[var(--accent-mint)] tracking-wider">La Mejor Idea:</span>
                                 {isSketch ? (
                                   <div className="p-1 bg-white dark:bg-[var(--surface-card)]/50 border border-[var(--border-card)] dark:border-teal-900/40 rounded-lg inline-block">
                                     <img 
@@ -690,7 +690,7 @@ export default function App() {
                                 )}
                               </div>
                               <div className="space-y-1">
-                                <span className="text-[9px] uppercase font-bold text-calm-emeraldsea dark:text-calm-duckegg tracking-wider font-semibold">Pasos de Acción:</span>
+                                <span className="text-[9px] uppercase font-bold text-[var(--accent-teal)] dark:text-[var(--accent-mint)] tracking-wider font-semibold">Pasos de Acción:</span>
                                 <p className="text-[var(--text-secondary)] dark:text-[var(--text-primary)]/80 font-medium whitespace-pre-wrap leading-relaxed">
                                   {task.plan}
                                 </p>

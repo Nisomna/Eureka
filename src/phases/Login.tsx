@@ -51,17 +51,17 @@ export function Login({ setPhase, onLoginSuccess }: Props) {
       {/* Visual Identity Ring Container */}
       <div className="text-center space-y-5 relative">
         {/* Glow ambiental detrás del logo */}
-        <div className="absolute inset-0 bg-calm-duckegg/30 rounded-full filter blur-3xl w-36 h-36 mx-auto pointer-events-none"></div>
-        <div className="absolute inset-0 bg-calm-emeraldsea/10 rounded-full filter blur-2xl w-28 h-28 mx-auto mt-4 pointer-events-none animate-breath"></div>
+        <div className="absolute inset-0 bg-[var(--accent-mint)]/30 rounded-full filter blur-3xl w-36 h-36 mx-auto pointer-events-none"></div>
+        <div className="absolute inset-0 bg-[var(--accent-teal)]/10 rounded-full filter blur-2xl w-28 h-28 mx-auto mt-4 pointer-events-none animate-breath"></div>
         
         {/* Logo con ring animado */}
         <div className="relative inline-flex items-center justify-center mb-2 mx-auto animate-float">
           {/* Outer ring pulsante */}
-          <div className="absolute w-32 h-32 rounded-full border border-calm-duckegg/30 dark:border-calm-emeraldsea/20 animate-ping" style={{ animationDuration: '3s' }}></div>
+          <div className="absolute w-32 h-32 rounded-full border border-[var(--accent-mint)]/30 dark:border-[var(--accent-teal)]/20 animate-ping" style={{ animationDuration: '3s' }}></div>
           {/* Inner ring */}
-          <div className="absolute w-28 h-28 rounded-full border border-calm-duckegg/50 dark:border-calm-emeraldsea/35"></div>
+          <div className="absolute w-28 h-28 rounded-full border border-[var(--accent-mint)]/50 dark:border-[var(--accent-teal)]/35"></div>
           {/* Logo */}
-          <div className="w-24 h-24 rounded-full overflow-hidden border-2 border-calm-duckegg/60 dark:border-calm-emeraldsea/50 shadow-xl shadow-calm-emeraldsea/20 dark:shadow-calm-emeraldsea/30">
+          <div className="w-24 h-24 rounded-full overflow-hidden border-2 border-[var(--accent-mint)]/60 dark:border-[var(--accent-teal)]/50 shadow-xl shadow-calm-emeraldsea/20 dark:shadow-calm-emeraldsea/30">
             <img src="/icon-192.png" alt="Incubapp" className="w-full h-full object-cover" />
           </div>
         </div>
@@ -69,7 +69,7 @@ export function Login({ setPhase, onLoginSuccess }: Props) {
         <h2 className="text-5xl font-bold tracking-tight text-[var(--text-primary)] serif-title">
           Incubapp
         </h2>
-        <span className="block text-xs uppercase tracking-widest text-calm-sage-700 dark:text-calm-duckegg font-extrabold">Templo de Incubación Mental</span>
+        <span className="block text-xs uppercase tracking-widest text-[var(--text-secondary)] dark:text-[var(--accent-mint)] font-extrabold">Templo de Incubación Mental</span>
         
         <p className="text-sm text-[var(--text-secondary)] dark:text-[var(--text-primary)]/80 max-w-xs mx-auto leading-relaxed font-medium">
           Un espacio sereno diseñado para disolver bloqueos creativos, descansar la mente y estructurar ideas geniales en cuatro simples etapas.
@@ -87,10 +87,10 @@ export function Login({ setPhase, onLoginSuccess }: Props) {
         <button
           onClick={handleLogin}
           disabled={isLoggingIn}
-          className={`w-full py-4 bg-[var(--surface-card)] dark:bg-[var(--surface-card2)]/85 backdrop-blur-md border border-[var(--border-card)] dark:border-[var(--border-default)]/80 hover:bg-[var(--surface-card)] dark:hover:bg-[var(--surface-hover)] hover:border-calm-emeraldsea dark:hover:border-teal-700 text-[var(--text-primary)] dark:text-[var(--text-primary)] rounded-2xl font-bold text-base flex items-center justify-center space-x-3 transition-all shadow-sm hover:shadow-md cursor-pointer ${isLoggingIn ? 'opacity-50 cursor-not-allowed' : ''}`}
+          className={`w-full py-4 bg-[var(--surface-card)] dark:bg-[var(--surface-card2)]/85 backdrop-blur-md border border-[var(--border-card)] dark:border-[var(--border-default)]/80 hover:bg-[var(--surface-card)] dark:hover:bg-[var(--surface-hover)] hover:border-[var(--accent-teal)] dark:hover:border-teal-700 text-[var(--text-primary)] dark:text-[var(--text-primary)] rounded-2xl font-bold text-base flex items-center justify-center space-x-3 transition-all shadow-sm hover:shadow-md cursor-pointer ${isLoggingIn ? 'opacity-50 cursor-not-allowed' : ''}`}
         >
           {isLoggingIn ? (
-            <div className="w-6 h-6 border-2 border-calm-emeraldsea border-t-transparent rounded-full animate-spin"></div>
+            <div className="w-6 h-6 border-2 border-[var(--accent-teal)] border-t-transparent rounded-full animate-spin"></div>
           ) : (
             <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" className="w-5 h-5" />
           )}
@@ -109,7 +109,7 @@ export function Login({ setPhase, onLoginSuccess }: Props) {
 
       {/* Aesthetic quote branding */}
       <div className="pt-8 text-center">
-        <p className="text-[11px] text-calm-sage-600 dark:text-[var(--text-primary)]/65 font-medium italic">
+        <p className="text-[11px] text-[var(--text-secondary)] dark:text-[var(--text-primary)]/65 font-medium italic">
           "La claridad nace del espacio que le otorgas a tu mente."
         </p>
       </div>

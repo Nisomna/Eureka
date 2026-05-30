@@ -131,18 +131,18 @@ export function Eureka({ setPhase, state, updateState, isDark }: Props) {
   if (!state.problem.trim()) {
     return (
       <div className="flex flex-col items-center justify-center text-center space-y-6 mt-12 px-4 pb-24">
-        <div className="w-16 h-16 bg-calm-butterscotch/15 rounded-full flex items-center justify-center border border-calm-butterscotch/35 text-calm-butterscotch animate-float">
+        <div className="w-16 h-16 bg-calm-butterscotch/15 rounded-full flex items-center justify-center border border-calm-butterscotch/35 text-[var(--accent-gold)] animate-float">
           <AlertCircle size={32} />
         </div>
         <div className="space-y-2">
           <h3 className="text-xl font-bold text-[var(--text-primary)] serif-title">Falta Definir tu Enfoque</h3>
-          <p className="text-sm text-calm-sage-600 dark:text-[var(--text-primary)]/60 max-w-xs leading-relaxed">
+          <p className="text-sm text-[var(--text-secondary)] dark:text-[var(--text-primary)]/60 max-w-xs leading-relaxed">
             Para cultivar ideas mágicas y perspectivas creativas, primero define tu reto en el primer paso.
           </p>
         </div>
         <button
           onClick={() => { soundTap(); setPhase('afinar'); }}
-          className="py-3 px-6 bg-calm-sage-800 hover:bg-calm-sage-900 dark:bg-calm-emeraldsea dark:hover:bg-calm-sage-600 text-white font-bold text-sm rounded-xl transition-colors shadow-md shadow-calm-sage-200/50 cursor-pointer"
+          className="py-3 px-6 bg-[#1E3A8A] hover:bg-[#12164A] dark:bg-[var(--accent-teal)] dark:hover:bg-[#2E6DA4] text-white font-bold text-sm rounded-xl transition-colors shadow-md shadow-calm-sage-200/50 cursor-pointer"
         >
           Afinar Problema Ahora
         </button>
@@ -156,11 +156,11 @@ export function Eureka({ setPhase, state, updateState, isDark }: Props) {
     <div className="flex flex-col overflow-y-auto pb-4 px-1">
       {/* Header compacto */}
       <div className="flex items-center space-x-3 pt-3 mb-4">
-        <div className="p-2.5 bg-calm-coral/15 border border-calm-coral/35 dark:bg-calm-coral/20 text-calm-coral rounded-xl shadow-sm animate-float shrink-0">
+        <div className="p-2.5 bg-[var(--accent-action)]/10 border border-calm-coral/35 dark:bg-calm-coral/20 text-[var(--accent-action)] rounded-xl shadow-sm animate-float shrink-0">
           <Lightbulb size={20} />
         </div>
         <div>
-          <span className="text-[10px] uppercase tracking-widest text-[#C85A3A] dark:text-calm-coral font-extrabold leading-none">Paso 3 de 4</span>
+          <span className="text-[10px] uppercase tracking-widest text-[var(--accent-action)] dark:text-[var(--accent-action)] font-extrabold leading-none">Paso 3 de 4</span>
           <h2 className="text-2xl font-bold text-[var(--text-primary)] serif-title leading-tight">Lluvia de Eureka</h2>
         </div>
       </div>
@@ -170,20 +170,20 @@ export function Eureka({ setPhase, state, updateState, isDark }: Props) {
         {/* Perspectives Block - Styled peacefully */}
         <div className="bg-gradient-to-tr from-calm-blush/25 to-calm-coral/10 dark:from-[#1E2E27] dark:to-teal-950/20 border border-calm-coral/30 dark:border-[var(--border-default)]/60 p-5 rounded-3xl space-y-3 shadow-sm">
           <div className="flex items-center justify-between mb-1">
-            <h4 className="text-xs font-bold text-calm-sage-700 dark:text-calm-blush uppercase tracking-widest flex items-center space-x-1.5">
-              <Sparkles size={14} className="text-calm-coral animate-pulse" />
+            <h4 className="text-xs font-bold text-[var(--text-secondary)] dark:text-[var(--accent-warm)] uppercase tracking-widest flex items-center space-x-1.5">
+              <Sparkles size={14} className="text-[var(--accent-action)] animate-pulse" />
               <span>Girar Perspectiva</span>
             </h4>
             <button 
               type="button" 
               onClick={getRandomPerspective} 
-              className="text-calm-emeraldsea hover:text-white dark:text-calm-duckegg dark:hover:text-white bg-[var(--surface-card)] hover:bg-calm-emeraldsea border border-calm-duckegg py-1.5 px-3 rounded-xl transition-all flex items-center gap-1 hover:shadow-sm cursor-pointer text-xs"
+              className="text-[var(--accent-teal)] hover:text-white dark:text-[var(--accent-mint)] dark:hover:text-white bg-[var(--surface-card)] hover:bg-[var(--accent-teal)] border border-[var(--accent-mint)] py-1.5 px-3 rounded-xl transition-all flex items-center gap-1 hover:shadow-sm cursor-pointer text-xs"
             >
               <Shuffle size={13} />
               <span className="text-[10px] font-bold uppercase tracking-wider">Generar Reto</span>
             </button>
           </div>
-          <p className="text-[var(--text-primary)] dark:text-calm-duckegg text-xs italic leading-relaxed min-h-[36px] bg-[var(--surface-card)]/60 dark:bg-[var(--surface-card)]/40 p-3 rounded-xl border border-calm-duckegg/40 dark:border-[var(--border-default)]/30">
+          <p className="text-[var(--text-primary)] dark:text-[var(--accent-mint)] text-xs italic leading-relaxed min-h-[36px] bg-[var(--surface-card)]/60 dark:bg-[var(--surface-card)]/40 p-3 rounded-xl border border-[var(--accent-mint)]/40 dark:border-[var(--border-default)]/30">
             {perspective || "Usa tus gustos e intereses personales para cambiar la perspectiva de tu problema. ¡Prueba Generar un Reto!"}
           </p>
         </div>
@@ -196,7 +196,7 @@ export function Eureka({ setPhase, state, updateState, isDark }: Props) {
             className={`flex-1 py-2 px-3 rounded-lg text-xs font-bold flex items-center justify-center gap-2 transition-all cursor-pointer ${
               creativeTab === 'text' 
                 ? 'bg-white dark:bg-[#233222] text-[var(--text-primary)] dark:text-[var(--text-primary)] shadow-sm' 
-                : 'text-calm-sage-600 hover:text-[var(--text-primary)] dark:text-[var(--text-primary)]/50 dark:hover:text-white'
+                : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] dark:text-[var(--text-primary)]/50 dark:hover:text-white'
             }`}
           >
             <Edit3 size={14} />
@@ -208,7 +208,7 @@ export function Eureka({ setPhase, state, updateState, isDark }: Props) {
             className={`flex-1 py-2 px-3 rounded-lg text-xs font-bold flex items-center justify-center gap-2 transition-all cursor-pointer ${
               creativeTab === 'draw' 
                 ? 'bg-white dark:bg-[#233222] text-[var(--text-primary)] dark:text-[var(--text-primary)] shadow-sm' 
-                : 'text-calm-sage-600 hover:text-[var(--text-primary)] dark:text-[var(--text-primary)]/50 dark:hover:text-white'
+                : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] dark:text-[var(--text-primary)]/50 dark:hover:text-white'
             }`}
           >
             <ImageIcon size={14} />
@@ -219,7 +219,7 @@ export function Eureka({ setPhase, state, updateState, isDark }: Props) {
         {/* Input/Draw Workspace */}
         {creativeTab === 'text' ? (
           <div className="space-y-2.5">
-            <h4 className="text-xs font-bold text-calm-sage-700 dark:text-[var(--text-primary)]/75 uppercase tracking-wider">
+            <h4 className="text-xs font-bold text-[var(--text-secondary)] dark:text-[var(--text-primary)]/75 uppercase tracking-wider">
               Anota todas tus ideas (sin juicios ni límites)
             </h4>
             <div className="flex space-x-2">
@@ -229,13 +229,13 @@ export function Eureka({ setPhase, state, updateState, isDark }: Props) {
                 onChange={(e) => setNewIdea(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && addIdea()}
                 placeholder="Tengo una idea de hacer..."
-                className="flex-1 p-4 rounded-xl border border-[var(--border-card)] dark:border-[var(--border-default)]/40 bg-[var(--surface-card)] dark:bg-[var(--surface-card)]/80 focus:bg-[var(--surface-card)] dark:focus:bg-[var(--surface-input)] focus:ring-4 focus:ring-calm-emeraldsea/20 focus:border-calm-emeraldsea outline-none text-sm transition-all text-[var(--text-primary)] dark:text-[var(--text-primary)] placeholder:text-[var(--text-secondary)] dark:placeholder:text-[#EBECEB]/55"
+                className="flex-1 p-4 rounded-xl border border-[var(--border-card)] dark:border-[var(--border-default)]/40 bg-[var(--surface-card)] dark:bg-[var(--surface-card)]/80 focus:bg-[var(--surface-card)] dark:focus:bg-[var(--surface-input)] focus:ring-4 focus:ring-calm-emeraldsea/20 focus:border-[var(--accent-teal)] outline-none text-sm transition-all text-[var(--text-primary)] dark:text-[var(--text-primary)] placeholder:text-[var(--text-secondary)] dark:placeholder:text-[#EBECEB]/55"
               />
               <button
                 type="button"
                 onClick={addIdea}
                 disabled={!newIdea.trim()}
-                className="p-4 bg-calm-sage-800 hover:bg-calm-sage-900 dark:bg-calm-emeraldsea dark:hover:bg-calm-sage-600 text-white rounded-xl disabled:bg-calm-sage-100 dark:disabled:bg-teal-950/40 disabled:text-[var(--text-secondary)] dark:disabled:text-[#EBECEB]/25 shadow-md shadow-calm-sage-200/40 dark:shadow-none disabled:shadow-none transition-all cursor-pointer flex items-center justify-center shrink-0"
+                className="p-4 bg-[#1E3A8A] hover:bg-[#12164A] dark:bg-[var(--accent-teal)] dark:hover:bg-[#2E6DA4] text-white rounded-xl disabled:bg-calm-sage-100 dark:disabled:bg-teal-950/40 disabled:text-[var(--text-secondary)] dark:disabled:text-[#EBECEB]/25 shadow-md shadow-calm-sage-200/40 dark:shadow-none disabled:shadow-none transition-all cursor-pointer flex items-center justify-center shrink-0"
                 title="Añadir idea"
               >
                 <Plus size={20} />
@@ -244,9 +244,9 @@ export function Eureka({ setPhase, state, updateState, isDark }: Props) {
           </div>
         ) : (
           <div className="space-y-2.5">
-            <h4 className="text-xs font-bold text-calm-sage-700 dark:text-[var(--text-primary)]/75 uppercase tracking-wider flex items-center gap-1.5">
+            <h4 className="text-xs font-bold text-[var(--text-secondary)] dark:text-[var(--text-primary)]/75 uppercase tracking-wider flex items-center gap-1.5">
               <span>Boceta tu idea visualmente</span>
-              <span className="text-[10px] lowercase text-calm-sage-600 dark:text-[var(--text-primary)]/70 font-normal">Garabatea libremente</span>
+              <span className="text-[10px] lowercase text-[var(--text-secondary)] dark:text-[var(--text-primary)]/70 font-normal">Garabatea libremente</span>
             </h4>
             <SketchPad onSave={handleSaveSketch} isDark={isDarkModeActive} />
           </div>
@@ -256,7 +256,7 @@ export function Eureka({ setPhase, state, updateState, isDark }: Props) {
         <div className="flex-1 min-h-[140px] overflow-y-auto space-y-2.5 pb-2">
           {state.ideas.length === 0 ? (
             <div className="h-full py-8 flex flex-col items-center justify-center text-center space-y-3 calm-card border border-dashed border-[var(--border-card)] dark:border-[var(--border-default)]/40 bg-[var(--surface-card)]/40 dark:bg-[var(--surface-card)]/20">
-              <Lightbulb size={36} className="text-calm-sage-500 opacity-60 animate-pulse" />
+              <Lightbulb size={36} className="text-[var(--accent-teal)] opacity-60 animate-pulse" />
               <div className="space-y-1">
                 <p className="text-xs font-bold text-[var(--text-secondary)] dark:text-[var(--text-primary)]/85">¿Algún chispazo?</p>
                 <p className="text-[10px] text-[var(--text-secondary)] dark:text-[var(--text-primary)]/75 max-w-[180px] leading-relaxed mx-auto">Toca el botón 'Generar Reto' o anota ideas sueltas y absurdas.</p>
@@ -271,13 +271,13 @@ export function Eureka({ setPhase, state, updateState, isDark }: Props) {
                 key={idx}
                 className="p-3.5 bg-[var(--surface-card)] dark:bg-[var(--surface-card)] border border-[var(--border-card)] dark:border-[var(--border-default)] rounded-2xl shadow-sm text-xs flex items-start space-x-2.5 text-[var(--text-primary)] dark:text-[var(--text-primary)] leading-relaxed"
               >
-                <span className="inline-flex w-5 h-5 items-center justify-center rounded-full bg-calm-duckegg/20 dark:bg-teal-950/40 text-[10px] text-calm-emeraldsea dark:text-calm-duckegg font-bold shrink-0 mt-0.5">
+                <span className="inline-flex w-5 h-5 items-center justify-center rounded-full bg-[var(--accent-mint)]/25 dark:bg-teal-950/40 text-[10px] text-[var(--accent-teal)] dark:text-[var(--accent-mint)] font-bold shrink-0 mt-0.5">
                   {state.ideas.length - idx}
                 </span>
                 
                 {idea.startsWith('data:image/') ? (
                   <div className="flex-1 space-y-2">
-                    <span className="text-[10px] uppercase font-bold tracking-widest text-calm-emeraldsea dark:text-calm-duckegg block flex items-center gap-1.5">
+                    <span className="text-[10px] uppercase font-bold tracking-widest text-[var(--accent-teal)] dark:text-[var(--accent-mint)] block flex items-center gap-1.5">
                       <ImageIcon size={12} /> Boceto de Idea Visual
                     </span>
                     <img 
@@ -308,7 +308,7 @@ export function Eureka({ setPhase, state, updateState, isDark }: Props) {
         <button
           onClick={() => { soundTransition(); setPhase('aplicacion'); }}
           disabled={state.ideas.length === 0}
-          className="flex-1 py-4 bg-calm-sage-800 hover:bg-calm-sage-900 dark:bg-calm-emeraldsea dark:hover:bg-calm-sage-600 disabled:bg-calm-sage-100 dark:disabled:bg-teal-950/40 disabled:text-[var(--text-secondary)] dark:disabled:text-[#EBECEB]/25 disabled:cursor-not-allowed text-white rounded-2xl font-bold text-base flex items-center justify-center space-x-2 transition-all shadow-lg shadow-calm-sage-200/50 dark:shadow-none disabled:shadow-none"
+          className="flex-1 py-4 bg-[#1E3A8A] hover:bg-[#12164A] dark:bg-[var(--accent-teal)] dark:hover:bg-[#2E6DA4] disabled:bg-calm-sage-100 dark:disabled:bg-teal-950/40 disabled:text-[var(--text-secondary)] dark:disabled:text-[#EBECEB]/25 disabled:cursor-not-allowed text-white rounded-2xl font-bold text-base flex items-center justify-center space-x-2 transition-all shadow-lg shadow-calm-sage-200/50 dark:shadow-none disabled:shadow-none"
         >
           <span>Siguiente Paso: Aplicar Plan</span>
           <ArrowRight size={18} />

@@ -47,18 +47,18 @@ export function Aplicacion({ setPhase, state, updateState }: Props) {
   if (state.ideas.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center text-center space-y-6 mt-12 px-4 pb-24">
-        <div className="w-16 h-16 bg-calm-duckegg/20 dark:bg-teal-950/45 rounded-full flex items-center justify-center border border-calm-duckegg/40 dark:border-[var(--border-default)] text-calm-emeraldsea animate-float">
+        <div className="w-16 h-16 bg-[#2AAFA8]/15 dark:bg-[#2AAFA8]/20 rounded-full flex items-center justify-center border-2 border-[#2AAFA8]/50 dark:border-[#2AAFA8]/40 text-[#2AAFA8] animate-float">
           <AlertCircle size={32} />
         </div>
         <div className="space-y-2">
           <h3 className="text-xl font-bold text-[var(--text-primary)] serif-title">Faltan Ideas para el Plan</h3>
-          <p className="text-sm text-calm-sage-600 dark:text-[var(--text-primary)]/60 max-w-xs leading-relaxed">
+          <p className="text-sm text-[var(--text-secondary)] dark:text-[var(--text-primary)]/60 max-w-xs leading-relaxed">
             Para diseñar un plan de implementación, primero ingresa ideas en el paso de Eureka.
           </p>
         </div>
         <button
           onClick={() => { soundTap(); setPhase('eureka'); }}
-          className="py-3 px-6 bg-calm-sage-800 hover:bg-calm-sage-900 dark:bg-calm-emeraldsea dark:hover:bg-calm-sage-600 text-white font-bold text-sm rounded-xl transition-colors shadow-md shadow-calm-sage-200/50 dark:shadow-none cursor-pointer"
+          className="py-3 px-6 bg-[#1E3A8A] hover:bg-[#12164A] dark:bg-[var(--accent-teal)] dark:hover:bg-[#2E6DA4] text-white font-bold text-sm rounded-xl transition-colors shadow-md shadow-calm-sage-200/50 dark:shadow-none cursor-pointer"
         >
           Generar Ideas en Eureka
         </button>
@@ -93,11 +93,11 @@ export function Aplicacion({ setPhase, state, updateState }: Props) {
   if (isDone) {
     return (
       <div className="flex flex-col items-center justify-center text-center space-y-6 px-4 mt-12 pb-24">
-        <div className="w-24 h-24 bg-gradient-to-tr from-calm-duckegg/30 to-calm-cream dark:from-teal-950 dark:to-[#142019] border border-calm-duckegg text-calm-emeraldsea rounded-full flex items-center justify-center shadow-lg animate-float">
+        <div className="w-24 h-24 bg-gradient-to-tr from-calm-duckegg/30 to-calm-cream dark:from-teal-950 dark:to-[#142019] border border-[var(--accent-mint)] text-[var(--accent-teal)] rounded-full flex items-center justify-center shadow-lg animate-float">
           <CheckCircle2 size={48} className="stroke-[2.5]" />
         </div>
         <div className="space-y-3">
-          <span className="text-[10px] bg-[var(--surface-card2)] dark:bg-[var(--surface-card2)] text-calm-sage-700 dark:text-calm-duckegg px-3 py-1 rounded-full uppercase tracking-widest font-extrabold border border-calm-sage-100/60 dark:border-[var(--border-default)]">Incubación Exitosa</span>
+          <span className="text-[10px] bg-[var(--surface-card2)] dark:bg-[var(--surface-card2)] text-[var(--text-secondary)] dark:text-[var(--accent-mint)] px-3 py-1 rounded-full uppercase tracking-widest font-extrabold border border-calm-sage-100/60 dark:border-[var(--border-default)]">Incubación Exitosa</span>
           <h2 className="text-4xl font-bold text-[var(--text-primary)] serif-title">¡Bloqueo Superado!</h2>
           <p className="text-sm text-[var(--text-secondary)] dark:text-[var(--text-secondary)] max-w-sm leading-relaxed font-medium">
             Has pasado de tener la mente nublada a estructurar un plan de acción concreto e inspirador. ¡Gran trabajo dándote espacio!
@@ -117,7 +117,7 @@ export function Aplicacion({ setPhase, state, updateState }: Props) {
             setChecks({ solve: false, restrictions: false, feasible: false });
             setPhase('home');
           }}
-          className="w-full max-w-xs py-4 bg-calm-sage-800 hover:bg-calm-sage-900 dark:bg-calm-emeraldsea dark:hover:bg-calm-sage-600 focus:ring-4 focus:ring-calm-emeraldsea/25 text-white rounded-2xl font-bold text-base transition-all shadow-lg active:scale-[0.99] cursor-pointer shadow-calm-sage-200/50"
+          className="w-full max-w-xs py-4 bg-[#1E3A8A] hover:bg-[#12164A] dark:bg-[var(--accent-teal)] dark:hover:bg-[#2E6DA4] focus:ring-4 focus:ring-calm-emeraldsea/25 text-white rounded-2xl font-bold text-base transition-all shadow-lg active:scale-[0.99] cursor-pointer shadow-calm-sage-200/50"
         >
           Volver a Empezar / Reset
         </button>
@@ -129,11 +129,11 @@ export function Aplicacion({ setPhase, state, updateState }: Props) {
     <div className="flex flex-col overflow-y-auto pb-4 px-1">
       {/* Header compacto */}
       <div className="flex items-center space-x-3 pt-3 mb-4">
-        <div className="p-2.5 bg-calm-emeraldsea/15 border border-calm-emeraldsea/35 dark:bg-calm-emeraldsea/20 text-calm-emeraldsea rounded-xl shadow-sm animate-float shrink-0">
+        <div className="p-2.5 bg-[var(--accent-teal)]/15 border border-[var(--accent-teal)]/35 dark:bg-[var(--accent-teal)]/20 text-[var(--accent-teal)] rounded-xl shadow-sm animate-float shrink-0">
           <PenTool size={20} />
         </div>
         <div>
-          <span className="text-[10px] uppercase tracking-widest text-calm-sage-700 dark:text-calm-duckegg font-extrabold leading-none">Paso 4 de 4</span>
+          <span className="text-[10px] uppercase tracking-widest text-[var(--text-secondary)] dark:text-[var(--accent-mint)] font-extrabold leading-none">Paso 4 de 4</span>
           <h2 className="text-2xl font-bold text-[var(--text-primary)] serif-title leading-tight">Aplicar y Planificar</h2>
         </div>
       </div>
@@ -142,7 +142,7 @@ export function Aplicacion({ setPhase, state, updateState }: Props) {
         
         {/* Visual interactive idea selector */}
         <div className="space-y-3">
-          <label className="block text-sm font-bold text-calm-sage-800 dark:text-[var(--text-primary)] uppercase tracking-wider flex items-center justify-between">
+          <label className="block text-sm font-bold text-[var(--text-primary)] dark:text-[var(--text-primary)] uppercase tracking-wider flex items-center justify-between">
             <span>Selecciona tu mejor chispazo:</span>
             <span className="text-[11px] text-[var(--text-secondary)] dark:text-[var(--text-primary)]/80 font-semibold lowercase">Selecciona una tarjeta</span>
           </label>
@@ -159,15 +159,15 @@ export function Aplicacion({ setPhase, state, updateState }: Props) {
                   onClick={() => updateState({ selectedIdea: idea })}
                   className={`p-4 border rounded-2xl text-left transition-all relative flex items-center gap-3 select-none cursor-pointer group ${
                     isSelected
-                      ? 'bg-calm-duckegg/25 border-calm-emeraldsea ring-2 ring-calm-emeraldsea/25 dark:bg-[var(--surface-card2)]/50 dark:border-calm-duckegg'
+                      ? 'bg-calm-duckegg/25 border-[var(--accent-teal)] ring-2 ring-calm-emeraldsea/25 dark:bg-[var(--surface-card2)]/50 dark:border-[var(--accent-mint)]'
                       : 'bg-[var(--surface-card)] dark:bg-[var(--surface-card)]/90 border-[var(--border-card)] dark:border-[var(--border-default)]/80 hover:border-calm-sage-400 dark:hover:border-teal-900 hover:bg-[var(--surface-hover)] dark:hover:bg-[var(--surface-hover)]'
                   }`}
                 >
                   {/* Selected check circle */}
                   <span className={`absolute top-3 right-3 w-6 h-6 rounded-full flex items-center justify-center transition-all ${
                     isSelected 
-                      ? 'bg-calm-emeraldsea text-white scale-100' 
-                      : 'border border-[var(--border-card)] dark:border-[#1A2820] group-hover:bg-calm-duckegg/15 dark:group-hover:bg-[var(--surface-hover)] scale-95 opacity-60'
+                      ? 'bg-[var(--accent-teal)] text-white scale-100' 
+                      : 'border border-[var(--border-card)] dark:border-[#1A2820] group-hover:bg-[var(--accent-mint)]/20 dark:group-hover:bg-[var(--surface-hover)] scale-95 opacity-60'
                   }`}>
                     {isSelected && <span className="text-xs font-bold">✓</span>}
                   </span>
@@ -182,7 +182,7 @@ export function Aplicacion({ setPhase, state, updateState }: Props) {
                           referrerPolicy="no-referrer"
                         />
                         <div className="min-w-0">
-                          <span className="text-xs uppercase font-bold text-calm-emeraldsea dark:text-calm-duckegg block tracking-wider">
+                          <span className="text-xs uppercase font-bold text-[var(--accent-teal)] dark:text-[var(--accent-mint)] block tracking-wider">
                             Idea Visual
                           </span>
                           <span className="text-[10px] text-[var(--text-secondary)] dark:text-[var(--text-primary)]/80 block font-medium">
@@ -197,7 +197,7 @@ export function Aplicacion({ setPhase, state, updateState }: Props) {
                     )}
                   </div>
  
-                  <span className="text-[10px] uppercase font-bold text-calm-sage-600 dark:text-[var(--text-primary)]/60 tracking-wider shrink-0">
+                  <span className="text-[10px] uppercase font-bold text-[var(--text-secondary)] dark:text-[var(--text-primary)]/60 tracking-wider shrink-0">
                     #{state.ideas.length - idx}
                   </span>
                 </button>
@@ -208,9 +208,9 @@ export function Aplicacion({ setPhase, state, updateState }: Props) {
  
          {/* AI Insight Advisory Box */}
          {isGeneratingAdvice && (
-           <div className="bg-calm-duckegg/15 dark:bg-[#1E2E27]/30 border border-calm-duckegg/35 dark:border-[var(--border-default)]/40 p-6 rounded-2xl flex items-center space-x-4 animate-pulse shadow-sm">
-             <Sparkles className="text-calm-emeraldsea shrink-0 text-calm-emeraldsea dark:text-calm-duckegg animate-bounce" size={26} />
-             <p className="text-base text-calm-sage-800 dark:text-calm-duckegg font-extrabold m-0">Estructurando un plan inteligente para consolidar esta idea...</p>
+           <div className="bg-[var(--accent-mint)]/20 dark:bg-[#1E2E27]/30 border border-[var(--accent-mint)]/35 dark:border-[var(--border-default)]/40 p-6 rounded-2xl flex items-center space-x-4 animate-pulse shadow-sm">
+             <Sparkles className="text-[var(--accent-teal)] shrink-0 text-[var(--accent-teal)] dark:text-[var(--accent-mint)] animate-bounce" size={26} />
+             <p className="text-base text-[var(--text-primary)] dark:text-[var(--accent-mint)] font-extrabold m-0">Estructurando un plan inteligente para consolidar esta idea...</p>
            </div>
          )}
  
@@ -218,11 +218,11 @@ export function Aplicacion({ setPhase, state, updateState }: Props) {
            <motion.div 
              initial={{ opacity: 0, y: 15 }}
              animate={{ opacity: 1, y: 0 }}
-             className="bg-gradient-to-tr from-calm-duckegg/20 to-calm-cream/15 dark:from-[#1E2E27]/40 dark:to-teal-950/30 border border-calm-duckegg/50 dark:border-[var(--border-default)]/60 p-6 sm:p-8 rounded-3xl shadow-md space-y-4 prose max-w-none prose-neutral dark:prose-invert"
+             className="bg-gradient-to-tr from-calm-duckegg/20 to-calm-cream/15 dark:from-[#1E2E27]/40 dark:to-teal-950/30 border border-[var(--accent-mint)]/50 dark:border-[var(--border-default)]/60 p-6 sm:p-8 rounded-3xl shadow-md space-y-4 prose max-w-none prose-neutral dark:prose-invert"
            >
-             <div className="flex items-center space-x-3 text-calm-emeraldsea dark:text-calm-duckegg border-b border-calm-sage-150 dark:border-[var(--border-default)]/30 pb-3">
-               <Bot size={26} className="text-calm-emeraldsea dark:text-calm-duckegg animate-float shrink-0" />
-               <h4 className="font-extrabold text-sm sm:text-base uppercase tracking-wider text-calm-sage-800 dark:text-calm-duckegg m-0">Inspiración del Mentor Calm</h4>
+             <div className="flex items-center space-x-3 text-[var(--accent-teal)] dark:text-[var(--accent-mint)] border-b border-calm-sage-150 dark:border-[var(--border-default)]/30 pb-3">
+               <Bot size={26} className="text-[var(--accent-teal)] dark:text-[var(--accent-mint)] animate-float shrink-0" />
+               <h4 className="font-extrabold text-sm sm:text-base uppercase tracking-wider text-[var(--text-primary)] dark:text-[var(--accent-mint)] m-0">Inspiración del Mentor Calm</h4>
              </div>
              <div className="text-base sm:text-lg text-[var(--text-secondary)] dark:text-[var(--text-secondary)] leading-relaxed space-y-3 m-0">
                <ReactMarkdown>{advice}</ReactMarkdown>
@@ -232,45 +232,45 @@ export function Aplicacion({ setPhase, state, updateState }: Props) {
  
          {/* Implementation Draft Textarea - MUCH MORE READABLE */}
          <div className="space-y-3">
-           <label className="block text-base font-bold text-calm-sage-800 dark:text-[var(--text-primary)] uppercase tracking-wider">
+           <label className="block text-base font-bold text-[var(--text-primary)] dark:text-[var(--text-primary)] uppercase tracking-wider">
              Boceto / Plan de Acción Inmediato:
            </label>
            <textarea
              value={state.plan}
              onChange={(e) => updateState({ plan: e.target.value })}
              placeholder="Escribe los primeros 3 pasos mínimos viables para hacer esta idea realidad..."
-             className="w-full p-6 rounded-3xl border border-[var(--border-card)] dark:border-[var(--border-default)]/40 bg-[var(--surface-card)] dark:bg-[var(--surface-card)]/90 focus:bg-white dark:focus:bg-[var(--surface-input)] focus:ring-4 focus:ring-calm-emeraldsea/25 focus:border-calm-emeraldsea outline-none resize-none h-48 text-base sm:text-lg font-semibold leading-relaxed transition-all placeholder:text-calm-sage-600 dark:placeholder:text-[#EBECEB]/50 text-[var(--text-primary)] dark:text-[var(--text-primary)] shadow-inner"
+             className="w-full p-6 rounded-3xl border border-[var(--border-card)] dark:border-[var(--border-default)]/40 bg-[var(--surface-card)] dark:bg-[var(--surface-card)]/90 focus:bg-white dark:focus:bg-[var(--surface-input)] focus:ring-4 focus:ring-calm-emeraldsea/25 focus:border-[var(--accent-teal)] outline-none resize-none h-48 text-base sm:text-lg font-semibold leading-relaxed transition-all placeholder:text-[var(--text-secondary)] dark:placeholder:text-[#EBECEB]/50 text-[var(--text-primary)] dark:text-[var(--text-primary)] shadow-inner"
            />
          </div>
  
          {/* Quality list check boxes - BOOSTED LEGIBILITY */}
          <div className="bg-[var(--surface-card)]/85 dark:bg-[var(--surface-card)]/80 border border-[var(--border-card)]/90 dark:border-[var(--border-default)]/50 p-6 sm:p-7 rounded-3xl space-y-5 shadow-sm">
-           <h4 className="text-base font-extrabold text-[var(--text-primary)] dark:text-calm-duckegg uppercase tracking-wider border-b border-calm-sage-150 dark:border-[var(--border-default)]/40 pb-2">Filtro de Viabilidad</h4>
+           <h4 className="text-base font-extrabold text-[var(--text-primary)] dark:text-[var(--accent-mint)] uppercase tracking-wider border-b border-calm-sage-150 dark:border-[var(--border-default)]/40 pb-2">Filtro de Viabilidad</h4>
            <div className="space-y-4">
-             <label className="flex items-start space-x-4 text-base text-[var(--text-primary)] dark:text-[var(--text-primary)] font-semibold cursor-pointer select-none group transition-colors hover:text-calm-emeraldsea dark:hover:text-calm-duckegg">
+             <label className="flex items-start space-x-4 text-base text-[var(--text-primary)] dark:text-[var(--text-primary)] font-semibold cursor-pointer select-none group transition-colors hover:text-[var(--accent-teal)] dark:hover:text-calm-duckegg">
                <input 
                  type="checkbox" 
                  checked={checks.solve}
                  onChange={() => { soundCheck(); setChecks(p => ({ ...p, solve: !p.solve })); }}
-                 className="w-6 h-6 rounded-lg text-calm-emeraldsea dark:text-calm-duckegg focus:ring-calm-emeraldsea border-calm-sage-300 dark:border-[var(--border-default)] cursor-pointer mt-0.5 shrink-0 scale-110 accent-calm-emeraldsea" 
+                 className="w-6 h-6 rounded-lg text-[var(--accent-teal)] dark:text-[var(--accent-mint)] focus:ring-calm-emeraldsea border-calm-sage-300 dark:border-[var(--border-default)] cursor-pointer mt-0.5 shrink-0 scale-110 accent-calm-emeraldsea" 
                />
                <span className="leading-snug">¿Resuelve genuinamente el problema original planteado?</span>
              </label>
-             <label className="flex items-start space-x-4 text-base text-[var(--text-primary)] dark:text-[var(--text-primary)] font-semibold cursor-pointer select-none group transition-colors hover:text-calm-emeraldsea dark:hover:text-calm-duckegg">
+             <label className="flex items-start space-x-4 text-base text-[var(--text-primary)] dark:text-[var(--text-primary)] font-semibold cursor-pointer select-none group transition-colors hover:text-[var(--accent-teal)] dark:hover:text-calm-duckegg">
                <input 
                  type="checkbox" 
                  checked={checks.restrictions}
                  onChange={() => { soundCheck(); setChecks(p => ({ ...p, restrictions: !p.restrictions })); }}
-                 className="w-6 h-6 rounded-lg text-calm-emeraldsea dark:text-calm-duckegg focus:ring-calm-emeraldsea border-calm-sage-300 dark:border-[var(--border-default)] cursor-pointer mt-0.5 shrink-0 scale-110 accent-calm-emeraldsea" 
+                 className="w-6 h-6 rounded-lg text-[var(--accent-teal)] dark:text-[var(--accent-mint)] focus:ring-calm-emeraldsea border-calm-sage-300 dark:border-[var(--border-default)] cursor-pointer mt-0.5 shrink-0 scale-110 accent-calm-emeraldsea" 
                />
                <span className="leading-snug">¿Cumple y respeta las restricciones de tiempo de incubación o de estilo?</span>
              </label>
-             <label className="flex items-start space-x-4 text-base text-[var(--text-primary)] dark:text-[var(--text-primary)] font-semibold cursor-pointer select-none group transition-colors hover:text-calm-emeraldsea dark:hover:text-calm-duckegg">
+             <label className="flex items-start space-x-4 text-base text-[var(--text-primary)] dark:text-[var(--text-primary)] font-semibold cursor-pointer select-none group transition-colors hover:text-[var(--accent-teal)] dark:hover:text-calm-duckegg">
                <input 
                  type="checkbox" 
                  checked={checks.feasible}
                  onChange={() => { soundCheck(); setChecks(p => ({ ...p, feasible: !p.feasible })); }}
-                 className="w-6 h-6 rounded-lg text-calm-emeraldsea dark:text-calm-duckegg focus:ring-calm-emeraldsea border-calm-sage-300 dark:border-[var(--border-default)] cursor-pointer mt-0.5 shrink-0 scale-110 accent-calm-emeraldsea" 
+                 className="w-6 h-6 rounded-lg text-[var(--accent-teal)] dark:text-[var(--accent-mint)] focus:ring-calm-emeraldsea border-calm-sage-300 dark:border-[var(--border-default)] cursor-pointer mt-0.5 shrink-0 scale-110 accent-calm-emeraldsea" 
                />
                <span className="leading-snug">¿Es factible tomar el primer paso hoy mismo?</span>
              </label>
@@ -293,7 +293,7 @@ export function Aplicacion({ setPhase, state, updateState }: Props) {
            type="button"
            onClick={handleFinalize}
            disabled={!state.selectedIdea || !state.plan.trim()}
-           className="flex-1 py-4 bg-calm-sage-800 hover:bg-calm-sage-900 dark:bg-calm-emeraldsea dark:hover:bg-calm-sage-600 disabled:bg-calm-sage-100 dark:disabled:bg-teal-950/40 disabled:text-[var(--text-secondary)] dark:disabled:text-[#EBECEB]/25 disabled:cursor-not-allowed disabled:shadow-none dark:shadow-none text-white rounded-2xl font-bold text-base flex items-center justify-center space-x-2.5 transition-all shadow-lg shadow-calm-sage-200/50 cursor-pointer"
+           className="flex-1 py-4 bg-[#1E3A8A] hover:bg-[#12164A] dark:bg-[var(--accent-teal)] dark:hover:bg-[#2E6DA4] disabled:bg-calm-sage-100 dark:disabled:bg-teal-950/40 disabled:text-[var(--text-secondary)] dark:disabled:text-[#EBECEB]/25 disabled:cursor-not-allowed disabled:shadow-none dark:shadow-none text-white rounded-2xl font-bold text-base flex items-center justify-center space-x-2.5 transition-all shadow-lg shadow-calm-sage-200/50 cursor-pointer"
          >
            <CheckCircle2 size={20} />
            <span>Finalizar e Incubar</span>

@@ -45,24 +45,24 @@ export function InstallPrompt() {
         >
           <div className="bg-[var(--surface-card)] dark:bg-[var(--surface-card2)] border border-[var(--border-card)] dark:border-[var(--border-default)]/40 shadow-2xl rounded-2xl p-4 flex items-center justify-between space-x-4">
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-calm-duckegg/20 dark:bg-[var(--surface-base)] text-calm-emeraldsea dark:text-calm-duckegg rounded-xl flex items-center justify-center">
+              <div className="w-10 h-10 bg-[var(--accent-mint)]/25 dark:bg-[var(--surface-base)] text-[var(--accent-teal)] dark:text-[var(--accent-mint)] rounded-xl flex items-center justify-center">
                 <Download size={20} />
               </div>
               <div>
                 <h4 className="font-bold text-[var(--text-primary)] dark:text-[var(--text-primary)] text-sm">Instalar Incubapp</h4>
-                <p className="text-calm-sage-600 dark:text-[var(--text-primary)]/60 text-xs text-balance">Accede más rápido desde tu pantalla de inicio.</p>
+                <p className="text-[var(--text-secondary)] dark:text-[var(--text-primary)]/60 text-xs text-balance">Accede más rápido desde tu pantalla de inicio.</p>
               </div>
             </div>
             <div className="flex items-center space-x-2">
               <button
                 onClick={handleInstall}
-                className="bg-calm-sage-800 hover:bg-calm-sage-900 dark:bg-calm-emeraldsea dark:hover:bg-calm-sage-600 text-white px-4 py-2 rounded-xl text-sm font-bold transition-colors cursor-pointer"
+                className="bg-[#1E3A8A] hover:bg-[#12164A] dark:bg-[var(--accent-teal)] dark:hover:bg-[#2E6DA4] text-white px-4 py-2 rounded-xl text-sm font-bold transition-colors cursor-pointer"
               >
                 Instalar
               </button>
               <button
                 onClick={() => setShowPrompt(false)}
-                className="p-2 text-calm-sage-600 dark:text-[var(--text-primary)]/50 hover:text-[var(--text-primary)] dark:hover:text-white cursor-pointer"
+                className="p-2 text-[var(--text-secondary)] dark:text-[var(--text-primary)]/50 hover:text-[var(--text-primary)] dark:hover:text-white cursor-pointer"
               >
                 <X size={20} />
               </button>

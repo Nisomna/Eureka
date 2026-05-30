@@ -225,7 +225,7 @@ export function SketchPad({ onSave, isDark }: Props) {
                   setIsEraser(false);
                 }}
                 className={`w-8 h-8 rounded-full border flex items-center justify-center transition-all cursor-pointer ${
-                  isSelected ? 'scale-110 ring-2 ring-calm-emeraldsea/50 border-calm-emeraldsea' : 'border-stone-200 dark:border-[var(--border-default)]/40 hover:scale-105'
+                  isSelected ? 'scale-110 ring-2 ring-calm-emeraldsea/50 border-[var(--accent-teal)]' : 'border-stone-200 dark:border-[var(--border-default)]/40 hover:scale-105'
                 }`}
                 style={{ backgroundColor: col.value }}
                 title={col.name}
@@ -249,7 +249,7 @@ export function SketchPad({ onSave, isDark }: Props) {
         {/* Brush Size / Actions */}
         <div className="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-start">
           <div className="flex items-center gap-2">
-            <span className="text-[11px] font-bold text-calm-sage-700 dark:text-calm-duckegg uppercase tracking-widest">Grosor:</span>
+            <span className="text-[11px] font-bold text-[var(--text-secondary)] dark:text-[var(--accent-mint)] uppercase tracking-widest">Grosor:</span>
             <input
               type="range"
               min="1"
@@ -263,7 +263,7 @@ export function SketchPad({ onSave, isDark }: Props) {
           <div className="flex items-center gap-1.5">
             <button
               onClick={undo}
-              className="p-2 text-calm-sage-600 dark:text-[var(--text-primary)]/70 hover:text-calm-sage-900 dark:hover:text-white bg-white dark:bg-[var(--surface-card)]/50 hover:bg-stone-50 dark:hover:bg-[var(--surface-hover)] border border-stone-200 dark:border-[var(--border-default)]/40 rounded-xl transition-all cursor-pointer"
+              className="p-2 text-[var(--text-secondary)] dark:text-[var(--text-primary)]/70 hover:text-calm-sage-900 dark:hover:text-white bg-white dark:bg-[var(--surface-card)]/50 hover:bg-stone-50 dark:hover:bg-[var(--surface-hover)] border border-stone-200 dark:border-[var(--border-default)]/40 rounded-xl transition-all cursor-pointer"
               title="Deshacer"
             >
               <RotateCcw size={16} />
@@ -281,7 +281,7 @@ export function SketchPad({ onSave, isDark }: Props) {
 
       <button
         onClick={handleExport}
-        className="w-full py-3 bg-calm-sage-800 hover:bg-calm-sage-900 dark:bg-calm-emeraldsea dark:hover:bg-calm-sage-600 active:scale-[0.99] text-white rounded-2xl font-bold text-sm tracking-wide flex items-center justify-center space-x-2 transition-all shadow-md shadow-calm-sage-200/50 dark:shadow-none cursor-pointer"
+        className="w-full py-3 bg-[#1E3A8A] hover:bg-[#12164A] dark:bg-[var(--accent-teal)] dark:hover:bg-[#2E6DA4] active:scale-[0.99] text-white rounded-2xl font-bold text-sm tracking-wide flex items-center justify-center space-x-2 transition-all shadow-md shadow-calm-sage-200/50 dark:shadow-none cursor-pointer"
       >
         <Check size={16} />
         <span>Añadir Boceto Visual a la Lluvia</span>
